@@ -1,20 +1,68 @@
-import type { Config } from 'tailwindcss'
+import type { Config } from 'tailwindcss';
 
 const config: Config = {
-  content: [
-    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
-  ],
+  content: ['./src/libraries/**/*.{js,ts,jsx,tsx,mdx}', './src/app/**/*.{js,ts,jsx,tsx,mdx}'],
   theme: {
-    extend: {
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic':
-          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
-      },
+    screens: {
+      sm: '560px',
+      md: '740px',
+      lg: '1024px',
+      xl: '1300px',
+      '2xl': '1300px'
     },
+    container: {
+      center: true,
+      padding: {
+        DEFAULT: '1rem',
+        sm: '1rem',
+        md: '1rem',
+        lg: '1rem',
+        xl: '1rem',
+        '2xl': '1rem'
+      },
+      screens: {
+        sm: '560px',
+        md: '740px',
+        lg: '1024px',
+        xl: '1300px',
+        '2xl': '1300px'
+      }
+    },
+    fontFamily: {
+      primary: 'var(--font-primary)'
+    },
+    colors: {
+      // default
+      inherit: 'inherit',
+      transparent: 'transparent',
+      current: 'currentColor',
+      black: '#000000',
+
+      // theme
+      primary: 'var(--primary-color)',
+      secondary: 'var(--secondary-color)',
+      white: 'var(--white)',
+      dark: 'var(--dark)',
+      success: 'var(--success)',
+      info: 'var(--info)',
+      danger: 'var(--danger)',
+      warning: 'var(--warning)',
+
+      'text-primary': 'var(--color-primary)',
+      'text-secondary': 'var(--color-secondary)',
+      'text-tertiary': 'var(--color-tertiary)',
+      'text-brand': 'var(--color-brand)',
+      'text-invert': 'var(--color-invert)',
+      'text-error': 'var(--color-error)',
+      'text-success': 'var(--color-success)',
+      'text-accent': 'var(--color-accent)',
+
+      gray: {
+        DEFAULT: 'var(--color-gray-0)',
+        100: 'var(--color-gray-100)'
+      }
+    }
   },
-  plugins: [],
-}
-export default config
+  plugins: [require('@tailwindcss/aspect-ratio')]
+};
+export default config;

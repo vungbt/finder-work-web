@@ -4,7 +4,12 @@
 /node_modules
 /.pnp
 .pnp.js
-.yarn/install-state.gz
+.yarn
+.pnp
+.pnp.js
+yarn.lock
+package-lock.json
+yarn.lock
 
 # testing
 /coverage
@@ -15,6 +20,8 @@
 
 # production
 /build
+/storybook-static
+/.vscode
 
 # misc
 .DS_Store
@@ -24,6 +31,7 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+.pnpm-debug.log*
 
 # local env files
 .env*.local
@@ -34,3 +42,21 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local env files
+*.env.local
+*.env.development.local
+*.env.test.local
+*.env.production.local
+*.env.production
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# utils
+*.env
+*generated.ts
+*.generated.*

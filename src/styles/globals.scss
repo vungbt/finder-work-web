@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import './top-loader.scss';
+
+@layer base {
+  @import './themes/dark-theme.scss';
+  @import './themes/light-theme.scss';
+
+  html {
+    font-family: var(--font-primary);
+    line-height: 1.15;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    -webkit-font-smoothing: antialiased;
+    @apply bg-text-primary;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-primary font-extrabold tracking-normal text-text-primary;
+  }
+}

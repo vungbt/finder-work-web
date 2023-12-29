@@ -1,0 +1,18 @@
+{
+  "home": {
+    "title":  "Home Page"
+  },
+  "jobSeekers": "Job seekers",
+  "employers": "Employers",
+  "for": "For {label}",
+  "navigation": {
+    "jobDiscovery": "Job Discovery",
+    "career": "Career",
+    "resumeBuilder": "Resume builder",
+    "aboutUs": "About us",
+    "login": "Login",
+    "register": "Register",
+    "postAJob": "Post a job",
+    "pricing": "Pricing"
+  }
+}
