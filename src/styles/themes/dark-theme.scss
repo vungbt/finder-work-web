@@ -18,7 +18,8 @@ html[data-theme='dark'] {
   --color-brand: var(--primary-color);
   --color-invert: var(--white);
   --color-error: var(--danger);
-  --color-success: var(--success) --color-accent: var(--info);
+  --color-success: var(--success);
+  --color-accent: var(--info);
 
   // Gray
   --color-gray-0: #f6f6f9;

@@ -1,9 +1,10 @@
 'use client';
 import useViewRole from '@/hooks/redux/view-role/useViewRole';
+import HydrateWrapper from '@/libraries/common/hydrate-wrap';
 import { ERole } from '@/types';
-import { Fragment, ReactNode } from 'react';
-import { FooterMainLayout, HeaderMainLayout, NavigationItem } from '.';
 import { useTranslations } from 'next-intl';
+import { ReactNode } from 'react';
+import { FooterMainLayout, HeaderMainLayout, NavigationItem } from '.';
 
 type MainLayoutProps = {
   employee: ReactNode;
@@ -29,10 +30,10 @@ export function MainLayout({ employee, employer, header }: MainLayoutProps) {
   const navigation = (header.navigation as any)[`${viewRole}`];
 
   return (
-    <Fragment>
+    <HydrateWrapper>
       <HeaderMainLayout navigation={navigation} labelButton={labelButton} />
       {pageView}
       <FooterMainLayout />
-    </Fragment>
+    </HydrateWrapper>
   );
 }

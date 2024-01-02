@@ -61,6 +61,23 @@ const config: Config = {
         DEFAULT: 'var(--color-gray-0)',
         100: 'var(--color-gray-100)'
       }
+    },
+    extend: {
+      width: {
+        '3.5': '0.875rem',
+        '4.5': '1.125rem'
+      },
+      height: {
+        '3.5': '0.875rem',
+        '4.5': '1.125rem'
+      },
+      spacing: {
+        '3.5': '0.875rem',
+        '4.5': '1.125rem'
+      },
+      borderWidth: {
+        1.5: '1.5px'
+      }
     }
   },
   plugins: [require('@tailwindcss/aspect-ratio')]

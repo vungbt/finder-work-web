@@ -14,6 +14,7 @@ export default function LandingPageLayout(props: { employee: ReactNode; employer
         { title: t('navigation.career'), url: RouterPath.Careers },
         { title: t('navigation.resumeBuilder'), url: RouterPath.ResumeBuilder },
         { title: t('navigation.aboutUs'), url: RouterPath.AboutUs },
+        { title: '', url: '', isLine: true },
         { title: t('navigation.login'), url: RouterPath.Login },
         { title: t('navigation.register'), url: RouterPath.SignUp }
       ],
@@ -22,6 +23,7 @@ export default function LandingPageLayout(props: { employee: ReactNode; employer
         { title: t('navigation.postAJob'), url: RouterPath.Posts },
         { title: t('navigation.pricing'), url: RouterPath.Pricing },
         { title: t('navigation.aboutUs'), url: RouterPath.AboutUs },
+        { title: '', url: '', isLine: true },
         { title: t('navigation.login'), url: RouterPath.Login },
         { title: t('navigation.register'), url: RouterPath.SignUp }
       ]
