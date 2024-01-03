@@ -1,5 +1,10 @@
-import React from 'react';
+import Banner from '@/libraries/banner';
+import React, { Fragment } from 'react';
 
 export default function EmployeePage() {
-  return <div>EmployeePage</div>;
+  return (
+    <Fragment>
+      <Banner type="employee" title="Step into Success: " />
+    </Fragment>
+  );
 }

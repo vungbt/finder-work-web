@@ -1,12 +1,14 @@
 'use client';
 import { RouterPath } from '@/constants/router-path';
 import useViewRole from '@/hooks/redux/view-role/useViewRole';
-import { Button } from '@/libraries/common';
+import { Button, Logo } from '@/libraries/common';
 import { ERole } from '@/types';
 import { Link } from '@/utils/navigation';
-import Image from 'next/image';
+import { DrawerMenu, NavigationMain } from './navigation';
+import useScreen from '@/hooks/themes/useScreen';
+import { useMemo } from 'react';
 
-export type NavigationItem = { title: string; url: string; isLine?: boolean };
+export type NavigationItem = { title: string; url: string; isLine?: boolean; showInLg?: boolean };
 type HeaderMainLayoutProps = {
   navigation: NavigationItem[];
   labelButton: string;
@@ -14,34 +16,43 @@ type HeaderMainLayoutProps = {
 
 export function HeaderMainLayout({ navigation, labelButton }: HeaderMainLayoutProps) {
   const { setViewRole, viewRole } = useViewRole();
+  const { sizes } = useScreen();
+  const navItems = useMemo(() => {
+    const newNavigationItem = [...navigation];
+    if (sizes.md && !sizes.xl) return newNavigationItem.filter((nav) => nav.showInLg);
+    return newNavigationItem;
+  }, [sizes, navigation]);
+  const navDrawer = useMemo(() => {
+    const newNavigationItem = [...navigation];
+    if (sizes.md && !sizes.xl) return newNavigationItem.filter((nav) => !nav.showInLg);
+    return newNavigationItem;
+  }, [sizes, navigation]);
+
   return (
-    <div suppressHydrationWarning className="flex items-center justify-between px-12 py-6">
-      <Link href={RouterPath.Home}>
-        <Image src="/assets/logo.png" alt="logo" width={168} height={48} loading="eager" priority />
+    <div
+      suppressHydrationWarning
+      className="fixed left-0 right-0 top-0 z-10 flex items-center justify-between px-8 py-4 md:px-12 md:py-6">
+      <Link href={RouterPath.Home} className="z-[51]">
+        <Logo type={sizes.sm ? 'default' : 'square'} />
       </Link>
 
-      <div className="flex items-center gap-6">
-        <nav className="flex items-center gap-6">
-          {navigation.map((nav) => (
-            <NavItem key={nav.url} {...nav} />
-          ))}
-        </nav>
+      {/** shadow navigation */}
+      <input hidden type="checkbox" id="navigation-checkbox" className="lg:hidden" />
+
+      <div className="navbar flex items-center gap-6">
+        <NavigationMain items={navItems} />
+        <DrawerMenu items={navDrawer} />
+        <label
+          htmlFor="navigation-checkbox"
+          className="overlay invisible fixed bottom-0 left-0 right-0 top-0 z-[40] h-screen bg-dark opacity-0 transition-all ease-linear xl:hidden"></label>
         <Button
           onClick={() => setViewRole(viewRole === ERole.EMPLOYEE ? ERole.EMPLOYER : ERole.EMPLOYEE)}
           label={labelButton}
           styleType="neon"
           iconRight="arrow-right"
+          className="z-[51] hidden sm:flex"
         />
       </div>
     </div>
   );
 }
-
-const NavItem = (item: NavigationItem) => {
-  if (item.isLine) return <div className="h-4 w-[1px] bg-dark"></div>;
-  return (
-    <Link className="px-4 py-3 font-semibold" key={item.url} href={item.url}>
-      {item.title}
-    </Link>
-  );
-};

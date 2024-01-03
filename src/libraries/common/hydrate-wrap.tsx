@@ -1,7 +1,7 @@
 import React, { Fragment, ReactNode, useEffect, useState } from 'react';
 import { RenderIcon } from '../icons';
 
-export default function HydrateWrapper({ children }: { children: ReactNode }) {
+export function HydrateWrapper({ children }: { children: ReactNode }) {
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {

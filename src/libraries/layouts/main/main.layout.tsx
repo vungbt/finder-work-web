@@ -1,6 +1,6 @@
 'use client';
 import useViewRole from '@/hooks/redux/view-role/useViewRole';
-import HydrateWrapper from '@/libraries/common/hydrate-wrap';
+import { HydrateWrapper } from '@/libraries/common';
 import { ERole } from '@/types';
 import { useTranslations } from 'next-intl';
 import { ReactNode } from 'react';

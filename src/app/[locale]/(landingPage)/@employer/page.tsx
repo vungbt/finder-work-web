@@ -1,8 +1,15 @@
+import Banner from '@/libraries/banner';
 import { Button } from '@/libraries/common';
+import { Switch } from '@/libraries/common';
+import { Fragment } from 'react';
 
 export default function EmployerPage() {
   return (
-    <div>
+    <Fragment>
+      <Banner type="employer" title="Recruit The Best Talent " />
+      <Switch size="large" />
+      <Switch size="middle" />
+      <Switch size="small" />
       <Button label="For Employers" size="large" iconRight="arrow-right" iconLeft="loading" />
       <Button label="For Employers" size="middle" iconRight="arrow-right" iconLeft="loading" />
       <Button label="For Employers" size="small" iconRight="arrow-right" iconLeft="loading" />
@@ -145,6 +152,6 @@ export default function EmployerPage() {
         iconRight="arrow-right"
         iconLeft="loading"
       />
-    </div>
+    </Fragment>
   );
 }
