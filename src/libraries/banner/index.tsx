@@ -1,5 +1,5 @@
+import clsx from 'clsx';
 import { ReactNode } from 'react';
-import { RenderIcon } from '../icons';
 
 type BannerProps = {
   type?: 'employee' | 'employer';
@@ -18,11 +18,10 @@ export default function Banner({
   // tags
 }: BannerProps) {
   return (
-    <div className="relative top-[-92px]">
-      <RenderIcon
-        name={type === 'employee' ? 'banner-employee' : 'banner-employer'}
-        className="!w-full"
-      />
-    </div>
+    <div
+      className={clsx('relative top-[-92px] min-h-[572px]', {
+        'bg-neon-x': type === 'employee',
+        'bg-neon-y': type === 'employer'
+      })}></div>
   );
 }

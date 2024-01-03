@@ -21,9 +21,12 @@ export function NavigationMain({ items }: NavigationMainProps) {
 }
 
 const NavItem = (item: NavigationItem) => {
-  if (item.isLine) return <div className="h-4 w-[1px] bg-dark"></div>;
+  if (item.isLine) return <div className="h-4 w-[1px] bg-white"></div>;
   return (
-    <Link className="nav-item px-4 py-3 font-semibold text-white" key={item.url} href={item.url}>
+    <Link
+      className="line-hover nav-item px-4 py-3 font-semibold text-white"
+      key={item.url}
+      href={item.url}>
       {item.title}
     </Link>
   );

@@ -25,7 +25,7 @@ const NavItem = (item: NavigationItem) => {
     inputShadow.checked = false;
   };
 
-  if (item.isLine) return <div className="h-[1px] w-full bg-dark md:hidden"></div>;
+  if (item.isLine) return <div className="h-[1px] w-full bg-white md:hidden"></div>;
   return (
     <Link
       onClick={onHandleClickNavMobile}

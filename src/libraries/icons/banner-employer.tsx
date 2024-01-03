@@ -9,7 +9,7 @@ export default function BannerEmployer({ className, transform, ...reset }: Reado
       className={className}
       transform={transform}
       {...reset}>
-      <g clip-path="url(#clip0_2_4021)">
+      <g clipPath="url(#clip0_2_4021)">
         <rect width="1439" height="572" fill="#0D0C0C" />
         <path
           fillRule="evenodd"

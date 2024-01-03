@@ -6,6 +6,24 @@ import Logo from './logo';
 import BannerEmployer from './banner-employer';
 import BannerEmployee from './banner-employee';
 import LoadingV2 from './loading-v2';
+import ChevronDown from './chevron-down';
+import ChevronLeft from './chevron-left';
+import ChevronRight from './chevron-right';
+import Danger from './danger';
+import EyeSlash from './eye-slash';
+import Eye from './eye';
+import HeartBold from './heart-bold';
+import Heart from './heart';
+import Messages from './messages';
+import Notification from './notification';
+import Search from './search';
+import SettingBold from './setting-bold';
+import Setting from './setting';
+import SMS from './sms';
+import Home from './home';
+import HomeBold from './home-bold';
+import CloseCircleBold from './close-circle-bold';
+import CloseCircle from './close-circle';
 
 export type IconProps = {
   className?: string;
@@ -23,7 +41,25 @@ export type IconName =
   | 'logo'
   | 'banner-employer'
   | 'banner-employee'
-  | 'loading-v2';
+  | 'loading-v2'
+  | 'chevron-down'
+  | 'chevron-left'
+  | 'chevron-right'
+  | 'danger'
+  | 'eye-slash'
+  | 'eye'
+  | 'heart-bold'
+  | 'heart'
+  | 'messages'
+  | 'notification'
+  | 'search'
+  | 'setting-bold'
+  | 'setting'
+  | 'sms'
+  | 'home'
+  | 'home-bold'
+  | 'close-circle'
+  | 'close-circle-bold';
 
 export type IconsType = Record<IconName, Icon>;
 
@@ -48,6 +84,60 @@ export const Icons: IconsType = {
   },
   'banner-employee': (props: IconProps) => {
     return <BannerEmployee {...props} />;
+  },
+  'chevron-down': (props: IconProps) => {
+    return <ChevronDown {...props} />;
+  },
+  'chevron-left': (props: IconProps) => {
+    return <ChevronLeft {...props} />;
+  },
+  'chevron-right': (props: IconProps) => {
+    return <ChevronRight {...props} />;
+  },
+  danger: (props: IconProps) => {
+    return <Danger {...props} />;
+  },
+  'eye-slash': (props: IconProps) => {
+    return <EyeSlash {...props} />;
+  },
+  eye: (props: IconProps) => {
+    return <Eye {...props} />;
+  },
+  'heart-bold': (props: IconProps) => {
+    return <HeartBold {...props} />;
+  },
+  heart: (props: IconProps) => {
+    return <Heart {...props} />;
+  },
+  messages: (props: IconProps) => {
+    return <Messages {...props} />;
+  },
+  notification: (props: IconProps) => {
+    return <Notification {...props} />;
+  },
+  search: (props: IconProps) => {
+    return <Search {...props} />;
+  },
+  'setting-bold': (props: IconProps) => {
+    return <SettingBold {...props} />;
+  },
+  setting: (props: IconProps) => {
+    return <Setting {...props} />;
+  },
+  sms: (props: IconProps) => {
+    return <SMS {...props} />;
+  },
+  home: (props: IconProps) => {
+    return <Home {...props} />;
+  },
+  'home-bold': (props: IconProps) => {
+    return <HomeBold {...props} />;
+  },
+  'close-circle': (props: IconProps) => {
+    return <CloseCircle {...props} />;
+  },
+  'close-circle-bold': (props: IconProps) => {
+    return <CloseCircleBold {...props} />;
   }
 };
 
