@@ -3,6 +3,7 @@ html[data-theme='light'] {
   // Brand
   --primary-color: #7afb3d;
   --secondary-color: #ddf7d4;
+  --tertiary-color: #919cd4;
 
   // Default
   --white: #ffffff;
@@ -24,6 +25,10 @@ html[data-theme='light'] {
   // Gray
   --color-gray-0: #f6f6f9;
   --color-gray-100: #e0e6eb;
+
+  // Gradient
+  --neon-x: linear-gradient(45deg, var(--info) 0%, var(--dark) 85.61%);
+  --neon-z: linear-gradient(45deg, var(--primary-color) 0%, var(--dark) 85.61%);
 
   // FONT FAMILY
   --font-primary: 'Inter', sans-serif;

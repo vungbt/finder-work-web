@@ -33,7 +33,7 @@
   }
 
   .bg-neon-x {
-    background: linear-gradient(45deg, var(--info) 0%, var(--dark) 85.61%);
+    background: var(--neon-x);
   }
 
   .bg-neon-y {
@@ -41,7 +41,7 @@
   }
 
   .bg-neon-z {
-    background: linear-gradient(45deg, var(--info) 0%, var(--danger) 100%);
+    background: var(--neon-z);
   }
 }
 
@@ -164,5 +164,118 @@
     &::after {
       @apply w-3 bg-white;
     }
+  }
+}
+
+// select custom
+.select-custom {
+  &__control {
+    @apply border border-solid border-gray-100;
+
+    // normal
+    &__large {
+      border-radius: 1.5rem !important;
+      min-height: 2.5rem !important;
+      @apply text-base;
+    }
+
+    &__middle {
+      border-radius: 1rem !important;
+      min-height: 2rem !important;
+      max-height: 2rem !important;
+      flex-wrap: unset !important;
+      @apply text-sm;
+    }
+
+    &__small {
+      border-radius: 0.75rem !important;
+      min-height: 1.5rem !important;
+      max-height: 1.5rem !important;
+      flex-wrap: unset !important;
+      @apply text-sm;
+    }
+  }
+
+  &__valueContainer {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+
+    // normal
+    &__large {
+      // min-height: 2.5rem;
+      padding-left: 1rem !important;
+    }
+
+    &__middle {
+      // min-height: 2rem;
+      padding-left: 1rem !important;
+    }
+
+    &__small {
+      // min-height: 1.5rem;
+      padding-left: 0.5rem !important;
+    }
+  }
+
+  &__input {
+    margin: 0 !important;
+  }
+
+  &__menu {
+    // normal
+    &__large {
+      border-radius: 1.5rem !important;
+      background-color: var(--white) !important;
+    }
+
+    &__middle {
+      border-radius: 1rem !important;
+      background-color: var(--white) !important;
+    }
+
+    &__small {
+      border-radius: 0.75rem !important;
+      background-color: var(--white) !important;
+    }
+  }
+
+  &__menuList {
+    // normal
+    &__large {
+      border-radius: 1.5rem !important;
+    }
+
+    &__middle {
+      border-radius: 1rem !important;
+    }
+
+    &__small {
+      border-radius: 0.75rem !important;
+    }
+  }
+
+  &__menuOption {
+    &:hover {
+      background: var(--tertiary-color);
+    }
+    &__focused {
+      background: var(--tertiary-color) !important;
+    }
+
+    &__selected {
+      background: var(--neon-x);
+    }
+  }
+
+  &__multiValue {
+    display: none !important;
+  }
+
+  .select-custom__control__focused__large,
+  .select-custom__control__focused__middle,
+  .select-custom__control__focused__small {
+    box-shadow: none;
+    border-color: var(--info) !important;
+    @apply border border-solid;
   }
 }

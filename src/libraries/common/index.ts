@@ -3,3 +3,4 @@ export * from './buttons';
 export * from './hydrate-wrap';
 export * from './logo';
 export * from './switch';
+export * from './selects';

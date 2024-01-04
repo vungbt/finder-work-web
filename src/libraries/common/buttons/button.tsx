@@ -39,7 +39,7 @@ export const Button = forwardRef(function ButtonBase(
     <button
       disabled={isDisabled}
       className={clsx(
-        'flex min-w-fit items-center justify-between gap-2 rounded-3xl transition-all',
+        'flex min-w-fit items-center justify-between gap-2 transition-all',
         {
           'box-border max-h-10 border-1.5 border-solid border-gray-100 bg-white text-dark':
             styleType === 'default' && buttonType === 'default',
@@ -51,9 +51,9 @@ export const Button = forwardRef(function ButtonBase(
           'border-1.5 border-info text-dark': styleType === 'info' && buttonType === 'outline',
 
           // size
-          'px-4 py-2 text-base font-semibold': size === 'large',
-          'px-4 py-2 text-sm font-medium': size === 'middle',
-          'px-2 py-1 text-sm font-medium': size === 'small',
+          'rounded-3xl px-4 py-2 text-base font-semibold': size === 'large',
+          'rounded-2xl px-4 py-1.5 text-sm font-medium': size === 'middle',
+          'rounded-xl px-2 py-0.5 text-sm font-medium': size === 'small',
 
           'cursor-no-drop opacity-90': isDisabled
         },
