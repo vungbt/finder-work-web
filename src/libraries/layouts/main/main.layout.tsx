@@ -24,8 +24,8 @@ export function MainLayout({ employee, employer, header }: MainLayoutProps) {
   const pageView = viewRole === ERole.EMPLOYEE ? employee : employer;
   const labelButton =
     viewRole === ERole.EMPLOYEE
-      ? t('for', { label: t('jobSeekers') })
-      : t('for', { label: t('employers') });
+      ? t('for', { label: t('employers') })
+      : t('for', { label: t('jobSeekers') });
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const navigation = (header.navigation as any)[`${viewRole}`];
 

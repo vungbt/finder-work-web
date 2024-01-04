@@ -77,6 +77,9 @@ const config: Config = {
       },
       borderWidth: {
         1.5: '1.5px'
+      },
+      borderRadius: {
+        '4xl': '2.25rem'
       }
     }
   },

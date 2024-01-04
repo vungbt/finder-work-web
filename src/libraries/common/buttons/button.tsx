@@ -41,7 +41,7 @@ export const Button = forwardRef(function ButtonBase(
       className={clsx(
         'flex min-w-fit items-center justify-between gap-2 rounded-3xl transition-all',
         {
-          'border-1.5 border-solid border-gray-100 bg-white text-dark':
+          'box-border max-h-10 border-1.5 border-solid border-gray-100 bg-white text-dark':
             styleType === 'default' && buttonType === 'default',
           'bg-neon text-white': styleType === 'neon' && buttonType === 'default',
           'bg-danger text-white': styleType === 'danger' && buttonType === 'default',
