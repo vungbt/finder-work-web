@@ -70,7 +70,8 @@ export default function ThemeSwitcher() {
         strokeLinecap="round"
         strokeLinejoin="round"
         style={{ ...svgContainerProps, cursor: 'pointer' }}
-        onClick={onHandleToggle}>
+        onClick={onHandleToggle}
+      >
         <mask id="mask">
           <rect x="0" y="0" width="100%" height="100%" fill="white" />
           <animated.circle style={maskedCircleProps as never} cx="12" cy="4" r="9" fill="black" />

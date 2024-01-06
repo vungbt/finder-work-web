@@ -11,7 +11,8 @@ export default function Search({ className, transform, ...reset }: Readonly<Icon
       xmlns="http://www.w3.org/2000/svg"
       className={clsx('h-6 w-6', className)}
       transform={transform}
-      {...reset}>
+      {...reset}
+    >
       <path
         d="M11.5 21C16.7467 21 21 16.7467 21 11.5C21 6.25329 16.7467 2 11.5 2C6.25329 2 2 6.25329 2 11.5C2 16.7467 6.25329 21 11.5 21Z"
         stroke="currentColor"

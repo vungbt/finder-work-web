@@ -10,7 +10,7 @@ type ButtonProps = React.DetailedHTMLProps<
   label?: string;
   iconLeft?: IconName;
   iconRight?: IconName;
-  loading?: boolean;
+  isLoading?: boolean;
 
   styleType?: 'default' | 'neon' | 'danger' | 'info';
   buttonType?: 'default' | 'outline';
@@ -26,14 +26,14 @@ export const Button = forwardRef(function ButtonBase(
     label,
     iconLeft,
     iconRight,
-    loading,
+    isLoading,
     styleType = 'default',
     buttonType = 'default',
     size = 'large',
     disabled,
     ...reset
   } = props;
-  const isDisabled = disabled ?? loading;
+  const isDisabled = disabled ?? isLoading;
 
   return (
     <button
@@ -60,7 +60,8 @@ export const Button = forwardRef(function ButtonBase(
         className
       )}
       {...reset}
-      ref={ref}>
+      ref={ref}
+    >
       {iconLeft && (
         <RenderIcon
           className={clsx({
@@ -68,7 +69,7 @@ export const Button = forwardRef(function ButtonBase(
             '!h-4.5 !w-4.5': size === 'middle',
             '!h-4 !w-4': size === 'small'
           })}
-          name={loading ? 'loading' : iconLeft}
+          name={isLoading ? 'loading' : iconLeft}
         />
       )}
       {label}
@@ -79,7 +80,7 @@ export const Button = forwardRef(function ButtonBase(
             '!h-4.5 !w-4.5': size === 'middle',
             '!h-4 !w-4': size === 'small'
           })}
-          name={loading ? 'loading' : iconRight}
+          name={isLoading ? 'loading' : iconRight}
         />
       )}
     </button>

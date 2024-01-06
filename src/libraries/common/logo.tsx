@@ -17,7 +17,8 @@ export function Logo({ type = 'default', layout = 'horizontal', size = 'md' }: L
         'w-fit flex-col items-center justify-center': layout === 'vertical',
 
         'px-3 py-2': size === 'md'
-      })}>
+      })}
+    >
       <RenderIcon
         name="logo"
         className={clsx({
@@ -30,7 +31,8 @@ export function Logo({ type = 'default', layout = 'horizontal', size = 'md' }: L
           hidden: type === 'square',
 
           'ml-3': size === 'md'
-        })}>
+        })}
+      >
         {t('webName')}
       </h5>
     </div>

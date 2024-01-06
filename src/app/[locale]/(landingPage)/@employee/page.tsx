@@ -1,10 +1,9 @@
 'use client';
 import Banner from '@/libraries/banner';
-import { Switch, SelectForm, Button } from '@/libraries/common';
+import { Button, InputForm, SelectForm } from '@/libraries/common';
+import { Field, Form, Formik } from 'formik';
 import { useTranslations } from 'next-intl';
-import { Formik, Field, ErrorMessage, Form } from 'formik';
 import * as Yup from 'yup';
-import { RenderIcon } from '@/libraries/icons';
 
 export default function EmployeePage() {
   const t = useTranslations();
@@ -15,15 +14,45 @@ export default function EmployeePage() {
     { value: 'orange', label: 'Orange' }
   ];
 
+  const optionsGroup = [
+    { label: 'All', value: 'all' },
+    {
+      label: 'Group 1',
+      options: [
+        { value: 'apple', label: 'Apple' },
+        { value: 'banana', label: 'Banana' },
+        { value: 'orange', label: 'Orange' }
+      ]
+    }
+  ];
+
   const validationSchema = Yup.object({
     selectedOption: Yup.object().shape({
       value: Yup.string().required('Please select an option'),
       label: Yup.string().required('Please select an option')
-    })
+    }),
+    selectedOption1: Yup.array()
+      .of(
+        Yup.object().shape({
+          value: Yup.string().required('Please select an option'),
+          label: Yup.string().required('Please select an option')
+        })
+      )
+      .min(1, 'Pls select one item'),
+    selectedOption2: Yup.object().shape({
+      value: Yup.string().required('Please select an option'),
+      label: Yup.string().required('Please select an option')
+    }),
+    input1: Yup.string().required('Input required'),
+    input2: Yup.string().required('Input required')
   });
 
   const initialValues = {
-    selectedOption: null
+    selectedOption: { value: 'apple', label: 'Apple' },
+    selectedOption1: [{ value: 'apple', label: 'Apple' }],
+    selectedOption2: { value: 'apple', label: 'Apple' },
+    input1: '',
+    input2: ''
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -41,41 +70,93 @@ export default function EmployeePage() {
         tags={['UI/UX Designer', 'Netflix', 'IT', '', 'Sale', 'Marketing']}
       />
       <div className="container">
-        <br />
-        <Switch size="large" loading />
-        <Switch size="middle" />
-        <Switch size="small" />
-        <RenderIcon name="close" />
-        <RenderIcon name="chevron-up" />
-        <br />
-        <Button iconLeft="chevron-down" styleType="neon" label="Button" size="large" />
-        <Button iconLeft="chevron-down" styleType="neon" label="Button" size="middle" />
-        <Button iconLeft="chevron-down" styleType="neon" label="Button" size="small" />
-        <br />
-        <SelectForm options={options} size="large" isClearable />
-        <SelectForm options={options} size="middle" isMulti />
-        <SelectForm options={options} size="small" isMulti />
-        <br />
+        <InputForm
+          iconLeft="arrow-left"
+          iconRight="arrow-right"
+          label="Input:"
+          size="large"
+          placeholder="Input..."
+          isRequired
+        />
+        <InputForm
+          iconLeft="arrow-left"
+          iconRight="arrow-right"
+          label="Input:"
+          size="middle"
+          placeholder="Input..."
+        />
+        <InputForm
+          iconLeft="arrow-left"
+          iconRight="arrow-right"
+          label="Input:"
+          size="small"
+          placeholder="Input..."
+        />
+        <SelectForm options={options} size="large" />
+        <SelectForm options={options} size="middle" />
+        <SelectForm options={options} size="small" />
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
-          onSubmit={handleSubmit}>
-          <Form>
-            <div>
-              <label htmlFor="selectedOption">Select Option:</label>
-              <Field
-                name="selectedOption"
-                component={SelectForm}
-                options={options}
-                isMulti={false}
-              />
-              <ErrorMessage name="selectedOption" component="div" />
-            </div>
+          onSubmit={handleSubmit}
+        >
+          {({ errors, touched }) => {
+            console.log('errors', errors);
+            console.log('touched', touched);
+            return (
+              <Form>
+                <Field
+                  label="Select Option:"
+                  isRequired={true}
+                  name="selectedOption"
+                  component={SelectForm}
+                  options={options}
+                  isMulti={false}
+                  isClearable
+                />
 
-            <div>
-              <button type="submit">Submit</button>
-            </div>
-          </Form>
+                <Field
+                  label="Select Option 1:"
+                  isRequired={true}
+                  name="selectedOption1"
+                  component={SelectForm}
+                  options={options}
+                  isMulti={true}
+                  layout="horizontal"
+                />
+
+                <Field
+                  label="Select Option 123123:"
+                  isRequired={true}
+                  name="selectedOption2"
+                  component={SelectForm}
+                  options={optionsGroup}
+                  isMulti={false}
+                  layout="horizontal"
+                />
+                <Field
+                  label="Input 1:"
+                  isRequired={true}
+                  name="input1"
+                  component={InputForm}
+                  options={optionsGroup}
+                  layout="horizontal"
+                  placeholder="Enter...."
+                />
+                <Field
+                  label="Input 2:"
+                  isRequired={true}
+                  name="input2"
+                  component={InputForm}
+                  options={optionsGroup}
+                  placeholder="Enter...."
+                  iconRight="heart"
+                />
+
+                <Button type="submit" label="Submit" styleType="neon" className="mt-5" />
+              </Form>
+            );
+          }}
         </Formik>
       </div>
     </div>

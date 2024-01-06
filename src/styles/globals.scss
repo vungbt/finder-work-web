@@ -43,6 +43,10 @@
   .bg-neon-z {
     background: var(--neon-z);
   }
+
+  ::placeholder {
+    color: var(--color-tertiary) !important;
+  }
 }
 
 // Hamburger
@@ -170,7 +174,8 @@
 // select custom
 .select-custom {
   &__control {
-    @apply border border-solid border-gray-100;
+    @apply border border-solid;
+    border-color: var(--color-gray-100) !important;
 
     // normal
     &__large {
@@ -194,6 +199,11 @@
       flex-wrap: unset !important;
       @apply text-sm;
     }
+
+    // error
+    &__error {
+      border-color: var(--danger) !important;
+    }
   }
 
   &__valueContainer {
@@ -202,17 +212,14 @@
 
     // normal
     &__large {
-      // min-height: 2.5rem;
       padding-left: 1rem !important;
     }
 
     &__middle {
-      // min-height: 2rem;
       padding-left: 1rem !important;
     }
 
     &__small {
-      // min-height: 1.5rem;
       padding-left: 0.5rem !important;
     }
   }
@@ -255,20 +262,27 @@
   }
 
   &__menuOption {
+    @apply font-primary;
+
     &:hover {
       background: var(--tertiary-color);
     }
+
     &__focused {
       background: var(--tertiary-color) !important;
     }
 
     &__selected {
-      background: var(--neon-x);
+      background: var(--neon-x) !important;
     }
   }
 
   &__multiValue {
     display: none !important;
+  }
+
+  &__placeholder {
+    color: var(--color-tertiary) !important;
   }
 
   .select-custom__control__focused__large,
@@ -277,5 +291,22 @@
     box-shadow: none;
     border-color: var(--info) !important;
     @apply border border-solid;
+  }
+
+  .select-custom__control__focused__error {
+    border-color: var(--danger) !important;
+  }
+}
+
+// form label
+.form-label {
+  @apply relative text-sm;
+
+  &__required {
+    &::before {
+      margin-inline-end: 0.25rem;
+      content: '*';
+      @apply inline-block font-primary text-sm leading-[1px] text-danger;
+    }
   }
 }

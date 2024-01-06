@@ -4,3 +4,6 @@ export * from './hydrate-wrap';
 export * from './logo';
 export * from './switch';
 export * from './selects';
+export * from './tags';
+export * from './form';
+export * from './inputs';
