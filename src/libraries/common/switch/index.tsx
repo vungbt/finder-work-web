@@ -19,8 +19,7 @@ export const Switch = forwardRef(function Switch(props: SwitchProps, ref: Ref<HT
         'h-8 w-16': size === 'large',
         'h-6 w-11': size === 'middle',
         'h-4 w-7': size === 'small'
-      })}
-    >
+      })}>
       <input hidden ref={ref} type="checkbox" className="switch-input" {...reset} />
 
       <span
@@ -32,15 +31,13 @@ export const Switch = forwardRef(function Switch(props: SwitchProps, ref: Ref<HT
             'switch-small': size === 'small'
           },
           className
-        )}
-      >
+        )}>
         <span
           className={clsx('slider-circle flex items-center justify-center', {
             'left-[3px] h-[26px] min-w-[26px]': size === 'large',
             'left-[2px] h-[18px] min-w-[18px]': size === 'middle',
             'left-[1px] h-3 min-w-3': size === 'small'
-          })}
-        >
+          })}>
           {isLoading && (
             <RenderIcon
               name="loading-v2"

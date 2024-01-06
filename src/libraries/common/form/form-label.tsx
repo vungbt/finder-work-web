@@ -18,8 +18,7 @@ export function FormLabel({ isRequired = false, label, name, className }: FormLa
           'form-label__required': isRequired
         },
         className
-      )}
-    >
+      )}>
       {label}
     </label>
   );

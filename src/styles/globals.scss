@@ -310,3 +310,223 @@
     }
   }
 }
+
+// radio custom
+.radio-custom {
+  @apply relative flex w-fit cursor-pointer select-none items-center gap-2 text-sm;
+
+  &__input {
+    @apply absolute h-0 w-0 cursor-pointer opacity-0;
+  }
+
+  &__checkmark {
+    @apply relative inline-block rounded-full border-2 border-gray-100 transition-all ease-linear;
+
+    &::before {
+      content: '';
+      @apply absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-transparent transition-all ease-linear;
+    }
+
+    &__small {
+      @apply h-4 w-4;
+
+      &::before {
+        @apply h-2 w-2;
+      }
+    }
+
+    &__middle {
+      @apply h-5 w-5;
+
+      &::before {
+        @apply h-3 w-3;
+      }
+    }
+
+    &__large {
+      @apply h-6 w-6;
+
+      &::before {
+        @apply h-3 w-3;
+      }
+    }
+  }
+
+  &__error {
+    border-color: var(--danger) !important;
+  }
+
+  &:hover {
+    .radio-custom__input ~ .radio-custom__checkmark {
+      &::before {
+        @apply bg-gray-100;
+      }
+    }
+  }
+
+  .radio-custom__input:checked ~ .radio-custom__checkmark {
+    @apply border-dark;
+
+    &::before {
+      @apply bg-dark;
+    }
+  }
+
+  .radio-custom__input:checked ~ .radio-custom__checkmark-default {
+    @apply border-dark;
+
+    &::before {
+      @apply bg-dark;
+    }
+  }
+
+  .radio-custom__input:checked ~ .radio-custom__checkmark-danger {
+    @apply border-danger;
+
+    &::before {
+      @apply bg-danger;
+    }
+  }
+
+  .radio-custom__input:checked ~ .radio-custom__checkmark-info {
+    @apply border-info;
+
+    &::before {
+      @apply bg-info;
+    }
+  }
+}
+
+// checkbox custom
+.checkbox-custom {
+  @apply relative flex w-fit cursor-pointer select-none items-center gap-2 text-sm;
+
+  &__input {
+    @apply absolute h-0 w-0 cursor-pointer opacity-0;
+  }
+
+  &__icon {
+    @apply absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-transparent transition-all ease-linear;
+
+    &__small {
+      @apply h-3 w-3;
+    }
+
+    &__middle {
+      @apply h-4 w-4;
+    }
+
+    &__large {
+      @apply h-5 w-5;
+    }
+  }
+
+  &__checkmark {
+    @apply relative inline-block border-2 border-gray-100 transition-all ease-linear;
+
+    &__small {
+      @apply h-4 w-4 rounded;
+    }
+
+    &__middle {
+      @apply h-5 w-5 rounded;
+    }
+
+    &__large {
+      @apply h-6 w-6 rounded;
+    }
+  }
+
+  &__error {
+    border-color: var(--danger) !important;
+  }
+
+  &:hover {
+    .checkbox-custom__input ~ .checkbox-custom__checkmark {
+      .checkbox-custom__icon {
+        @apply text-gray-100;
+      }
+    }
+  }
+
+  .checkbox-custom__input:checked ~ .checkbox-custom__checkmark {
+    .checkbox-custom__icon {
+      @apply text-white;
+    }
+  }
+
+  .checkbox-custom__input:checked ~ .checkbox-custom__checkmark-default {
+    @apply border-dark bg-dark;
+  }
+
+  .checkbox-custom__input:checked ~ .checkbox-custom__checkmark-danger {
+    @apply border-danger bg-danger;
+  }
+
+  .checkbox-custom__input:checked ~ .checkbox-custom__checkmark-info {
+    @apply border-info bg-info;
+  }
+}
+
+.checkbox-custom-indeterminate {
+  .checkbox-custom__checkmark {
+    @apply relative inline-block border-2 border-dark transition-all ease-linear;
+
+    &::before {
+      content: '';
+      @apply absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-dark transition-all ease-linear;
+    }
+  }
+
+  .checkbox-custom__checkmark__small {
+    &::before {
+      @apply h-2 w-2 rounded-sm;
+    }
+  }
+
+  .checkbox-custom__checkmark__middle {
+    &::before {
+      @apply h-2.5 w-2.5 rounded-sm;
+    }
+  }
+
+  .checkbox-custom__checkmark__large {
+    &::before {
+      @apply h-3 w-3 rounded-sm;
+    }
+  }
+
+  .checkbox-custom__checkmark-default {
+    @apply border-dark;
+
+    &::before {
+      @apply bg-dark;
+    }
+  }
+
+  .checkbox-custom__checkmark-danger {
+    @apply border-danger;
+
+    &::before {
+      @apply bg-danger;
+    }
+  }
+
+  .checkbox-custom__checkmark-info {
+    @apply border-info;
+
+    &::before {
+      @apply bg-info;
+    }
+  }
+
+  .checkbox-custom__icon {
+    @apply hidden;
+  }
+
+  .checkbox-custom__input:checked ~ .checkbox-custom__checkmark-info {
+    .checkbox-custom__icon {
+      @apply block;
+    }
+  }
+}

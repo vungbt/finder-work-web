@@ -60,8 +60,7 @@ export const Button = forwardRef(function ButtonBase(
         className
       )}
       {...reset}
-      ref={ref}
-    >
+      ref={ref}>
       {iconLeft && (
         <RenderIcon
           className={clsx({

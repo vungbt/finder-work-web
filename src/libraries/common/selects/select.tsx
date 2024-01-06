@@ -4,6 +4,7 @@ import clsx from 'clsx';
 import { FieldInputProps, FormikProps } from 'formik';
 import { Ref, forwardRef } from 'react';
 import Select, {
+  ActionMeta,
   ClearIndicatorProps,
   DropdownIndicatorProps,
   GroupBase,
@@ -33,7 +34,17 @@ type SelectFormProps = SelectProps & {
 };
 
 export const SelectForm = forwardRef(function SelectForm(props: SelectFormProps, ref: Ref<never>) {
-  const { className, size = 'large', field, form, layout, isRequired, label, ...reset } = props;
+  const {
+    className,
+    size = 'large',
+    field,
+    form,
+    layout,
+    isRequired,
+    label,
+    onChange,
+    ...reset
+  } = props;
   const name = field?.name;
   const fieldValues = cloneDeep(field?.value);
   const isHaveError = !form || !name ? false : form.errors[name] && form.touched[name];
@@ -66,7 +77,7 @@ export const SelectForm = forwardRef(function SelectForm(props: SelectFormProps,
     return (
       components.ClearIndicator && (
         <components.ClearIndicator {...props}>
-          <span onClick={props.onClearAll}>
+          <button onClick={props.onClearAll}>
             <RenderIcon
               name="close-circle-bold"
               className={clsx(
@@ -79,13 +90,16 @@ export const SelectForm = forwardRef(function SelectForm(props: SelectFormProps,
                 }
               )}
             />
-          </span>
+          </button>
         </components.ClearIndicator>
       )
     );
   };
 
-  const onHandleChange = (values: OnChangeValue<any, any>) => {
+  const onHandleChange = (values: OnChangeValue<any, any>, actionMeta: ActionMeta<any>) => {
+    if (onChange) {
+      onChange(values, actionMeta);
+    }
     if (!field) return;
     onHandleTouched(values);
     setValueForFormField(values);
@@ -263,8 +277,7 @@ export const SelectForm = forwardRef(function SelectForm(props: SelectFormProps,
         <div
           className={clsx('mt-2 flex flex-wrap gap-2', {
             hidden: (fieldValues as IOptItem[]).length <= 0
-          })}
-        >
+          })}>
           {(fieldValues as IOptItem[]).map((item) => (
             <Tag
               key={item.value}

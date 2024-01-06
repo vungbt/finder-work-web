@@ -35,6 +35,7 @@ export const InputForm = forwardRef(function Input(props: InputProps, ref: Ref<H
     isLoading,
     isRequired,
     label,
+    onChange,
     ...reset
   } = props;
   const name = field?.name;
@@ -54,15 +55,19 @@ export const InputForm = forwardRef(function Input(props: InputProps, ref: Ref<H
             '!border-danger': isHaveError,
             'border-gray-100': !isHaveError
           }
-        )}
-      >
+        )}>
         {iconLeft && <IconView name={iconLeft} isLoading={isLoading} size={size} />}
         <input
           ref={ref}
           name={name}
           id={name}
           value={field?.value}
-          onChange={field?.onChange}
+          onChange={(e) => {
+            if (onChange) {
+              onChange(e);
+            }
+            field?.onChange(e);
+          }}
           onBlur={field?.onBlur}
           className={clsx('flex-1 border-none text-dark outline-none', className)}
           {...reset}

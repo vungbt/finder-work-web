@@ -7,3 +7,5 @@ export * from './selects';
 export * from './tags';
 export * from './form';
 export * from './inputs';
+export * from './checkbox';
+export * from './radio';

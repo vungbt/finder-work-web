@@ -33,8 +33,7 @@ export function FormGroup({
             'items-start': layout === 'vertical'
           },
           className
-        )}
-      >
+        )}>
         {label && (
           <FormLabel
             className={clsx({
@@ -50,8 +49,7 @@ export function FormGroup({
           className={clsx('w-full', {
             'col-span-12': layout === 'vertical',
             'col-span-8': layout === 'horizontal'
-          })}
-        >
+          })}>
           {children}
         </div>
       </div>
@@ -61,8 +59,7 @@ export function FormGroup({
         <div
           className={clsx('mt-1', {
             'grid grid-cols-12 gap-2': layout === 'horizontal'
-          })}
-        >
+          })}>
           <div
             className={clsx({
               hidden: layout === 'vertical',

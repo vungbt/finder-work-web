@@ -1,8 +1,16 @@
 'use client';
 import Banner from '@/libraries/banner';
-import { Button, InputForm, SelectForm } from '@/libraries/common';
+import {
+  Button,
+  CheckboxGroup,
+  CheckboxItem,
+  InputForm,
+  RadioGroup,
+  SelectForm
+} from '@/libraries/common';
 import { Field, Form, Formik } from 'formik';
 import { useTranslations } from 'next-intl';
+import { useState } from 'react';
 import * as Yup from 'yup';
 
 export default function EmployeePage() {
@@ -31,28 +39,18 @@ export default function EmployeePage() {
       value: Yup.string().required('Please select an option'),
       label: Yup.string().required('Please select an option')
     }),
-    selectedOption1: Yup.array()
-      .of(
-        Yup.object().shape({
-          value: Yup.string().required('Please select an option'),
-          label: Yup.string().required('Please select an option')
-        })
-      )
-      .min(1, 'Pls select one item'),
-    selectedOption2: Yup.object().shape({
-      value: Yup.string().required('Please select an option'),
-      label: Yup.string().required('Please select an option')
-    }),
-    input1: Yup.string().required('Input required'),
-    input2: Yup.string().required('Input required')
+    input: Yup.string().required('Input required'),
+    radio: Yup.string().required('Input required'),
+    checkbox: Yup.array()
+      .of(Yup.string().required('Please select an option'))
+      .min(1, 'Please select at least one option')
   });
 
   const initialValues = {
     selectedOption: { value: 'apple', label: 'Apple' },
-    selectedOption1: [{ value: 'apple', label: 'Apple' }],
-    selectedOption2: { value: 'apple', label: 'Apple' },
-    input1: '',
-    input2: ''
+    input: '',
+    radio: '',
+    checkbox: []
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -60,6 +58,19 @@ export default function EmployeePage() {
     // Handle form submission logic here
     console.log('Form values:', values);
     // setSubmitting(false);
+  };
+
+  const [items, setItems] = useState<string[]>([]);
+
+  const onChangeItem = (value: string) => {
+    const newItems = [...items];
+    const indexItemValid = newItems.findIndex((item) => item === value);
+    if (indexItemValid === -1) {
+      newItems.push(value);
+    } else {
+      newItems.splice(indexItemValid, 1);
+    }
+    setItems(newItems);
   };
 
   return (
@@ -70,39 +81,40 @@ export default function EmployeePage() {
         tags={['UI/UX Designer', 'Netflix', 'IT', '', 'Sale', 'Marketing']}
       />
       <div className="container">
-        <InputForm
-          iconLeft="arrow-left"
-          iconRight="arrow-right"
-          label="Input:"
-          size="large"
-          placeholder="Input..."
-          isRequired
-        />
-        <InputForm
-          iconLeft="arrow-left"
-          iconRight="arrow-right"
-          label="Input:"
-          size="middle"
-          placeholder="Input..."
-        />
-        <InputForm
-          iconLeft="arrow-left"
-          iconRight="arrow-right"
-          label="Input:"
+        <CheckboxItem
           size="small"
-          placeholder="Input..."
+          styleType="danger"
+          indeterminate={items.length < options.length && items.length > 0}
+          checked={items.length === options.length}
+          onClick={() => {
+            if (items.length < options.length) {
+              const allItem = options.map((item) => item.value);
+              setItems(allItem);
+            } else {
+              setItems([]);
+            }
+          }}
         />
-        <SelectForm options={options} size="large" />
-        <SelectForm options={options} size="middle" />
-        <SelectForm options={options} size="small" />
+        <div>
+          {options.map((item) => {
+            return (
+              <CheckboxItem
+                key={item.value}
+                label={item.label}
+                value={item.value}
+                styleType="info"
+                checked={items.includes(item.value)}
+                onChange={(e) => onChangeItem(e.target.value)}
+              />
+            );
+          })}
+        </div>
+
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
-          onSubmit={handleSubmit}
-        >
-          {({ errors, touched }) => {
-            console.log('errors', errors);
-            console.log('touched', touched);
+          onSubmit={handleSubmit}>
+          {() => {
             return (
               <Form>
                 <Field
@@ -114,45 +126,21 @@ export default function EmployeePage() {
                   isMulti={false}
                   isClearable
                 />
-
-                <Field
-                  label="Select Option 1:"
-                  isRequired={true}
-                  name="selectedOption1"
-                  component={SelectForm}
-                  options={options}
-                  isMulti={true}
-                  layout="horizontal"
-                />
-
-                <Field
-                  label="Select Option 123123:"
-                  isRequired={true}
-                  name="selectedOption2"
-                  component={SelectForm}
-                  options={optionsGroup}
-                  isMulti={false}
-                  layout="horizontal"
-                />
                 <Field
                   label="Input 1:"
                   isRequired={true}
-                  name="input1"
+                  name="input"
                   component={InputForm}
                   options={optionsGroup}
-                  layout="horizontal"
                   placeholder="Enter...."
                 />
+                <Field name="radio" component={RadioGroup} options={options} layout="vertical" />
                 <Field
-                  label="Input 2:"
-                  isRequired={true}
-                  name="input2"
-                  component={InputForm}
-                  options={optionsGroup}
-                  placeholder="Enter...."
-                  iconRight="heart"
+                  name="checkbox"
+                  component={CheckboxGroup}
+                  options={options}
+                  layout="vertical"
                 />
-
                 <Button type="submit" label="Submit" styleType="neon" className="mt-5" />
               </Form>
             );

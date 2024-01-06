@@ -26,6 +26,7 @@ import CloseCircleBold from './close-circle-bold';
 import CloseCircle from './close-circle';
 import ChevronUp from './chevron-up';
 import Close from './close';
+import CheckIcon from './check-icon';
 
 export type IconProps = {
   className?: string;
@@ -63,7 +64,8 @@ export type IconName =
   | 'close-circle'
   | 'close-circle-bold'
   | 'chevron-up'
-  | 'close';
+  | 'close'
+  | 'check-icon';
 
 export type IconsType = Record<IconName, Icon>;
 
@@ -148,6 +150,9 @@ export const Icons: IconsType = {
   },
   close: (props: IconProps) => {
     return <Close {...props} />;
+  },
+  'check-icon': (props: IconProps) => {
+    return <CheckIcon {...props} />;
   }
 };
 
