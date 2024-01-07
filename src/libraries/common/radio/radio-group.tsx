@@ -16,6 +16,8 @@ type RadioGroupProps = {
   options: IRadioItem[];
   layout?: 'horizontal' | 'vertical';
   styleType?: 'default' | 'danger' | 'info';
+  size?: 'large' | 'middle' | 'small';
+
   className?: string;
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
 };
@@ -26,6 +28,7 @@ export const RadioGroup = ({
   options = [],
   className,
   styleType,
+  size = 'large',
   layout = 'horizontal',
   onChange
 }: RadioGroupProps) => {
@@ -63,6 +66,7 @@ export const RadioGroup = ({
             label={item.label}
             styleType={styleType}
             isHaveError={!!isHaveError}
+            size={size}
           />
         ))}
       </div>

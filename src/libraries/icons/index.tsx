@@ -27,6 +27,7 @@ import CloseCircle from './close-circle';
 import ChevronUp from './chevron-up';
 import Close from './close';
 import CheckIcon from './check-icon';
+import DateIcon from './date-icon';
 
 export type IconProps = {
   className?: string;
@@ -65,7 +66,8 @@ export type IconName =
   | 'close-circle-bold'
   | 'chevron-up'
   | 'close'
-  | 'check-icon';
+  | 'check-icon'
+  | 'date-icon';
 
 export type IconsType = Record<IconName, Icon>;
 
@@ -153,6 +155,9 @@ export const Icons: IconsType = {
   },
   'check-icon': (props: IconProps) => {
     return <CheckIcon {...props} />;
+  },
+  'date-icon': (props: IconProps) => {
+    return <DateIcon {...props} />;
   }
 };
 

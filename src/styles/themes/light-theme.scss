@@ -27,6 +27,7 @@ html[data-theme='light'] {
   --color-gray-100: #e0e6eb;
 
   // Gradient
+  --neon: linear-gradient(106deg, var(--primary-color) 0%, var(--info) 85.61%);
   --neon-x: linear-gradient(45deg, var(--info) 0%, var(--dark) 85.61%);
   --neon-z: linear-gradient(45deg, var(--primary-color) 0%, var(--dark) 85.61%);
 

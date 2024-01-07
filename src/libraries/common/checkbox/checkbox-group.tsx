@@ -5,7 +5,7 @@ import { ChangeEvent } from 'react';
 import { CheckboxItem } from '.';
 import { cloneDeep } from 'lodash';
 
-export interface IRadioItem {
+export interface ICheckboxItem {
   value: string;
   label: string;
 }
@@ -14,9 +14,10 @@ type CheckboxGroupProps = {
   field?: FieldInputProps<never>;
   form?: FormikProps<any>;
 
-  options: IRadioItem[];
+  options: ICheckboxItem[];
   layout?: 'horizontal' | 'vertical';
   styleType?: 'default' | 'danger' | 'info';
+  size?: 'large' | 'middle' | 'small';
   className?: string;
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
 };
@@ -28,6 +29,7 @@ export const CheckboxGroup = ({
   className,
   layout = 'horizontal',
   styleType,
+  size = 'large',
   onChange
 }: CheckboxGroupProps) => {
   const name = field?.name;
@@ -77,6 +79,7 @@ export const CheckboxGroup = ({
             value={item.value}
             label={item.label}
             styleType={styleType}
+            size={size}
             isHaveError={!!isHaveError}
           />
         ))}

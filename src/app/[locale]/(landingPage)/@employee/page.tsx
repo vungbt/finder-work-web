@@ -3,14 +3,14 @@ import Banner from '@/libraries/banner';
 import {
   Button,
   CheckboxGroup,
-  CheckboxItem,
+  DatePicker,
   InputForm,
   RadioGroup,
-  SelectForm
+  SelectForm,
+  Switch
 } from '@/libraries/common';
 import { Field, Form, Formik } from 'formik';
 import { useTranslations } from 'next-intl';
-import { useState } from 'react';
 import * as Yup from 'yup';
 
 export default function EmployeePage() {
@@ -43,14 +43,18 @@ export default function EmployeePage() {
     radio: Yup.string().required('Input required'),
     checkbox: Yup.array()
       .of(Yup.string().required('Please select an option'))
-      .min(1, 'Please select at least one option')
+      .min(1, 'Please select at least one option'),
+    datepicker: Yup.date().required('Date picker required'),
+    switch: Yup.boolean().optional()
   });
 
   const initialValues = {
     selectedOption: { value: 'apple', label: 'Apple' },
     input: '',
     radio: '',
-    checkbox: []
+    checkbox: [],
+    datepicker: new Date(),
+    switch: true
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -60,19 +64,6 @@ export default function EmployeePage() {
     // setSubmitting(false);
   };
 
-  const [items, setItems] = useState<string[]>([]);
-
-  const onChangeItem = (value: string) => {
-    const newItems = [...items];
-    const indexItemValid = newItems.findIndex((item) => item === value);
-    if (indexItemValid === -1) {
-      newItems.push(value);
-    } else {
-      newItems.splice(indexItemValid, 1);
-    }
-    setItems(newItems);
-  };
-
   return (
     <div>
       <Banner
@@ -80,36 +71,10 @@ export default function EmployeePage() {
         title={t('banner.stepIntoSuccess')}
         tags={['UI/UX Designer', 'Netflix', 'IT', '', 'Sale', 'Marketing']}
       />
+      <Switch size="large" />
+      <Switch size="middle" />
+      <Switch size="small" />
       <div className="container">
-        <CheckboxItem
-          size="small"
-          styleType="danger"
-          indeterminate={items.length < options.length && items.length > 0}
-          checked={items.length === options.length}
-          onClick={() => {
-            if (items.length < options.length) {
-              const allItem = options.map((item) => item.value);
-              setItems(allItem);
-            } else {
-              setItems([]);
-            }
-          }}
-        />
-        <div>
-          {options.map((item) => {
-            return (
-              <CheckboxItem
-                key={item.value}
-                label={item.label}
-                value={item.value}
-                styleType="info"
-                checked={items.includes(item.value)}
-                onChange={(e) => onChangeItem(e.target.value)}
-              />
-            );
-          })}
-        </div>
-
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
@@ -133,6 +98,7 @@ export default function EmployeePage() {
                   component={InputForm}
                   options={optionsGroup}
                   placeholder="Enter...."
+                  iconRight="sms"
                 />
                 <Field name="radio" component={RadioGroup} options={options} layout="vertical" />
                 <Field
@@ -141,6 +107,16 @@ export default function EmployeePage() {
                   options={options}
                   layout="vertical"
                 />
+                <Field
+                  name="datepicker"
+                  component={DatePicker}
+                  layout="vertical"
+                  label="Datepicker"
+                  placeholder="Enter...."
+                  isRequired={true}
+                  isClearable
+                />
+                <Field name="switch" component={Switch} label="Switch" layout="vertical" />
                 <Button type="submit" label="Submit" styleType="neon" className="mt-5" />
               </Form>
             );

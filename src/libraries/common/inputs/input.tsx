@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { IconName } from '@/libraries/icons';
+import clsx from 'clsx';
 import { FieldInputProps, FormikProps } from 'formik';
 import { Ref, forwardRef } from 'react';
-import { FormGroup } from '..';
-import clsx from 'clsx';
-import { IconName, RenderIcon } from '@/libraries/icons';
+import { FormGroup, IconViewSize } from '..';
 
 type InputProps = Omit<
   React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>,
@@ -18,7 +18,6 @@ type InputProps = Omit<
   isRequired?: boolean;
 
   error?: string;
-  loading?: boolean;
   size?: 'large' | 'middle' | 'small';
   layout?: 'horizontal' | 'vertical';
 };
@@ -34,6 +33,7 @@ export const InputForm = forwardRef(function Input(props: InputProps, ref: Ref<H
     layout,
     isLoading,
     isRequired,
+    disabled,
     label,
     onChange,
     ...reset
@@ -46,57 +46,52 @@ export const InputForm = forwardRef(function Input(props: InputProps, ref: Ref<H
       <label
         htmlFor={name}
         className={clsx(
-          'box-border flex w-full items-center border border-solid transition-all ease-linear hover:border-info',
+          'input-custom box-border flex w-full items-center border border-solid transition-all ease-linear hover:border-info',
           {
             'min-h-10 gap-3 rounded-3xl px-4 text-base': size === 'large',
             'min-h-8 gap-2 rounded-2xl px-4 text-sm': size === 'middle',
             'min-h-6 gap-1 rounded-xl px-2 text-sm': size === 'small',
 
             '!border-danger': isHaveError,
-            'border-gray-100': !isHaveError
+            'border-gray-100': !isHaveError,
+            'cursor-not-allowed !bg-gray-100': disabled
           }
         )}>
-        {iconLeft && <IconView name={iconLeft} isLoading={isLoading} size={size} />}
+        {iconLeft && (
+          <IconViewSize className="icon-left" name={iconLeft} isLoading={isLoading} size={size} />
+        )}
         <input
           ref={ref}
           name={name}
           id={name}
           value={field?.value}
           onChange={(e) => {
+            if (disabled) return;
             if (onChange) {
               onChange(e);
             }
             field?.onChange(e);
           }}
           onBlur={field?.onBlur}
-          className={clsx('flex-1 border-none text-dark outline-none', className)}
+          disabled={disabled}
+          className={clsx(
+            'w-full flex-1 border-none text-dark outline-none',
+            { 'cursor-not-allowed bg-gray-100': disabled },
+            className
+          )}
           {...reset}
         />
         {(iconRight || isLoading) && (
-          <IconView name={iconRight} isLoading={isLoading} size={size} />
+          <IconViewSize
+            className={clsx('icon-right', {
+              '!text-text-tertiary': disabled
+            })}
+            name={iconRight}
+            isLoading={isLoading}
+            size={size}
+          />
         )}
       </label>
     </FormGroup>
   );
 });
-
-const IconView = ({
-  name,
-  isLoading,
-  size
-}: {
-  name?: IconName;
-  isLoading?: boolean;
-  size: 'large' | 'middle' | 'small';
-}) => {
-  return (
-    <RenderIcon
-      className={clsx({
-        '!h-5 !w-5': size === 'large',
-        '!h-4.5 !w-4.5': size === 'middle',
-        '!h-4 !w-4': size === 'small'
-      })}
-      name={isLoading ? 'loading' : name}
-    />
-  );
-};

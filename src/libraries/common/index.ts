@@ -9,3 +9,4 @@ export * from './form';
 export * from './inputs';
 export * from './checkbox';
 export * from './radio';
+export * from './date-pickler';

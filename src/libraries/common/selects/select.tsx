@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { RenderIcon } from '@/libraries/icons';
+import { IconName, RenderIcon } from '@/libraries/icons';
 import clsx from 'clsx';
 import { FieldInputProps, FormikProps } from 'formik';
 import { Ref, forwardRef } from 'react';
@@ -29,6 +29,7 @@ type SelectFormProps = SelectProps & {
 
   error?: string;
   loading?: boolean;
+  icon?: IconName;
   size?: 'large' | 'middle' | 'small';
   layout?: 'horizontal' | 'vertical';
 };
@@ -54,7 +55,12 @@ export const SelectForm = forwardRef(function SelectForm(props: SelectFormProps,
     const menuIsOpen = props.selectProps.menuIsOpen;
     return (
       components.DropdownIndicator && (
-        <components.DropdownIndicator {...props}>
+        <components.DropdownIndicator
+          {...props}
+          className={clsx({
+            '!pr-4': size === 'large' || size === 'middle',
+            '!pr-2': size === 'small'
+          })}>
           <RenderIcon
             name="chevron-down"
             className={clsx('text-dark transition-all ease-linear', {
