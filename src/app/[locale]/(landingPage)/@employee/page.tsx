@@ -4,6 +4,7 @@ import {
   Button,
   CheckboxGroup,
   DatePicker,
+  DateRangePicker,
   InputForm,
   RadioGroup,
   SelectForm,
@@ -74,6 +75,7 @@ export default function EmployeePage() {
       <Switch size="large" />
       <Switch size="middle" />
       <Switch size="small" />
+      <DateRangePicker />
       <div className="container">
         <Formik
           initialValues={initialValues}

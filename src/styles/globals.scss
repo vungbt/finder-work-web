@@ -599,7 +599,8 @@
 
             .react-datepicker__day--keyboard-selected,
             .react-datepicker__day--today {
-              @apply rounded-[0.3rem] bg-info bg-opacity-20 text-white;
+              @apply rounded-[0.3rem] text-white;
+              background: var(--neon);
             }
           }
         }
