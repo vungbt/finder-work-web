@@ -1,0 +1,13 @@
+query companyCommon {
+  all_company_type(where: { isDefault: { equals: true } }) {
+    data {
+      ...CompanyType
+    }
+  }
+
+  all_company_size(where: { isDefault: { equals: true } }) {
+    data {
+      ...CompanySize
+    }
+  }
+}

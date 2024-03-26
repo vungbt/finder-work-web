@@ -1,0 +1,10 @@
+query allCountry {
+  all_country {
+    id
+    name
+    iso2
+    iso3
+    phoneCode
+    emoji
+  }
+}

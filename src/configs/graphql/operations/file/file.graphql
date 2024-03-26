@@ -1,0 +1,3 @@
+query uploadUrl($name: String!) {
+  upload_url(name: $name)
+}

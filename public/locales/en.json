@@ -1,0 +1,124 @@
+{
+  "webName": "Jobcadu",
+  "home": {
+    "title": "Home Page"
+  },
+  "jobSeekers": "Job seekers",
+  "jobSeeker": "Job seeker",
+  "employers": "Employers",
+  "employer": "Employer",
+  "for": "For {label}",
+  "navigation": {
+    "jobDiscovery": "Job Discovery",
+    "career": "Career",
+    "resumeBuilder": "Resume builder",
+    "aboutUs": "About us",
+    "login": "Login",
+    "register": "Register",
+    "postAJob": "Post a job",
+    "pricing": "Pricing"
+  },
+  "footer": {
+    "buildYourPersonalBrand": "Build your personal brand",
+    "proProfile": "Pro profile",
+    "proProfileContent": "Create your personal work profile and connect with companies searching for your skills.",
+    "resumeBuilder": "Resume builder",
+    "resumeBuilderContent": "Land your dream job by harnessing the power of AI and our customized CV templates to create a truly professional resume.",
+    "copyRight": "Copyright © 2023 FinderWork. All rights reserved."
+  },
+  "banner": {
+    "recruitTheBestTalent": "Recruit The Best Talent With AI Power",
+    "stepIntoSuccess": "Step into Success: Your Ideal Job Awaits",
+    "slogan": "Professional job post with just a few keywords"
+  },
+  "noChange": {
+    "topCompaniesHiring": "Top Companies Hiring",
+    "mostTrendingJobForYou": "Most Trending Jobs for you",
+    "mostViewedJobs": "Most Viewed Jobs",
+    "mostAppliedJobs": "Most Applied Jobs"
+  },
+  "plural": {
+    "openPositions": "{count, plural, =0 {no open positions yet} =1 {open position} other {# open positions}"
+  },
+  "signIn": {
+    "subTitle": "Step into Success: Your Ideal Job Awaits"
+  },
+  "common": {
+    "jobTitle": "Job title",
+    "all": "All {label}",
+    "locations": "Locales",
+    "searchValue": "Search value...",
+    "search": "Search",
+    "activelyHiring": "Actively hiring",
+    "apply": "Apply",
+    "viewAll": "View all {label}",
+    "jobs": "Jobs",
+    "topCompanies": "Top Companies",
+    "browseBy": "Browse by",
+    "buildResume": "Build resume",
+    "createProfile": "Create profile",
+    "paginationShowing": "Showing {from} - {to} of {total}",
+    "registerNow": "Register now",
+    "postAJob": "Post a job",
+    "loginAs": "Login as {role}",
+    "registerAs": "Register as {role}",
+    "orLoginWith": "or login with",
+    "doNotHaveAnAccount": "Don't have an account?",
+    "registerHere": "Register here",
+    "registerWithEmail": "Register with email",
+    "alreadyHaveAnAccount": "Already have an account?",
+    "or": "Or",
+    "back": "Back",
+    "next": "Next",
+    "emailVerification": "Email verification",
+    "submit": "Submit",
+    "plsEnterTheSixDigitVerificationCode": "Please enter the 6-digit verification code that was sent to {email}.",
+    "code": "code",
+    "resendCode": "Resend code?",
+    "registrationSuccessful": "Registration successful",
+    "yourSignupHasBeenCompleted": "Your signup has been completed.",
+    "passwordResetSuccessfully": "Password reset successfully",
+    "agreeTo": "Agree to",
+    "and": "and",
+    "termsOfUse": "Terms of Use",
+    "privacyPolicy": "Privacy policy",
+    "forgotPassword": "Forgot password",
+    "send": "Send",
+    "resetPassword": "Reset password"
+  },
+  "subTitle": {
+    "forgotPassword": "Enter your email address and we will send you a link to reset your password",
+    "resetPassword": "Create your new password"
+  },
+  "form": {
+    "email": "Email",
+    "password": "Password",
+    "forgotPassword": "Forgot password?",
+    "login": "Login",
+    "loginWith": "Login with {label}",
+    "google": "Google",
+    "facebook": "Facebook",
+    "loginHere": "Login here",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "phoneCode": "Phone code",
+    "phoneNumber": "Phone number",
+    "confirmPassword": "Confirm password",
+    "verificationCode": "Verification code",
+    "policy": "Terms of User and Privacy Policy"
+  },
+  "placeholder": {
+    "enter": "Enter {label}"
+  },
+  "validation": {
+    "required": "Please enter {label}",
+    "requiredYour": "Please enter your {label}",
+    "valid": "Please enter a valid {label}",
+    "min": "{label} must be at least {number} characters",
+    "max": "{label} must be at highest {number} characters",
+    "passwordInvalid": "Password must contain at least one lowercase, uppercase and one special character",
+    "optionRequired": "Please select a option",
+    "passwordMustMatch": "Confirm password must match with password",
+    "permissionDenied": "Permission denied"
+  }
+}

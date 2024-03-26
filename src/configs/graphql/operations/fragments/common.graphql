@@ -1,0 +1,46 @@
+fragment Image on File {
+  id
+  url
+  metadata
+}
+
+fragment CompanyType on CompanyType {
+  id
+  key
+  value
+  isDefault
+}
+
+fragment CompanySize on CompanySize {
+  id
+  key
+  value
+  isDefault
+}
+
+fragment User on UserOnly {
+  id
+  avatarUrl
+  avatar {
+    ...Image
+  }
+  firstName
+  lastName
+  email
+  color
+  addressDetail
+  # address {
+  #   city {
+  #     id
+  #     name
+  #     countryName
+  #     countryId
+  #     stateName
+  #     stateId
+  #   }
+  # }
+  phoneNumber
+  role
+  createdAt
+  updatedAt
+}

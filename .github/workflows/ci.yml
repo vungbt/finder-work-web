@@ -1,0 +1,30 @@
+name: GitHub Actions
+run-name: ${{ github.actor }} is running GitHub Actions 🚀
+on:
+  push:
+    branches:
+      - main
+      - develop
+    pull_request:
+      - main
+      - develop
+jobs:
+  code_quality_build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Format code
+        run: yarn format
+
+      - name: Lint code
+        run: yarn lint

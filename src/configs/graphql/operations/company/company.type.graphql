@@ -1,0 +1,7 @@
+query allCompanyType {
+  all_company_type(searchValue: "", where: { isDefault: { equals: true } }) {
+    data {
+      ...CompanyType
+    }
+  }
+}

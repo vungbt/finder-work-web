@@ -1,0 +1,81 @@
+mutation authLogin($email: String!, $password: String!) {
+  auth_login(email: $email, password: $password) {
+    accessToken
+    expireTime
+    refreshToken
+    profile {
+      ...User
+    }
+  }
+}
+
+mutation authLoginWithGoogle(
+  $idToken: String!
+  $role: UserRoleWithoutAdmin
+  $provider: SignInProvider
+  $countryCode: String
+) {
+  auth_login_with_google(
+    idToken: $idToken
+    role: $role
+    provider: $provider
+    countryCode: $countryCode
+  ) {
+    accessToken
+    expireTime
+    refreshToken
+    profile {
+      ...User
+    }
+  }
+}
+
+mutation authEmployeeRegister(
+  $email: String!
+  $password: String!
+  $firstName: String!
+  $lastName: String!
+  $countryCode: String
+  $phoneNumber: String!
+) {
+  auth_employee_register(
+    email: $email
+    password: $password
+    firstName: $firstName
+    lastName: $lastName
+    countryCode: $countryCode
+    phoneNumber: $phoneNumber
+  ) {
+    ...User
+  }
+}
+
+mutation authEmployerRegister(
+  $email: String!
+  $password: String!
+  $firstName: String!
+  $lastName: String!
+  $countryCode: String
+  $phoneNumber: String!
+  $companyName: String!
+  $industryIds: [String!]!
+  $companyTypeId: String!
+  $cityId: Float!
+  $addressDetail: String!
+) {
+  auth_employer_register(
+    email: $email
+    password: $password
+    firstName: $firstName
+    lastName: $lastName
+    countryCode: $countryCode
+    phoneNumber: $phoneNumber
+    companyName: $companyName
+    industryIds: $industryIds
+    companyTypeId: $companyTypeId
+    cityId: $cityId
+    addressDetail: $addressDetail
+  ) {
+    ...User
+  }
+}
