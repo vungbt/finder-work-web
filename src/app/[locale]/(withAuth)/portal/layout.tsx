@@ -1,6 +1,6 @@
 import { UserRole } from '@/configs/graphql/generated';
 import { RouterPath } from '@/constants/router-path';
-import PortalLayout from '@/libraries/layouts/portal/portal.layout';
+import { PortalLayout } from '@/libraries/layouts/portal';
 import { redirect } from '@/utils/navigation';
 import { getSessionSS } from '@/utils/session';
 import React, { ReactNode } from 'react';

@@ -6,6 +6,7 @@ import { RegexHelper } from '@/utils/helpers/regex';
 import { Link } from '@/utils/navigation';
 import { Field, Form, Formik } from 'formik';
 import { motion } from 'framer-motion';
+import { signIn } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
 import * as Yup from 'yup';
 
@@ -30,11 +31,8 @@ export function SignInEmployeeView() {
     password: ''
   };
 
-  const handleSubmit = (values: IAuthLogin) => {
-    // TODO: CALL API LOGIN
-    console.log('Form values:', values);
-    // setSubmitting(false);
-  };
+  const handleSubmit = async (values: IAuthLogin) =>
+    await signIn('credentials', { ...values, callbackUrl: '/' });
 
   return (
     <motion.div

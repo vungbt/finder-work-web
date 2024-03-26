@@ -12,7 +12,10 @@ const nextConfig = {
   generateBuildId: () => nextBuildId({ dir: __dirname }),
   env: {
     GRAPHQL_API_URL: process.env.GRAPHQL_API_URL,
-    PAGE_PROPS_REVALIDATE: process.env.PAGE_PROPS_REVALIDATE,
+    PAGE_PROPS_REVALIDATE: process.env.PAGE_PROPS_REVALIDATE
+  },
+  images: {
+    domains: process.env.IMAGE_DOMAINS.split(',')
   }
 };
 
