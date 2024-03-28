@@ -4,7 +4,8 @@ export enum EKeyStorage {
   THEME_MODE = 'theme_mode',
   UI = 'ui',
   SESSION = 'session',
-  VIEW_ROLE = 'view_role'
+  VIEW_ROLE = 'view_role',
+  PROFILE = 'profile'
 }
 
 const localStorageHelper = {
