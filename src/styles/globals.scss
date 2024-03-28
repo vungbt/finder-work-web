@@ -622,3 +622,24 @@
     }
   }
 }
+
+// admin sidebar
+#admin-sidebar {
+}
+
+#admin-sidebar:checked ~ .admin-sidebar {
+  @apply transform-none visible;
+}
+
+.admin-sidebar {
+  z-index: 1;
+  @apply transition-all ease-linear fixed bg-white -translate-x-full lg:translate-x-0 lg:visible lg:static invisible;
+}
+
+.admin-sidebar-overlay {
+  @apply fixed top-0 right-0 left-0 bottom-0 w-full h-full bg-dark opacity-15 transition-all ease-linear hidden;
+}
+
+#admin-sidebar:checked ~ .admin-sidebar-overlay {
+  @apply block;
+}

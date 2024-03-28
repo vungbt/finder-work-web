@@ -17,21 +17,21 @@ export default function CloseCircle({ className, transform, ...reset }: Readonly
         stroke="currentColor"
         stroke-width="1.5"
         stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeLinejoin="round"
       />
       <path
         d="M9.16998 14.83L14.83 9.17004"
         stroke="currentColor"
         stroke-width="1.5"
         stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeLinejoin="round"
       />
       <path
         d="M14.83 14.83L9.16998 9.17004"
         stroke="currentColor"
         stroke-width="1.5"
         stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeLinejoin="round"
       />
     </svg>
   );

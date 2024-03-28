@@ -31,6 +31,18 @@ import DateIcon from './date-icon';
 import Google from './google';
 import Facebook from './facebook';
 import Success from './success';
+import Briefcase from './briefcase';
+import DocumentForward from './document-forward';
+import DocumentNormal from './document-normal';
+import DollarCircle from './dollar-circle';
+import Flash from './flash';
+import Graph from './graph';
+import Profile2User from './profile-2user';
+import ReceiptSearch from './receipt-search';
+import History from './history';
+import SidebarLeft from './sidebar-left';
+import SidebarRight from './sidebar-right';
+import Star from './star';
 
 export type IconProps = {
   className?: string;
@@ -73,7 +85,19 @@ export type IconName =
   | 'date-icon'
   | 'google'
   | 'facebook'
-  | 'success';
+  | 'success'
+  | 'briefcase'
+  | 'document-forward'
+  | 'document-normal'
+  | 'dollar-circle'
+  | 'flash'
+  | 'graph'
+  | 'profile-2user'
+  | 'receipt-search'
+  | 'history'
+  | 'sidebar-left'
+  | 'sidebar-right'
+  | 'star';
 
 export type IconsType = Record<IconName, Icon>;
 
@@ -173,6 +197,42 @@ export const Icons: IconsType = {
   },
   success: (props: IconProps) => {
     return <Success {...props} />;
+  },
+  briefcase: (props: IconProps) => {
+    return <Briefcase {...props} />;
+  },
+  'document-forward': (props: IconProps) => {
+    return <DocumentForward {...props} />;
+  },
+  'document-normal': (props: IconProps) => {
+    return <DocumentNormal {...props} />;
+  },
+  'dollar-circle': (props: IconProps) => {
+    return <DollarCircle {...props} />;
+  },
+  flash: (props: IconProps) => {
+    return <Flash {...props} />;
+  },
+  graph: (props: IconProps) => {
+    return <Graph {...props} />;
+  },
+  'profile-2user': (props: IconProps) => {
+    return <Profile2User {...props} />;
+  },
+  'receipt-search': (props: IconProps) => {
+    return <ReceiptSearch {...props} />;
+  },
+  history: (props: IconProps) => {
+    return <History {...props} />;
+  },
+  'sidebar-left': (props: IconProps) => {
+    return <SidebarLeft {...props} />;
+  },
+  'sidebar-right': (props: IconProps) => {
+    return <SidebarRight {...props} />;
+  },
+  star: (props: IconProps) => {
+    return <Star {...props} />;
   }
 };
 

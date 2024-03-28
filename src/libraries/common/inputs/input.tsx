@@ -16,6 +16,7 @@ type InputProps = Omit<
   iconRight?: IconName;
   isLoading?: boolean;
   isRequired?: boolean;
+  classNameWrap?: string;
 
   error?: string;
   size?: 'large' | 'middle' | 'small';
@@ -25,6 +26,7 @@ type InputProps = Omit<
 export const InputForm = forwardRef(function Input(props: InputProps, ref: Ref<HTMLInputElement>) {
   const {
     className,
+    classNameWrap,
     size = 'large',
     field,
     form,
@@ -55,7 +57,8 @@ export const InputForm = forwardRef(function Input(props: InputProps, ref: Ref<H
             '!border-danger': isHaveError,
             'border-gray-100': !isHaveError,
             'cursor-not-allowed !bg-gray-100': disabled
-          }
+          },
+          classNameWrap
         )}>
         {iconLeft && (
           <IconViewSize className="icon-left" name={iconLeft} isLoading={isLoading} size={size} />
@@ -75,7 +78,7 @@ export const InputForm = forwardRef(function Input(props: InputProps, ref: Ref<H
           onBlur={field?.onBlur}
           disabled={disabled}
           className={clsx(
-            'w-full flex-1 border-none text-dark outline-none',
+            'w-full flex-1 border-none text-dark outline-none bg-transparent',
             { 'cursor-not-allowed bg-gray-100': disabled },
             className
           )}
