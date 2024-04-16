@@ -1,0 +1,43 @@
+fragment PostFragment on Post {
+  id
+  title
+  content
+  shareUrl
+  metadata
+  slug
+  minRead
+  thumbnailId
+  thumbnail {
+    ...Image
+  }
+  jobTitle {
+    id
+    name
+  }
+  categories {
+    id
+    name
+    slug
+  }
+  tags {
+    id
+    type
+    name
+    color
+  }
+  createdAt
+  updatedAt
+  deletedAt
+  author {
+    id
+    avatarUrl
+    avatar {
+      ...Image
+    }
+    firstName
+    lastName
+    email
+    color
+    role
+  }
+}

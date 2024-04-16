@@ -1,0 +1,39 @@
+# Write your query or mutation here
+query allPost(
+  $where: PostWhereInput
+  $orderBy: [PostOrderByWithRelationInput!]
+  $pagination: PaginationInput
+) {
+  all_post(where: $where, orderBy: $orderBy, pagination: $pagination) {
+    data {
+      ...PostFragment
+    }
+    metadata {
+      ...Metadata
+    }
+  }
+}
+
+query onePost($where: PostWhereInput) {
+  one_post(where: $where) {
+    ...PostFragment
+  }
+}
+
+mutation createPost($data: PostCreateInput!) {
+  create_post(data: $data) {
+    ...PostFragment
+  }
+}
+
+mutation updatePost($data: PostUpdateInput!, $where: PostWhereUniqueInput!) {
+  update_post(data: $data, where: $where) {
+    ...PostFragment
+  }
+}
+
+mutation deletePost($where: PostWhereUniqueInput!) {
+  delete_post(where: $where) {
+    ...PostFragment
+  }
+}

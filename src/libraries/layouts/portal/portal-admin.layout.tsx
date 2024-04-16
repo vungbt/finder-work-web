@@ -81,7 +81,6 @@ export function PortalAdminLayout(props: { children: ReactNode }) {
     }
   };
 
-  console.log('newCollapsedActive=====>', collapsedActive);
   return (
     <div className="flex items-start h-screen bg-white">
       {/* input trigger sidebar */}
@@ -91,7 +90,7 @@ export function PortalAdminLayout(props: { children: ReactNode }) {
       <label
         htmlFor="admin-sidebar"
         className={clsx(
-          'admin-sidebar w-[212px] p-4 border-r border-solid border-black border-opacity-15 h-full max-h-screen overflow-y-auto'
+          'admin-sidebar min-w-[212px] w-[212px] p-4 border-r border-solid border-black border-opacity-15 h-full max-h-screen overflow-y-auto'
         )}>
         {/* avatar */}
         <div className="flex items-center gap-2 p-2">
@@ -110,7 +109,7 @@ export function PortalAdminLayout(props: { children: ReactNode }) {
       </label>
 
       {/* content */}
-      <div className="flex-1 h-full">
+      <div className="admin-content flex-1 h-full">
         {/* header */}
         <div className="flex items-center justify-between bg-white px-7 py-5 border-b border-solid border-black border-opacity-15">
           <div className="flex items-center gap-2">
@@ -145,7 +144,7 @@ export function PortalAdminLayout(props: { children: ReactNode }) {
             />
           </div>
         </div>
-        {props.children}
+        <div className="p-7">{props.children}</div>
       </div>
 
       {/* overlay */}

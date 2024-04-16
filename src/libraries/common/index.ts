@@ -13,3 +13,7 @@ export * from './date-pickler';
 export * from './line-text';
 export * from './steps';
 export * from './result';
+export * from './table';
+export * from './pagination';
+export * from './tab';
+export * from './upload';

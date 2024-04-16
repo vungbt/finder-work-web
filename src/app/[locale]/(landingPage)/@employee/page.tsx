@@ -6,11 +6,14 @@ import {
   CheckboxGroup,
   DatePicker,
   DateRangePicker,
+  EditorForm,
   InputForm,
   RadioGroup,
   SelectAsync,
   SelectForm,
-  Switch
+  Switch,
+  Upload,
+  UploadMultiple
 } from '@/libraries/common';
 import { useApiClient } from '@/libraries/providers/graphql';
 import { upload } from '@/utils/upload';
@@ -45,7 +48,23 @@ export default function EmployeePage() {
     }
   ];
 
+  const thumbnailSchema = Yup.object()
+    .shape({
+      id: Yup.string().required('Thumbnail required'),
+      url: Yup.string().required('Thumbnail required')
+    })
+    .nullable();
+
+  const customThumbnailSchema = Yup.lazy((value) => {
+    if (value === null || typeof value === 'undefined') {
+      return Yup.string().required('Thumbnail must be required');
+    } else {
+      return thumbnailSchema;
+    }
+  });
+
   const validationSchema = Yup.object({
+    editor: Yup.string().required('Editor required'),
     selectedOption: Yup.object().shape({
       value: Yup.string().required('Please select an option'),
       label: Yup.string().required('Please select an option')
@@ -58,22 +77,36 @@ export default function EmployeePage() {
     datepicker: Yup.date().required('Date picker required'),
     switch: Yup.boolean().optional(),
     dateRangePicker: Yup.array()
-      // .of(Yup.date().required('Start and end must be is date.'))
+      // .of(Yup.date()s.required('Start and end must be is date.'))
       .min(2, 'Pls select start date and end date.')
       .test('is-non-null', 'Date is required', (value) => {
         if (!value) {
           return false;
         }
         return value.every((date) => date !== null);
-      })
+      }),
+    thumbnail: customThumbnailSchema,
+    thumbnails: Yup.array()
+      .min(1, 'Thumbnails must be required')
+      .of(
+        Yup.object()
+          .shape({
+            id: Yup.string().required('Thumbnail required'),
+            url: Yup.string().required('Thumbnail required')
+          })
+          .nullable()
+      )
   });
 
   const initialValues = {
     selectedOption: { value: 'apple', label: 'Apple' },
     selectedAsync: null,
     input: '',
+    editor: '',
     radio: '',
+    thumbnail: null,
     checkbox: [],
+    thumbnails: [],
     datepicker: new Date(),
     switch: true,
     dateRangePicker: [null, null]
@@ -100,10 +133,8 @@ export default function EmployeePage() {
       const files = event.target?.files ?? [];
       if (!files || files.length <= 0) return toastError('File invalid');
       const file = files[0];
-      console.log('file=====>', file);
       const formData = upload.imgFormData(file);
       const res = await upload.uploadFile(file.name, formData);
-      console.log('res=====>', res);
       // api_key: '283742229642811';
       // asset_id: '1d0d9ff447242bf8ed824e9f4151cca2';
       // bytes: 751441;
@@ -151,9 +182,42 @@ export default function EmployeePage() {
           initialValues={initialValues}
           validationSchema={validationSchema}
           onSubmit={handleSubmit}>
-          {() => {
+          {({ setErrors, errors, setFieldValue, values }) => {
             return (
               <Form>
+                <Upload
+                  isRequired={true}
+                  label="File upload"
+                  name="thumbnail"
+                  value={values?.thumbnail}
+                  placeholder="Drop or Drag a photo"
+                  subPlaceholder="Supported png, jpeg, jpg, webp, gif"
+                  onChange={(value) => {
+                    setFieldValue('thumbnail', value);
+                  }}
+                  error={errors?.thumbnail}
+                  setError={(mess) => setErrors(mess)}
+                />
+                <UploadMultiple
+                  isRequired={true}
+                  label="File uploads"
+                  name="thumbnails"
+                  values={values?.thumbnails}
+                  placeholder="Drop or Drag photos"
+                  subPlaceholder="Supported png, jpeg, jpg, webp, gif"
+                  onChange={(value) => {
+                    setFieldValue('thumbnails', value);
+                  }}
+                  error={errors?.thumbnails as string}
+                  setError={(mess) => setErrors(mess)}
+                />
+                <Field
+                  label="Editor:"
+                  isRequired={true}
+                  name="editor"
+                  component={EditorForm}
+                  placeholder="Enter content...."
+                />
                 <Field
                   label="Select Option:"
                   isRequired={true}
@@ -167,7 +231,9 @@ export default function EmployeePage() {
                   isRequired={true}
                   name="selectedAsync"
                   component={SelectAsync}
+                  defaultOptions={options}
                   filterOptions={filterOptions}
+                  isMulti={true}
                 />
                 <Field
                   label="Input 1:"

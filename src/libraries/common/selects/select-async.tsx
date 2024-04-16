@@ -297,12 +297,7 @@ export const SelectAsync = forwardRef(function SelectAsync(
             hidden: (fieldValues as IOptItem[]).length <= 0
           })}>
           {(fieldValues as IOptItem[]).map((item) => (
-            <Tag
-              key={item.value}
-              content={item.label}
-              icon="loading"
-              onClose={() => onHandleCloseTag(item)}
-            />
+            <Tag key={item.value} content={item.label} onClose={() => onHandleCloseTag(item)} />
           ))}
         </div>
       )}

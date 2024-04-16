@@ -33,12 +33,13 @@ export const CheckboxItem = forwardRef(function CheckboxItem(
       className={clsx(
         'checkbox-custom',
         {
-          'checkbox-custom-indeterminate': indeterminate
+          'checkbox-custom-indeterminate': indeterminate,
+          'checkbox-custom-checked': !indeterminate && checked
         },
         className
       )}>
       <input
-        checked={checked}
+        checked={checked && !indeterminate}
         hidden
         className="checkbox-custom__input"
         ref={ref}
