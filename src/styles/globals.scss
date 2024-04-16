@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 @import 'react-datepicker/dist/react-datepicker.css';
+@import 'react-quill/dist/quill.snow.css';
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
 @import './top-loader.scss';
 
@@ -449,24 +450,6 @@
       }
     }
   }
-
-  .checkbox-custom__input:checked ~ .checkbox-custom__checkmark {
-    .checkbox-custom__icon {
-      @apply text-white;
-    }
-  }
-
-  .checkbox-custom__input:checked ~ .checkbox-custom__checkmark-default {
-    @apply border-dark bg-dark;
-  }
-
-  .checkbox-custom__input:checked ~ .checkbox-custom__checkmark-danger {
-    @apply border-danger bg-danger;
-  }
-
-  .checkbox-custom__input:checked ~ .checkbox-custom__checkmark-info {
-    @apply border-info bg-info;
-  }
 }
 
 .checkbox-custom-indeterminate {
@@ -529,6 +512,26 @@
     .checkbox-custom__icon {
       @apply block;
     }
+  }
+}
+
+.checkbox-custom-checked {
+  .checkbox-custom__input:checked ~ .checkbox-custom__checkmark {
+    .checkbox-custom__icon {
+      @apply text-white;
+    }
+  }
+
+  .checkbox-custom__input:checked ~ .checkbox-custom__checkmark-default {
+    @apply border-dark bg-dark;
+  }
+
+  .checkbox-custom__input:checked ~ .checkbox-custom__checkmark-danger {
+    @apply border-danger bg-danger;
+  }
+
+  .checkbox-custom__input:checked ~ .checkbox-custom__checkmark-info {
+    @apply border-info bg-info;
   }
 }
 
@@ -637,9 +640,107 @@
 }
 
 .admin-sidebar-overlay {
-  @apply fixed top-0 right-0 left-0 bottom-0 w-full h-full bg-dark opacity-15 transition-all ease-linear hidden;
+  @apply fixed top-0 right-0 left-0 bottom-0 w-full h-full bg-dark opacity-15 transition-all ease-linear hidden lg:hidden;
 }
 
 #admin-sidebar:checked ~ .admin-sidebar-overlay {
-  @apply block;
+  @apply block lg:hidden;
+}
+
+.admin-content {
+  @apply w-full;
+}
+
+@media (min-width: 1024px) {
+  .admin-content {
+    width: calc(100vw - 212px);
+  }
+}
+
+// pagination
+.pagination-container {
+  @apply flex items-center gap-2;
+
+  .selected {
+    .page-item {
+      @apply bg-tertiary hover:bg-tertiary;
+    }
+  }
+
+  .page-item {
+    @apply min-w-7 min-h-7 flex items-center justify-center p-0 box-border rounded-lg font-medium hover:bg-gray transition-all;
+  }
+}
+
+// quill editor
+.custom-quill {
+  @apply font-primary;
+  &:hover {
+    .quill {
+      .ql-toolbar {
+        @apply border-info;
+      }
+    }
+  }
+
+  .quill {
+    @apply w-full;
+
+    .ql-toolbar {
+      @apply border-t-0 border-r-0 border-l-0 border-solid border-b border-gray-100 transition-all ease-linear bg-gray-200 rounded-tl-3xl rounded-tr-3xl px-5 py-4;
+
+      .ql-formats {
+        @apply bg-white border border-solid border-gray-100 rounded-lg;
+
+        button {
+          @apply w-8 h-8 p-2 hover:text-info;
+        }
+
+        button:first-child {
+          @apply rounded-tl-lg rounded-bl-lg;
+        }
+
+        button:last-child {
+          @apply rounded-tr-lg rounded-br-lg;
+        }
+
+        .ql-picker-label {
+        }
+
+        .ql-active {
+          @apply bg-info text-white;
+
+          svg,
+          path,
+          line {
+            @apply stroke-white text-white;
+          }
+        }
+      }
+    }
+
+    .ql-container {
+      @apply border-none p-4;
+
+      .ql-editor {
+        @apply min-h-96 p-0 font-primary text-sm;
+      }
+    }
+  }
+}
+
+.custom-quill-error {
+  .quill {
+    .ql-toolbar {
+      @apply border-danger;
+    }
+  }
+
+  &:hover {
+    .quill {
+      .ql-toolbar {
+        @apply border-danger;
+      }
+    }
+  }
 }

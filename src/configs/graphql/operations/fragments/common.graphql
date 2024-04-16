@@ -44,3 +44,10 @@ fragment User on UserOnly {
   createdAt
   updatedAt
 }
+
+
+fragment Metadata on Metadata {
+  page
+  total
+  limit
+}

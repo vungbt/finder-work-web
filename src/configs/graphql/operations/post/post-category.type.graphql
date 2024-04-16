@@ -1,0 +1,20 @@
+query allPostCategory(
+  $where: PostCategoryWhereInput
+  $pagination: PaginationInput
+  $searchValue: String
+) {
+  all_post_category(where: $where, pagination: $pagination, searchValue: $searchValue) {
+    data {
+      id
+      name
+      slug
+      createdAt
+      updatedAt
+    }
+    metadata {
+      total
+      limit
+      page
+    }
+  }
+}

@@ -43,6 +43,7 @@ import History from './history';
 import SidebarLeft from './sidebar-left';
 import SidebarRight from './sidebar-right';
 import Star from './star';
+import ImageIcon from './image-icon';
 
 export type IconProps = {
   className?: string;
@@ -97,7 +98,8 @@ export type IconName =
   | 'history'
   | 'sidebar-left'
   | 'sidebar-right'
-  | 'star';
+  | 'star'
+  | 'image-icon';
 
 export type IconsType = Record<IconName, Icon>;
 
@@ -233,6 +235,9 @@ export const Icons: IconsType = {
   },
   star: (props: IconProps) => {
     return <Star {...props} />;
+  },
+  'image-icon': (props: IconProps) => {
+    return <ImageIcon {...props} />;
   }
 };
 
