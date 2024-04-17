@@ -2,7 +2,7 @@
 import { FILE_IMAGE } from '@/constants/common';
 import { RenderIcon } from '@/libraries/icons';
 import clsx from 'clsx';
-import { ChangeEvent, Ref, forwardRef } from 'react';
+import { ChangeEvent, Ref, forwardRef, useMemo, useState } from 'react';
 import { FormGroup, UploadItem, UploadPreview } from '..';
 
 type UploadProps = Omit<
@@ -45,7 +45,8 @@ export const Upload = forwardRef(function UploadInput(
     onChange,
     ...reset
   } = props;
-  const isHaveError = error && error.length > 0;
+  const [isFocus, setIsFocus] = useState<boolean>(false);
+  const isHaveError = useMemo(() => error && error.length > 0 && isFocus, [error, isFocus]);
   const { accepts, size } = FILE_IMAGE;
 
   const onHandleChangeFile = (event: ChangeEvent<HTMLInputElement>) => {
@@ -105,7 +106,8 @@ export const Upload = forwardRef(function UploadInput(
             'cursor-not-allowed !bg-gray-100': disabled
           },
           classNameWrap
-        )}>
+        )}
+        onClick={() => setIsFocus(true)}>
         <RenderIcon name="image-icon" />
         <p className="text-sm text-dark">{placeholder}</p>
         <p className="text-sm text-text-secondary">{subPlaceholder}</p>

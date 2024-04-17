@@ -272,6 +272,7 @@ export const SelectForm = forwardRef(function SelectForm(props: SelectFormProps,
           }
         }}
         onChange={onHandleChange}
+        isClearable
         onBlur={field?.onBlur}
         {...reset}
       />

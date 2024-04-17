@@ -3,14 +3,15 @@ import clsx from 'clsx';
 import { FieldInputProps, FormikProps } from 'formik';
 import cloneDeep from 'lodash/cloneDeep';
 import dynamic from 'next/dynamic';
-import { useMemo, useRef } from 'react';
+import { forwardRef, Ref, useMemo } from 'react';
+import { ReactQuillType } from '../../../configs/quill';
 import { FormGroup } from '../form';
 
 const ReactQuill = dynamic(
   async () => {
     const { default: RQ } = await import('../../../configs/quill');
     // eslint-disable-next-line react/display-name
-    return ({ forwardedRef, ...props }: any) => <RQ ref={forwardedRef} {...props} />;
+    return ({ ...props }: any) => <RQ {...props} />;
   },
   {
     ssr: false
@@ -32,8 +33,11 @@ type EditorProps = {
   showLimit?: number;
 };
 
-export const EditorForm = (props: EditorProps) => {
-  const editorRef = useRef<any>(null);
+export const EditorForm = forwardRef(function QuillEditor(
+  props: EditorProps,
+  ref: Ref<ReactQuillType>
+) {
+  // const editorRef = useRef<any>(null);
   const { field, form, label, layout, isRequired, disabled = false, onChange, ...reset } = props;
   const name = field?.name;
   const fieldValue = cloneDeep(field?.value);
@@ -111,9 +115,8 @@ export const EditorForm = (props: EditorProps) => {
           }
         )}>
         <ReactQuill
-          forwardedRef={editorRef}
           readOnly={disabled}
-          ref={editorRef}
+          ref={ref}
           modules={modules}
           formats={formats}
           value={field?.value}
@@ -124,4 +127,4 @@ export const EditorForm = (props: EditorProps) => {
       </label>
     </FormGroup>
   );
-};
+});

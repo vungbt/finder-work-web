@@ -1,6 +1,5 @@
 'use client';
 import { toastError, toastSuccess } from '@/configs/toast';
-import Banner from '@/libraries/banner';
 import {
   Button,
   CheckboxGroup,
@@ -10,7 +9,6 @@ import {
   InputForm,
   RadioGroup,
   SelectAsync,
-  SelectCreatable,
   SelectForm,
   Switch,
   Upload,
@@ -19,12 +17,10 @@ import {
 import { useApiClient } from '@/libraries/providers/graphql';
 import { upload } from '@/utils/upload';
 import { Field, Form, Formik } from 'formik';
-import { useTranslations } from 'next-intl';
 import { ChangeEvent, useEffect } from 'react';
 import * as Yup from 'yup';
 
-export default function EmployeePage() {
-  const t = useTranslations();
+export default function EmployerTestPage() {
   const { apiClient } = useApiClient();
   useEffect(() => {
     initFetching();
@@ -70,10 +66,6 @@ export default function EmployeePage() {
       value: Yup.string().required('Please select an option'),
       label: Yup.string().required('Please select an option')
     }),
-    selectedCreatable: Yup.object().shape({
-      value: Yup.string().required('Please select an option'),
-      label: Yup.string().required('Please select an option')
-    }),
     input: Yup.string().required('Input required'),
     radio: Yup.string().required('Input required'),
     checkbox: Yup.array()
@@ -106,7 +98,6 @@ export default function EmployeePage() {
   const initialValues = {
     selectedOption: { value: 'apple', label: 'Apple' },
     selectedAsync: null,
-    selectedCreatable: null,
     input: '',
     editor: '',
     radio: '',
@@ -171,19 +162,12 @@ export default function EmployeePage() {
   };
 
   return (
-    <div>
-      <Banner
-        type="employee"
-        title={t('banner.stepIntoSuccess')}
-        tags={['UI/UX Designer', 'Netflix', 'IT', '', 'Sale', 'Marketing']}
-      />
-
-      <input type="file" placeholder="test" onChange={onHandleCHange} />
-      <Switch size="large" />
-      <Switch size="middle" />
-      <Switch size="small" />
-
+    <div className="mt-20">
       <div className="container">
+        <input type="file" placeholder="test" onChange={onHandleCHange} />
+        <Switch size="large" />
+        <Switch size="middle" />
+        <Switch size="small" />
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
@@ -229,14 +213,6 @@ export default function EmployeePage() {
                   isRequired={true}
                   name="selectedOption"
                   component={SelectForm}
-                  options={options}
-                  isMulti={false}
-                />
-                <Field
-                  label="Select Option:"
-                  isRequired={true}
-                  name="selectedCreatable"
-                  component={SelectCreatable}
                   options={options}
                   isMulti={false}
                 />
