@@ -2,7 +2,7 @@
 import { FILE_IMAGE } from '@/constants/common';
 import { RenderIcon } from '@/libraries/icons';
 import clsx from 'clsx';
-import { ChangeEvent, Ref, forwardRef } from 'react';
+import { ChangeEvent, Ref, forwardRef, useMemo, useState } from 'react';
 import { FormGroup, UploadItem, UploadPreview } from '..';
 
 type UploadProps = Omit<
@@ -45,7 +45,9 @@ export const UploadMultiple = forwardRef(function UploadMultipleInput(
     onChange,
     ...reset
   } = props;
-  const isHaveError = error && error.length > 0;
+  const [isFocus, setIsFocus] = useState<boolean>(false);
+  const isHaveError = useMemo(() => error && error.length > 0 && isFocus, [error, isFocus]);
+
   const { accepts, size } = FILE_IMAGE;
 
   const onHandleChangeFile = async (event: ChangeEvent<HTMLInputElement>) => {
@@ -114,6 +116,7 @@ export const UploadMultiple = forwardRef(function UploadMultipleInput(
       isRequired={isRequired}>
       <label
         htmlFor={name}
+        onClick={() => setIsFocus(true)}
         className={clsx(
           'box-border flex flex-col gap-2 w-fit min-w-[304px] items-center border border-dashed transition-all ease-linear hover:border-info cursor-pointer px-4 py-6 rounded-xl',
           {

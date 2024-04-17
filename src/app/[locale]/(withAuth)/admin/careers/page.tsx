@@ -42,7 +42,8 @@ export default function AdminCareersPage() {
     console.log('res====>', res);
   };
 
-  const onSubmitVerifyCode = (values) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const onSubmitVerifyCode = (values: any) => {
     console.log('values====>', values);
     // TODO: CALL API ACTIVE ACCOUNT
     // setTimeout(() => {

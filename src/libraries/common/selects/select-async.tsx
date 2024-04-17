@@ -3,7 +3,8 @@ import { IconName, RenderIcon } from '@/libraries/icons';
 import { IOptItem } from '@/types';
 import clsx from 'clsx';
 import { FieldInputProps, FormikProps } from 'formik';
-import { cloneDeep, debounce } from 'lodash';
+import debounce from 'lodash/debounce';
+import cloneDeep from 'lodash/cloneDeep';
 import { Ref, forwardRef } from 'react';
 import {
   ActionMeta,
@@ -288,6 +289,7 @@ export const SelectAsync = forwardRef(function SelectAsync(
         }}
         loadOptions={debouncedFetch}
         onChange={onHandleChange}
+        isClearable
         onBlur={field?.onBlur}
         {...reset}
       />
