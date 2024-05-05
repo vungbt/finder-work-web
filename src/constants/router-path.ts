@@ -12,5 +12,7 @@ export const RouterPath = {
 
   // ADMIN PORTAL
   PORTAL: '/portal',
-  PORTAL_ADMIN: '/admin'
+  PORTAL_ADMIN: '/admin',
+  ADMIN_SETTING_GENERAL: '/admin/setting/general',
+  ADMIN_SETTING_GENERAL_ADD: '/admin/setting/general/add'
 };

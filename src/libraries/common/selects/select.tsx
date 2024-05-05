@@ -39,6 +39,7 @@ export const SelectForm = forwardRef(function SelectForm(props: SelectFormProps,
     layout,
     isRequired,
     label,
+    icon,
     onChange,
     ...reset
   } = props;
@@ -285,7 +286,7 @@ export const SelectForm = forwardRef(function SelectForm(props: SelectFormProps,
             <Tag
               key={item.value}
               content={item.label}
-              icon="loading"
+              icon={icon}
               onClose={() => onHandleCloseTag(item)}
             />
           ))}

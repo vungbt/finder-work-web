@@ -15,7 +15,12 @@ const nextConfig = {
     PAGE_PROPS_REVALIDATE: process.env.PAGE_PROPS_REVALIDATE
   },
   images: {
-    domains: process.env.IMAGE_DOMAINS.split(',')
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**'
+      }
+    ]
   }
 };
 

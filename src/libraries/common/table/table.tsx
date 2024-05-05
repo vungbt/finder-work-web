@@ -49,6 +49,7 @@ export function Table<T>(props: TableProps<T>) {
     page,
     limit,
     total = 0,
+    className,
     onChangePage,
 
     rowSelection
@@ -57,7 +58,7 @@ export function Table<T>(props: TableProps<T>) {
   const isSelected = useMemo(() => getSelectedAll(rowSelection, limit), [rowSelection, limit]);
 
   return (
-    <div>
+    <div className={className}>
       <div className="overflow-auto">
         <table
           id={tableId}
@@ -85,8 +86,15 @@ export function Table<T>(props: TableProps<T>) {
               {columns.map((column, index) => (
                 <td
                   key={index}
-                  className="px-4 py-2 text-left border-b border-solid border-text-secondary tracking-wider break-words">
+                  className="px-4 py-2 text-left border-b border-solid border-text-secondary tracking-wider break-words relative">
                   {column.title}
+
+                  {/* border */}
+                  <div
+                    style={{ transform: 'translate(0, -50%)' }}
+                    className={clsx('absolute right-0 top-1/2 w-[1px] h-4 bg-text-secondary', {
+                      hidden: index === columns.length - 1
+                    })}></div>
                 </td>
               ))}
             </tr>

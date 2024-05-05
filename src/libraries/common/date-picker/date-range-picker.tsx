@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { IconName, RenderIcon } from '@/libraries/icons';
-import { EDateFormat, formatDate } from '@/utils/helpers/formater';
+import { EDateFormat, formatDate } from '@/utils/helpers/formatter';
 import clsx from 'clsx';
 import { FieldInputProps, FormikProps } from 'formik';
 import { Ref, forwardRef } from 'react';
@@ -10,7 +10,7 @@ import ReactDatePicker, {
 } from 'react-datepicker';
 import { FormGroup, IconViewSize } from '..';
 
-type DatePickerProps = Omit<ReactDatePickerProps, 'onChange' | 'placeholderText'> & {
+type DateRangePickerProps = Omit<ReactDatePickerProps, 'onChange' | 'placeholderText'> & {
   field?: FieldInputProps<never>;
   form?: FormikProps<any>;
   className?: string;
@@ -25,11 +25,14 @@ type DatePickerProps = Omit<ReactDatePickerProps, 'onChange' | 'placeholderText'
   error?: string;
   size?: 'large' | 'middle' | 'small';
   layout?: 'horizontal' | 'vertical';
-  onChange?: (value: Date | null) => void;
+  onChange?: (values: (Date | null)[]) => void;
   onClear?: () => void;
 };
 
-export const DatePicker = forwardRef(function DatePicker(props: DatePickerProps, ref: Ref<any>) {
+export const DateRangePicker = forwardRef(function DateRangePicker(
+  props: DateRangePickerProps,
+  ref: Ref<any>
+) {
   const {
     className,
     size = 'large',
@@ -41,7 +44,8 @@ export const DatePicker = forwardRef(function DatePicker(props: DatePickerProps,
     isLoading,
     isRequired,
     label,
-    selected,
+    startDate,
+    endDate,
     dateFormat,
     isClearable,
     placeholder,
@@ -53,15 +57,15 @@ export const DatePicker = forwardRef(function DatePicker(props: DatePickerProps,
   const name = field?.name;
   const isHaveError = !form || !name ? false : form.errors[name] && form.touched[name];
 
-  const onHandleChange = (value: Date | null) => {
+  const onHandleChange = (values: (Date | null)[]) => {
     if (onChange) {
-      onChange(value);
+      onChange(values);
     }
     if (!field) return;
     const changeEvent = {
       target: {
         name,
-        value: value
+        value: values
       }
     };
     field.onChange(changeEvent);
@@ -75,7 +79,7 @@ export const DatePicker = forwardRef(function DatePicker(props: DatePickerProps,
     const changeEvent = {
       target: {
         name,
-        value: null
+        value: [null, null]
       }
     };
     field.onChange(changeEvent);
@@ -104,10 +108,13 @@ export const DatePicker = forwardRef(function DatePicker(props: DatePickerProps,
           ref={ref}
           className="w-full flex-1 bg-transparent outline-none"
           onChange={onHandleChange}
-          selected={field?.value ?? selected}
+          selected={field?.value[0] ?? startDate}
+          startDate={field?.value[0] ?? startDate}
+          endDate={field?.value[1] ?? endDate}
           dateFormat={dateFormat ?? EDateFormat.MM_dd_yyyy}
           renderCustomHeader={CustomHeader}
           placeholderText={placeholder}
+          selectsRange
           {...reset}
         />
         {isClearable && <ClearIndicator size={size} onClear={onHandleClear} />}

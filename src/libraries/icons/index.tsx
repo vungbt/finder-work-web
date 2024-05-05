@@ -44,6 +44,14 @@ import SidebarLeft from './sidebar-left';
 import SidebarRight from './sidebar-right';
 import Star from './star';
 import ImageIcon from './image-icon';
+import EditIcon from './edit-icon';
+import Trash from './trash';
+import Add from './add';
+import Sort from './sort';
+import DangerSolid from './danger-solid';
+import TrashSolid from './trash-solid';
+import CaretDownSolid from './caret-down-solid';
+import CaretUpSolid from './caret-up-solid';
 
 export type IconProps = {
   className?: string;
@@ -99,7 +107,15 @@ export type IconName =
   | 'sidebar-left'
   | 'sidebar-right'
   | 'star'
-  | 'image-icon';
+  | 'image-icon'
+  | 'edit-icon'
+  | 'trash'
+  | 'add'
+  | 'sort'
+  | 'danger-solid'
+  | 'trash-solid'
+  | 'caret-up-solid'
+  | 'caret-down-solid';
 
 export type IconsType = Record<IconName, Icon>;
 
@@ -238,6 +254,30 @@ export const Icons: IconsType = {
   },
   'image-icon': (props: IconProps) => {
     return <ImageIcon {...props} />;
+  },
+  'edit-icon': (props: IconProps) => {
+    return <EditIcon {...props} />;
+  },
+  trash: (props: IconProps) => {
+    return <Trash {...props} />;
+  },
+  add: (props: IconProps) => {
+    return <Add {...props} />;
+  },
+  sort: (props: IconProps) => {
+    return <Sort {...props} />;
+  },
+  'danger-solid': (props: IconProps) => {
+    return <DangerSolid {...props} />;
+  },
+  'trash-solid': (props: IconProps) => {
+    return <TrashSolid {...props} />;
+  },
+  'caret-down-solid': (props: IconProps) => {
+    return <CaretDownSolid {...props} />;
+  },
+  'caret-up-solid': (props: IconProps) => {
+    return <CaretUpSolid {...props} />;
   }
 };
 

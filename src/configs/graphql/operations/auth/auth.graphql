@@ -4,7 +4,7 @@ mutation authLogin($email: String!, $password: String!) {
     expireTime
     refreshToken
     profile {
-      ...User
+      ...UserOnly
     }
   }
 }
@@ -25,7 +25,7 @@ mutation authLoginWithGoogle(
     expireTime
     refreshToken
     profile {
-      ...User
+      ...UserOnly
     }
   }
 }
@@ -46,7 +46,7 @@ mutation authEmployeeRegister(
     countryCode: $countryCode
     phoneNumber: $phoneNumber
   ) {
-    ...User
+    ...UserOnly
   }
 }
 
@@ -76,6 +76,6 @@ mutation authEmployerRegister(
     cityId: $cityId
     addressDetail: $addressDetail
   ) {
-    ...User
+    ...UserOnly
   }
 }

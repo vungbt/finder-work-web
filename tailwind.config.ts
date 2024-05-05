@@ -50,8 +50,15 @@ const config: Config = {
       dark: 'var(--dark)',
       success: 'var(--success)',
       info: 'var(--info)',
-      danger: 'var(--danger)',
-      warning: 'var(--warning)',
+      danger: {
+        DEFAULT: 'var(--danger)',
+        100: 'var(--danger-100)',
+        200: 'var(--danger-200)'
+      },
+      warning: {
+        DEFAULT: 'var(--warning)',
+        100: 'var(--warning-100)'
+      },
 
       'text-primary': 'var(--color-primary)',
       'text-secondary': 'var(--color-secondary)',
