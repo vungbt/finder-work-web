@@ -2,7 +2,7 @@
 import { IconName, RenderIcon } from '@/libraries/icons';
 import { Link, usePathname } from '@/utils/navigation';
 import clsx from 'clsx';
-import { ReactNode, useEffect, useState } from 'react';
+import { ReactNode, useEffect, useMemo, useState } from 'react';
 
 export type SidebarMenu = {
   label: string;
@@ -15,9 +15,42 @@ export type MenuItem = {
   icon?: IconName;
   child?: MenuItem[];
   isFavorite?: boolean;
+  parent?: MenuItem;
 };
 
 export function SideBar({ menus, className }: { menus: SidebarMenu[]; className?: string }) {
+  const pathname = usePathname();
+
+  const activeMenuItem = useMemo(() => {
+    const newList: MenuItem[] = [];
+    menus.forEach((menuItem) => {
+      const menu = menuItem.items ?? [];
+      menu.forEach((item) => {
+        const child = item.child ?? [];
+        if (pathname.startsWith(item.href) && pathname.includes(item.href) && !item.isFavorite) {
+          newList.push(item);
+        }
+        if (child && child.length > 0) {
+          child.forEach((cItem) => {
+            if (
+              pathname.startsWith(item.href) &&
+              pathname.includes(cItem.href) &&
+              !item.isFavorite
+            ) {
+              newList.push({ ...cItem, parent: item });
+            }
+          });
+        }
+      });
+    });
+    return (newList ?? []).filter(Boolean).reduce((acc: MenuItem | null, curr) => {
+      if (!acc || (curr.href && curr.href.length > acc.href.length)) {
+        return curr;
+      }
+      return acc;
+    }, null);
+  }, [pathname, menus]);
+
   return (
     <div className={clsx('mt-3 flex flex-col gap-5', className)}>
       {menus.map((menu, index) => {
@@ -25,7 +58,7 @@ export function SideBar({ menus, className }: { menus: SidebarMenu[]; className?
         return (
           <div key={index}>
             <p className="p-2 text-dark opacity-45 text-sm">{menu.label}</p>
-            <Menu menu={items} />
+            <Menu active={activeMenuItem} menu={items} />
           </div>
         );
       })}
@@ -35,9 +68,11 @@ export function SideBar({ menus, className }: { menus: SidebarMenu[]; className?
 
 const Menu = ({
   menu,
+  active,
   className
 }: {
   menu: MenuItem[];
+  active?: MenuItem | null;
   isSubMenu?: boolean;
   className?: string;
 }) => {
@@ -45,7 +80,7 @@ const Menu = ({
   const pathname = usePathname();
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => setMenuActiveByPathname(pathname), [pathname]);
+  useEffect(() => setMenuActiveByPathname(pathname, active), [pathname, active]);
 
   const onShowMenu = (item: MenuItem) => {
     const newMenuActive = [...menuActive];
@@ -58,13 +93,16 @@ const Menu = ({
     setMenuActive(newMenuActive);
   };
 
-  const setMenuActiveByPathname = (pathname: string) => {
+  const setMenuActiveByPathname = (pathname: string, active?: MenuItem | null) => {
     const subMenu = menu.filter((item) => {
       const child = item.child ?? [];
       const pathnameInChild = child.findIndex((childItem) => childItem.href === pathname);
       if (pathnameInChild !== -1) return item;
     });
     const newMenuActive = subMenu.map((item) => item.label);
+    if (active && active.parent) {
+      newMenuActive.push(active?.parent?.label);
+    }
     setMenuActive((items) => mergeArrays(items, newMenuActive));
   };
 
@@ -83,7 +121,8 @@ const Menu = ({
           <div key={index}>
             <div
               className={clsx('ease-linear transition-colors p-2', {
-                'bg-neon rounded-xl': pathname === item.href && !item.isFavorite
+                'bg-neon rounded-xl':
+                  (pathname === item.href || active?.href === item.href) && !item.isFavorite
               })}>
               <MenuItem
                 item={item}
@@ -97,6 +136,7 @@ const Menu = ({
               <Menu
                 menu={child}
                 isSubMenu
+                active={active}
                 className={clsx('transition-all ease-linear', {
                   hidden: !menuActive.includes(item.label)
                 })}

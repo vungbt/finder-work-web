@@ -18,7 +18,34 @@ fragment CompanySize on CompanySize {
   isDefault
 }
 
-fragment User on UserOnly {
+fragment UserOnly on UserOnly {
+  id
+  avatarUrl
+  avatar {
+    ...Image
+  }
+  firstName
+  lastName
+  email
+  color
+  addressDetail
+  # address {
+  #   city {
+  #     id
+  #     name
+  #     countryName
+  #     countryId
+  #     stateName
+  #     stateId
+  #   }
+  # }
+  phoneNumber
+  role
+  createdAt
+  updatedAt
+}
+
+fragment User on User {
   id
   avatarUrl
   avatar {

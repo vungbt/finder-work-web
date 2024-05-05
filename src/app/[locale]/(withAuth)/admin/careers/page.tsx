@@ -14,7 +14,9 @@ export default function AdminCareersPage() {
 
   useEffect(() => {
     fetchingPostCategory();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   const validationSchema = Yup.object({
     title: Yup.string().required('Title is required'),
     categories: Yup.array()

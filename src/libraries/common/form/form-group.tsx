@@ -12,6 +12,7 @@ type FormGroupProps = {
 
   children: ReactNode;
   className?: string;
+  size?: 'large' | 'middle' | 'small';
 };
 export function FormGroup({
   layout = 'vertical',
@@ -19,6 +20,7 @@ export function FormGroup({
   children,
   label,
   name,
+  size,
   isShowError = true,
   className
 }: FormGroupProps) {
@@ -67,7 +69,10 @@ export function FormGroup({
             })}
           />
           <ErrorMessage
-            className="col-span-8 w-full text-sm text-danger"
+            className={clsx('col-span-8 w-full text-danger', {
+              'text-sm': size === 'large',
+              'text-xs': size === 'middle' || size === 'small'
+            })}
             name={name}
             component={'div'}
           />

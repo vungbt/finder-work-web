@@ -76,7 +76,7 @@ export const Button = forwardRef(function ButtonBase(
             '!h-4 !w-4': size === 'small'
           })}
           name={iconLeft}
-          isLoading={isLoading}
+          isLoading={isLoading && !iconRight}
           size={size}
         />
       )}
@@ -90,7 +90,7 @@ export const Button = forwardRef(function ButtonBase(
             '!h-4 !w-4': size === 'small'
           })}
           name={iconRight}
-          isLoading={isLoading}
+          isLoading={isLoading && !iconLeft}
           size={size}
         />
       )}

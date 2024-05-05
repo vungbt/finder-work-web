@@ -47,3 +47,9 @@ export interface IAuthLogin {
   email: string;
   password: string;
 }
+
+export enum ESettingType {
+  Footer = 'footer',
+  Header = 'header',
+  Menu = 'menu'
+}

@@ -7,7 +7,34 @@
   "jobSeeker": "Job seeker",
   "employers": "Employers",
   "employer": "Employer",
+  "employee": "Employee",
   "for": "For {label}",
+  "admin": "Admin",
+  "superAdmin": "Super admin",
+  "landingPage": "Landing page",
+  "no": "No",
+  "name": "Name",
+  "key": "Key",
+  "type": "Type",
+  "value": "Value",
+  "author": "Author",
+  "updatedBy": "Updated by",
+  "createdAt": "Created at",
+  "updatedAt": "Updated at",
+  "actions": "Actions",
+  "cancel": "Cancel",
+  "delete": "Delete",
+  "edit": "Edit",
+  "warning": "Warning",
+  "noCancel": "No, cancel",
+  "yesSure": "Yes, I'm sure",
+  "setting": "Setting",
+  "header": {
+    "title": "Header"
+  },
+  "menu": {
+    "title": "Menu"
+  },
   "navigation": {
     "jobDiscovery": "Job Discovery",
     "career": "Career",
@@ -19,6 +46,7 @@
     "pricing": "Pricing"
   },
   "footer": {
+    "title": "Footer",
     "buildYourPersonalBrand": "Build your personal brand",
     "proProfile": "Pro profile",
     "proProfileContent": "Create your personal work profile and connect with companies searching for your skills.",
@@ -48,6 +76,7 @@
     "all": "All {label}",
     "locations": "Locales",
     "searchValue": "Search value...",
+    "searchValue2": "Search value",
     "search": "Search",
     "activelyHiring": "Actively hiring",
     "apply": "Apply",
@@ -105,7 +134,11 @@
     "phoneNumber": "Phone number",
     "confirmPassword": "Confirm password",
     "verificationCode": "Verification code",
-    "policy": "Terms of User and Privacy Policy"
+    "policy": "Terms of User and Privacy Policy",
+    "settingKey": "Setting key",
+    "settingType": "Setting type",
+    "settingValue": "Setting value",
+    "showWith": "Show with"
   },
   "placeholder": {
     "enter": "Enter {label}"
@@ -120,5 +153,15 @@
     "optionRequired": "Please select a option",
     "passwordMustMatch": "Confirm password must match with password",
     "permissionDenied": "Permission denied"
+  },
+  "noti": {
+    "createSuccess": "Create successful",
+    "updateSuccess": "Update successful",
+    "deleteSuccess": "Delete successful",
+    "deleteFailed": "Delete failed",
+    "createError": "Create error, please try again",
+    "deleteConfirm": "Are you sure you want to delete this {label}?",
+    "deleteConfirmFrom": "Are you sure you want to delete this {label} from {from}?",
+    "deleteConfirmEffectTo": "By deleting this {label}, {number} other {effectKey} will also be permanently deleted."
   }
 }

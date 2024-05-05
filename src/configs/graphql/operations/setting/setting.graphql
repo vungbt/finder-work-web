@@ -1,0 +1,103 @@
+mutation createSetting($data: SettingCreateInput!) {
+  create_setting(data: $data) {
+    key
+    value
+    type
+    showWith
+    createdAt
+    updatedAt
+    deletedAt
+  }
+}
+
+mutation updateSetting($data: SettingUpdateInput!, $where: SettingWhereUniqueInput!) {
+  update_setting(data: $data, where: $where) {
+    key
+    value
+    type
+    showWith
+    createdAt
+    updatedAt
+    deletedAt
+  }
+}
+
+mutation deleteSetting($where: SettingWhereUniqueInput!) {
+  delete_setting(where: $where) {
+    key
+    type
+    value
+    showWith
+  }
+}
+
+query allSettingPortal(
+  $pagination: PaginationInput
+  $where: SettingWhereInput
+  $searchValue: String
+  $isInit: Boolean
+  $orderBy: [SettingOrderByWithRelationInput!]
+) {
+  setting_portal(
+    pagination: $pagination
+    where: $where
+    searchValue: $searchValue
+    isInit: $isInit
+    orderBy: $orderBy
+  ) {
+    data {
+      key
+      value
+      type
+      showWith
+      author {
+        ...User
+      }
+      updatedBy {
+        ...User
+      }
+      createdAt
+      updatedAt
+      deletedAt
+    }
+    metadata {
+      total
+      page
+      limit
+    }
+  }
+}
+
+query allSettingLandingPage($pagination: PaginationInput, $where: SettingWhereInput) {
+  setting_landing_page(pagination: $pagination, where: $where) {
+    data {
+      key
+      value
+      type
+      showWith
+      author {
+        ...User
+      }
+      updatedBy {
+        ...User
+      }
+      createdAt
+      updatedAt
+      deletedAt
+    }
+    metadata {
+      total
+      page
+      limit
+    }
+  }
+}
+
+query oneSetting($where: SettingWhereInput) {
+  one_setting(where: $where) {
+    key
+    type
+    value
+    showWith
+  }
+}

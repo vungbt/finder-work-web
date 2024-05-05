@@ -8,66 +8,13 @@ import { ReactNode, useRef, useState } from 'react';
 import { SideBar, SidebarMenu } from './sidebar';
 import clsx from 'clsx';
 
-export function PortalAdminLayout(props: { children: ReactNode }) {
+export function PortalAdminLayout(props: { children: ReactNode; menus?: SidebarMenu[] }) {
   const { profile } = useProfile();
   const inputSidebar = useRef<HTMLInputElement>(null);
   const [collapsedActive, setCollapsedActive] = useState<{
     sidebar: boolean;
     notification: boolean;
   }>({ sidebar: false, notification: false });
-
-  const menus: SidebarMenu[] = [
-    {
-      label: 'Favorites',
-      items: [
-        { label: 'Overview', href: '/admin', isFavorite: true },
-        { label: 'Projects', href: '/admin/project', isFavorite: true }
-      ]
-    },
-    {
-      label: 'Dashboards',
-      items: [
-        { label: 'Overview', href: '/admin', icon: 'graph' },
-        { label: 'Users', href: '/admin/users', icon: 'profile-2user' },
-        { label: 'Jobs', href: '/admin/jobs', icon: 'document-normal' },
-        { label: 'Report request', href: '/admin/reports', icon: 'document-forward' }
-      ]
-    },
-    {
-      label: 'Pages',
-      items: [
-        { label: 'Working skills', href: '/admin/skills', icon: 'flash' },
-        { label: 'Career portal', href: '/admin/careers', icon: 'briefcase' },
-        { label: 'Payment history', href: '/admin/payment-history', icon: 'receipt-search' },
-        {
-          label: 'Subscription',
-          href: '/admin/subscription',
-          icon: 'dollar-circle',
-          child: [
-            {
-              label: 'Coupons',
-              href: '/admin/subscription/coupons'
-            },
-            {
-              label: 'Top company',
-              href: '/admin/subscription/top-company-hiring'
-            }
-          ]
-        },
-        {
-          label: 'Setting',
-          href: '/admin/setting',
-          icon: 'setting',
-          child: [
-            {
-              label: 'Theme',
-              href: '/admin/setting/theme'
-            }
-          ]
-        }
-      ]
-    }
-  ];
 
   const onHandleCollapsed = (type: 'sidebar' | 'notification') => {
     const newCollapsedActive = { ...collapsedActive };
@@ -105,7 +52,7 @@ export function PortalAdminLayout(props: { children: ReactNode }) {
         </div>
 
         {/* sidebar */}
-        <SideBar menus={menus} />
+        <SideBar menus={props.menus ?? []} />
       </label>
 
       {/* content */}

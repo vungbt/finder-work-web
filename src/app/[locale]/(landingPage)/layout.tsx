@@ -14,7 +14,9 @@ export default async function LandingPageLayout(props: {
   const session = await getSessionSS();
   if (session && session?.token)
     return redirect(
-      session.userRole === UserRole.Admin ? RouterPath.PORTAL_ADMIN : RouterPath.PORTAL
+      session.userRole === UserRole.Admin || session.userRole === UserRole.SuperAdmin
+        ? RouterPath.PORTAL_ADMIN
+        : RouterPath.PORTAL
     );
 
   // have fetching get config

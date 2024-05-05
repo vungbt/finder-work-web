@@ -1,5 +1,6 @@
 import { GraphQLClient } from 'graphql-request';
 import { getSdk } from './generated';
+import { getSessionSS } from '@/utils/session';
 
 const defaultHeaders = {};
 const getHeaders = (accessToken: string | null = null) => {
@@ -19,3 +20,9 @@ export const getApiClient = (accessToken: string | null = null) => {
 };
 
 export const apiClientInstance = getApiClient();
+
+export const apiClientServer = async () => {
+  const session = await getSessionSS();
+  if (!session || !session.token?.accessToken) return apiClientInstance;
+  return { ...getApiClient(session.token?.accessToken), session };
+};
