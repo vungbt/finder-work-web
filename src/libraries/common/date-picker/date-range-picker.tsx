@@ -100,7 +100,8 @@ export const DateRangePicker = forwardRef(function DateRangePicker(
             'border-gray-100': !isHaveError
           },
           className
-        )}>
+        )}
+      >
         {iconLeft && (
           <IconViewSize className="icon-left" name={iconLeft} isLoading={isLoading} size={size} />
         )}
@@ -134,7 +135,8 @@ const CustomHeader = (params: ReactDatePickerCustomHeaderProps) => {
       <button
         onClick={decreaseMonth}
         disabled={prevMonthButtonDisabled}
-        className="px-2 text-gray-100 transition-all ease-linear hover:text-white">
+        className="px-2 text-gray-100 transition-all ease-linear hover:text-white"
+      >
         <RenderIcon name="chevron-left" strokeWidth={3} className="!h-4 !w-4" />
       </button>
       <span className="w-full flex-1 text-sm font-medium text-white">
@@ -143,7 +145,8 @@ const CustomHeader = (params: ReactDatePickerCustomHeaderProps) => {
       <button
         onClick={increaseMonth}
         disabled={nextMonthButtonDisabled}
-        className="px-2 text-gray-100 transition-all ease-linear hover:text-white">
+        className="px-2 text-gray-100 transition-all ease-linear hover:text-white"
+      >
         <RenderIcon name="chevron-right" strokeWidth={3} className="!h-4 !w-4" />
       </button>
     </div>

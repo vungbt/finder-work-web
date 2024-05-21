@@ -11,7 +11,8 @@ export default function Trash({ className, transform, ...reset }: Readonly<IconP
       stroke="currentColor"
       className={clsx('h-6 w-6', className)}
       transform={transform}
-      {...reset}>
+      {...reset}
+    >
       <path
         strokeLinecap="round"
         strokeLinejoin="round"

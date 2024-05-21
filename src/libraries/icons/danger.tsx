@@ -11,7 +11,8 @@ export default function Danger({ className, transform, ...reset }: Readonly<Icon
       stroke="currentColor"
       className={clsx('h-6 w-6', className)}
       transform={transform}
-      {...reset}>
+      {...reset}
+    >
       <path
         strokeLinecap="round"
         strokeLinejoin="round"

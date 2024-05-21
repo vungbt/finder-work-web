@@ -96,8 +96,6 @@ export function AdminGeneralDetailUtils(): AdminGeneralDetailUtilsResult {
   const fetchDetailSetting = async (key: string, type: string) => {
     try {
       setLoadingDetail(true);
-      console.log('key====>', key);
-      console.log('type====>', type);
       const res = await apiClient.oneSetting({
         where: {
           AND: [

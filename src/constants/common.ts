@@ -35,3 +35,5 @@ export const SettingTypes = [
   { label: 'header.title', value: ESettingType.Header },
   { label: 'footer.title', value: ESettingType.Footer }
 ];
+
+export const RouterAction = ['add', 'edit'];

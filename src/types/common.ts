@@ -53,3 +53,22 @@ export enum ESettingType {
   Header = 'header',
   Menu = 'menu'
 }
+
+export enum ERouterAction {
+  Add = 'add',
+  Edit = 'edit'
+}
+
+export type OptionItem = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  label: any;
+  value: string;
+  isDisabled?: boolean;
+  isFixed?: boolean;
+  color?: string;
+};
+
+export type GroupedOptionItem = {
+  label: string;
+  options: OptionItem[];
+};

@@ -49,7 +49,8 @@ export const RadioGroup = ({
             'flex-col gap-4': layout === 'vertical'
           },
           className
-        )}>
+        )}
+      >
         {options.map((item) => (
           <RadioItem
             key={item.value}

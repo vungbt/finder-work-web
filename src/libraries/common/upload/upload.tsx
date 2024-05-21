@@ -95,7 +95,8 @@ export const Upload = forwardRef(function UploadInput(
       layout={layout}
       label={label}
       name={name}
-      isRequired={isRequired}>
+      isRequired={isRequired}
+    >
       <label
         htmlFor={name}
         className={clsx(
@@ -107,7 +108,8 @@ export const Upload = forwardRef(function UploadInput(
           },
           classNameWrap
         )}
-        onClick={() => setIsFocus(true)}>
+        onClick={() => setIsFocus(true)}
+      >
         <RenderIcon name="image-icon" />
         <p className="text-sm text-dark">{placeholder}</p>
         <p className="text-sm text-text-secondary">{subPlaceholder}</p>
@@ -134,7 +136,8 @@ export const Upload = forwardRef(function UploadInput(
         <div
           className={clsx('mt-1', {
             'grid grid-cols-12 gap-2': layout === 'horizontal'
-          })}>
+          })}
+        >
           <div
             className={clsx({
               hidden: layout === 'vertical',

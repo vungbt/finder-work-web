@@ -9,7 +9,8 @@ export function NavigationMain({ items }: NavigationMainProps) {
   return (
     <label
       htmlFor="navigation-checkbox"
-      className={clsx('main-navigation z-[51] flex items-center gap-6')}>
+      className={clsx('main-navigation z-[51] flex items-center gap-6')}
+    >
       <HamburgerIcon className="xl:hidden" />
       <div className="hidden md:flex md:flex-1 md:items-center md:gap-6">
         {items.map((nav) => (
@@ -26,7 +27,8 @@ const NavItem = (item: NavigationItem) => {
     <Link
       className="line-hover nav-item px-4 py-3 font-semibold text-white"
       key={item.url}
-      href={item.url}>
+      href={item.url}
+    >
       {item.title}
     </Link>
   );

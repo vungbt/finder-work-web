@@ -11,7 +11,8 @@ export default function History({ className, transform, ...reset }: Readonly<Ico
       xmlns="http://www.w3.org/2000/svg"
       className={clsx('h-6 w-6', className)}
       transform={transform}
-      {...reset}>
+      {...reset}
+    >
       <path
         fillRule="evenodd"
         clipRule="evenodd"

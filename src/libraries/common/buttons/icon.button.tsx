@@ -23,7 +23,8 @@ export const IconButton = forwardRef(function IconButton(
       className={clsx(className, 'block p-1')}
       type={reset.type ?? 'button'}
       {...reset}
-      ref={ref}>
+      ref={ref}
+    >
       <RenderIcon className={clsx('!w-5 !h-5', classNameIcon)} name={iconName} />
     </button>
   );

@@ -68,6 +68,9 @@
   "plural": {
     "openPositions": "{count, plural, =0 {no open positions yet} =1 {open position} other {# open positions}"
   },
+  "selecting": {
+    "charCount": "{count}/{max} {type, select, char {characters} word {words} other {}}"
+  },
   "signIn": {
     "subTitle": "Step into Success: Your Ideal Job Awaits"
   },
@@ -82,6 +85,7 @@
     "apply": "Apply",
     "viewAll": "View all {label}",
     "jobs": "Jobs",
+    "companies": "Companies",
     "topCompanies": "Top Companies",
     "browseBy": "Browse by",
     "buildResume": "Build resume",
@@ -101,6 +105,7 @@
     "next": "Next",
     "emailVerification": "Email verification",
     "submit": "Submit",
+    "post": "Post",
     "plsEnterTheSixDigitVerificationCode": "Please enter the 6-digit verification code that was sent to {email}.",
     "code": "code",
     "resendCode": "Resend code?",
@@ -113,7 +118,21 @@
     "privacyPolicy": "Privacy policy",
     "forgotPassword": "Forgot password",
     "send": "Send",
-    "resetPassword": "Reset password"
+    "resetPassword": "Reset password",
+    "title": "Title",
+    "contentCategories": "Content Categories",
+    "jobCategory": "Job category",
+    "categories": "Categories",
+    "postCategories": "Post categories",
+    "careerTags": "Career tags",
+    "newPost": "New post",
+    "shareALink": "Share a link",
+    "jobRoleIndustry": "Job role / Industry",
+    "theTop5Categories": "The top 5 categories",
+    "featuredCategories": "Featured categories",
+    "others": "Others",
+    "dropOrDragPhotos": "Drop or Drag photos",
+    "supported": "Supported {type}"
   },
   "subTitle": {
     "forgotPassword": "Enter your email address and we will send you a link to reset your password",
@@ -138,10 +157,14 @@
     "settingKey": "Setting key",
     "settingType": "Setting type",
     "settingValue": "Setting value",
-    "showWith": "Show with"
+    "showWith": "Show with",
+    "description": "Description",
+    "thumbnails": "Thumbnails",
+    "content": "Content"
   },
   "placeholder": {
-    "enter": "Enter {label}"
+    "enter": "Enter {label}",
+    "shareYourThoughts": "Share your thoughts..."
   },
   "validation": {
     "required": "Please enter {label}",
@@ -152,7 +175,10 @@
     "passwordInvalid": "Password must contain at least one lowercase, uppercase and one special character",
     "optionRequired": "Please select a option",
     "passwordMustMatch": "Confirm password must match with password",
-    "permissionDenied": "Permission denied"
+    "permissionDenied": "Permission denied",
+    "fileNotInAccepts": "File not in accepts",
+    "fileLarge": "File large",
+    "fileInvalid": "File invalid"
   },
   "noti": {
     "createSuccess": "Create successful",

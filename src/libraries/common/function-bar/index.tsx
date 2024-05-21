@@ -40,7 +40,8 @@ export function FunctionBar({
       className={clsx(
         'flex items-center justify-between p-2 bg-gray-100 rounded-lg gap-4',
         className
-      )}>
+      )}
+    >
       <div className="flex items-center gap-2">
         {/* add button */}
         {onAdd && (
@@ -69,7 +70,8 @@ export function FunctionBar({
           <Formik
             initialValues={{ search: '' }}
             validationSchema={searchValidation ?? validationSchema}
-            onSubmit={(values) => onSearch(values.search.trim())}>
+            onSubmit={(values) => onSearch(values.search.trim())}
+          >
             {() => {
               return (
                 <Form>

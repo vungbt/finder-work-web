@@ -43,7 +43,8 @@ export function SignInEmployeeView() {
         delay: 0.2,
         ease: [0, 0.71, 0.2, 1.01]
       }}
-      className="flex-1 flex flex-col justify-start pt-14 items-center lg:pt-0 lg:justify-center">
+      className="flex-1 flex flex-col justify-start pt-14 items-center lg:pt-0 lg:justify-center"
+    >
       <div className="w-[90%] sm:w-[80%] md:w-[500px] mx-auto">
         <Link href={RouterPath.Home}>
           <Logo />
@@ -55,7 +56,8 @@ export function SignInEmployeeView() {
         <Formik<IAuthLogin>
           initialValues={initialValues}
           validationSchema={validationSchema}
-          onSubmit={handleSubmit}>
+          onSubmit={handleSubmit}
+        >
           {() => {
             return (
               <Form>
@@ -79,7 +81,8 @@ export function SignInEmployeeView() {
                 <div className="flex items-center justify-end mt-2">
                   <Link
                     className="font-semibold text-info text-sm"
-                    href={RouterPath.ForgotPassword}>
+                    href={RouterPath.ForgotPassword}
+                  >
                     {t('form.forgotPassword')}
                   </Link>
                 </div>

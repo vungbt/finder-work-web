@@ -38,7 +38,8 @@ export default function SignUpVerifyCode() {
         delay: 0.2,
         ease: [0, 0.71, 0.2, 1.01]
       }}
-      className="mx-auto">
+      className="mx-auto"
+    >
       <BackButton onClick={() => actions.previousStep(formData)} />
       <h1 className="text-[32px] leading-[48px] font-semibold my-4">
         {t('common.emailVerification')}
@@ -59,7 +60,8 @@ export default function SignUpVerifyCode() {
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
-        onSubmit={onSubmitVerifyCode}>
+        onSubmit={onSubmitVerifyCode}
+      >
         {() => {
           return (
             <Form>

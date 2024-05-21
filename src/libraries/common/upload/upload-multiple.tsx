@@ -2,12 +2,13 @@
 import { FILE_IMAGE } from '@/constants/common';
 import { RenderIcon } from '@/libraries/icons';
 import clsx from 'clsx';
+import { useTranslations } from 'next-intl';
 import { ChangeEvent, Ref, forwardRef, useMemo, useState } from 'react';
 import { FormGroup, UploadItem, UploadPreview } from '..';
 
 type UploadProps = Omit<
   React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>,
-  'size' | 'onChange' | 'value'
+  'size' | 'onChange' | 'value' | 'max'
 > & {
   label?: string;
   isLoading?: boolean;
@@ -15,6 +16,7 @@ type UploadProps = Omit<
   classNameWrap?: string;
   subPlaceholder?: string;
   values?: UploadItem[];
+  max?: number;
 
   error?: string;
   layout?: 'horizontal' | 'vertical';
@@ -41,18 +43,20 @@ export const UploadMultiple = forwardRef(function UploadMultipleInput(
     placeholder,
     values = [],
     subPlaceholder,
+    max = 5,
     setError,
     onChange,
     ...reset
   } = props;
   const [isFocus, setIsFocus] = useState<boolean>(false);
+  const t = useTranslations();
   const isHaveError = useMemo(() => error && error.length > 0 && isFocus, [error, isFocus]);
 
   const { accepts, size } = FILE_IMAGE;
 
   const onHandleChangeFile = async (event: ChangeEvent<HTMLInputElement>) => {
     const files = event.target?.files ?? [];
-    if (!files || files.length <= 0) return showError('File invalid');
+    if (!files || files.length <= 0) return showError(t('validation.fileInvalid'));
 
     const newValues: UploadItem[] = [];
     for (let i = 0; i < files.length; i++) {
@@ -61,8 +65,8 @@ export const UploadMultiple = forwardRef(function UploadMultipleInput(
       const fileSize = file.size;
       const fileId = `${new Date().toISOString()}-${file?.name}`;
 
-      if (!accepts.includes(fileType)) return showError('File not in accepts');
-      if (size < fileSize) return showError('File large');
+      if (!accepts.includes(fileType)) return showError(t('validation.fileNotInAccepts'));
+      if (size < fileSize) return showError(t('validation.fileLarge'));
       if (file) {
         const reader = new FileReader();
         await new Promise((resolve: any, reject) => {
@@ -79,6 +83,8 @@ export const UploadMultiple = forwardRef(function UploadMultipleInput(
         });
       }
     }
+    if (newValues.length > max)
+      return showError(t('validation.max', { label: t(`form.${name}`), number: max }));
     onChange && onChange(newValues);
     resetInputFile();
   };
@@ -113,19 +119,21 @@ export const UploadMultiple = forwardRef(function UploadMultipleInput(
       layout={layout}
       label={label}
       name={name}
-      isRequired={isRequired}>
+      isRequired={isRequired}
+    >
       <label
         htmlFor={name}
         onClick={() => setIsFocus(true)}
         className={clsx(
-          'box-border flex flex-col gap-2 w-fit min-w-[304px] items-center border border-dashed transition-all ease-linear hover:border-info cursor-pointer px-4 py-6 rounded-xl',
+          'box-border flex flex-col gap-2 w-fit min-w-[304px] items-center border border-dashed transition-all bg-white ease-linear hover:border-info cursor-pointer px-4 py-6 rounded-xl',
           {
             '!border-danger': isHaveError,
             'border-gray-100': !isHaveError,
             'cursor-not-allowed !bg-gray-100': disabled
           },
           classNameWrap
-        )}>
+        )}
+      >
         <RenderIcon name="image-icon" />
         <p className="text-sm text-dark">{placeholder}</p>
         <p className="text-sm text-text-secondary">{subPlaceholder}</p>
@@ -153,7 +161,8 @@ export const UploadMultiple = forwardRef(function UploadMultipleInput(
         <div
           className={clsx('mt-1', {
             'grid grid-cols-12 gap-2': layout === 'horizontal'
-          })}>
+          })}
+        >
           <div
             className={clsx({
               hidden: layout === 'vertical',

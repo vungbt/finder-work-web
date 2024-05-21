@@ -59,7 +59,8 @@ export const InputPasswordForm = forwardRef(function Input(
             'border-gray-100': !isHaveError,
             'cursor-not-allowed !bg-gray-100': disabled
           }
-        )}>
+        )}
+      >
         {iconLeft && (
           <IconViewSize className="icon-left" name={iconLeft} isLoading={isLoading} size={size} />
         )}
@@ -88,7 +89,8 @@ export const InputPasswordForm = forwardRef(function Input(
         <button
           type="button"
           className="outline-none border-none p-0 m-0"
-          onClick={() => !disabled && setIsViewPass(!isViewPass)}>
+          onClick={() => !disabled && setIsViewPass(!isViewPass)}
+        >
           <IconViewSize
             className={clsx('icon-right', {
               '!text-text-tertiary': disabled

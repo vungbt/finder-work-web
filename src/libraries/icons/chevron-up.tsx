@@ -11,7 +11,8 @@ export default function ChevronUp({ className, transform, ...reset }: Readonly<I
       xmlns="http://www.w3.org/2000/svg"
       className={clsx('h-6 w-6', className)}
       transform={transform}
-      {...reset}>
+      {...reset}
+    >
       <path
         d="M19.9201 15.0499L13.4001 8.52989C12.6301 7.75989 11.3701 7.75989 10.6001 8.52989L4.08008 15.0499"
         stroke="currentColor"

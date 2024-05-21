@@ -49,6 +49,8 @@
 
   ::placeholder {
     color: var(--color-tertiary) !important;
+    font-size: 0.875rem /* 14px */ !important;
+    line-height: 1.25rem /* 20px */ !important;
   }
 }
 
@@ -288,6 +290,7 @@
 
   &__placeholder {
     color: var(--color-tertiary) !important;
+    @apply text-sm;
   }
 
   .select-custom__control__focused__large,
@@ -677,7 +680,7 @@
 
 // quill editor
 .custom-quill {
-  @apply font-primary;
+  @apply font-primary bg-white;
   &:hover {
     .quill {
       .ql-toolbar {
@@ -690,7 +693,7 @@
     @apply w-full;
 
     .ql-toolbar {
-      @apply border-t-0 border-r-0 border-l-0 border-solid border-b border-gray-100 transition-all ease-linear bg-gray-200 rounded-tl-3xl rounded-tr-3xl px-5 py-4;
+      @apply border-t-0 border-r-0 border-l-0 border-solid border-b border-gray-100 transition-all ease-linear bg-white rounded-tl-3xl rounded-tr-3xl px-5 py-4;
 
       .ql-formats {
         @apply bg-white border border-solid border-gray-100 rounded-lg;
@@ -727,6 +730,12 @@
 
       .ql-editor {
         @apply min-h-96 p-0 font-primary text-sm;
+      }
+
+      .ql-blank {
+        &::before {
+          @apply not-italic font-primary text-sm text-text-tertiary;
+        }
       }
     }
   }
@@ -808,4 +817,28 @@
 
 .modal-backdrop {
   @apply bg-black bg-opacity-35;
+}
+
+// tab
+.tab {
+  @apply text-dark transition-all ease-linear border-b-2 py-1 hover:opacity-100 cursor-pointer relative border-transparent opacity-50;
+
+  // opacity-100 border-dark border-solid
+  &::before {
+    content: '';
+    @apply absolute w-0 h-[2px] transition-all ease-linear bg-dark bottom-0 right-0 left-0 mx-auto;
+  }
+
+  &__active {
+    @apply opacity-100;
+
+    &::before {
+      @apply w-full;
+    }
+  }
+}
+
+.portal-content-layout {
+  max-height: calc(100vh - 73px);
+  overflow: auto;
 }

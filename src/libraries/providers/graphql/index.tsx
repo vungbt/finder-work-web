@@ -26,7 +26,8 @@ export const ApiClientProvider = ({ children }: ApiClientProviderProps) => {
     <ApiClientContext.Provider
       value={{
         apiClient
-      }}>
+      }}
+    >
       {children}
     </ApiClientContext.Provider>
   );

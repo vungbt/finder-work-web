@@ -1,1 +1,1 @@
-export * from './careers.view';
+export * from './careers-action.view';

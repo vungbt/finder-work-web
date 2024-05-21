@@ -8,7 +8,8 @@ export default function BannerEmployee({ className, transform, ...reset }: Reado
       xmlns="http://www.w3.org/2000/svg"
       className={className}
       transform={transform}
-      {...reset}>
+      {...reset}
+    >
       <g clipPath="url(#clip0_2_2531)">
         <rect width="1439" height="572" fill="#0D0C0C" />
         <path
@@ -25,7 +26,8 @@ export default function BannerEmployee({ className, transform, ...reset }: Reado
           y1="759"
           x2="1470"
           y2="110"
-          gradientUnits="userSpaceOnUse">
+          gradientUnits="userSpaceOnUse"
+        >
           <stop offset="0.211838" stopColor="#97FF66" />
           <stop offset="0.611838" stopColor="#FC9C9C" />
           <stop offset="1" stopColor="#687CE3" />

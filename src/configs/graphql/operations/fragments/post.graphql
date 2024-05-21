@@ -10,7 +10,7 @@ fragment PostFragment on Post {
   thumbnail {
     ...Image
   }
-  jobTitle {
+  jobCategory {
     id
     name
   }

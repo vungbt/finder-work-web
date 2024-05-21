@@ -113,7 +113,8 @@ export const EditorForm = forwardRef(function QuillEditor(
             'border-gray-100': !isHaveError
             // 'cursor-not-allowed !bg-gray-100': disabled
           }
-        )}>
+        )}
+      >
         <ReactQuill
           readOnly={disabled}
           ref={ref}
