@@ -160,7 +160,10 @@
     "showWith": "Show with",
     "description": "Description",
     "thumbnails": "Thumbnails",
-    "content": "Content"
+    "content": "Content",
+    "categories": "Categories",
+    "title": "Title",
+    "link": "Link"
   },
   "placeholder": {
     "enter": "Enter {label}",
@@ -168,6 +171,11 @@
   },
   "validation": {
     "required": "Please enter {label}",
+    "select": "Please select {label}",
+    "selectMin": "{label} must be at least {number} option",
+    "selectMax": "{label} must be at highest {number} options",
+    "fileMin": "{label} must be at least {number} file",
+    "fileMax": "{label} must be at highest {number} files",
     "requiredYour": "Please enter your {label}",
     "valid": "Please enter a valid {label}",
     "min": "{label} must be at least {number} characters",
@@ -176,9 +184,9 @@
     "optionRequired": "Please select a option",
     "passwordMustMatch": "Confirm password must match with password",
     "permissionDenied": "Permission denied",
-    "fileNotInAccepts": "File not in accepts",
-    "fileLarge": "File large",
-    "fileInvalid": "File invalid"
+    "fileNotInAccepts": "Please choose a file of type: {types}",
+    "fileLarge": "Please choose a file that is smaller than {max}MB.",
+    "fileInvalid": "Please choose a valid file."
   },
   "noti": {
     "createSuccess": "Create successful",

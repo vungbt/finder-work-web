@@ -1,9 +1,11 @@
 import useJobCategories from '@/hooks/redux/job-category/useJobCategories';
 import usePostCategories from '@/hooks/redux/post-category/usePostCategories';
 import { TabItem } from '@/libraries/common';
-import { GroupedOptionItem, OptionItem } from '@/types';
+import { GroupedOptionItem, MetaInfo, OptionItem } from '@/types';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
+import debounce from 'lodash/debounce';
+import useMetaInfo from '@/hooks/useMetaInfo';
 
 type AdminCareerActionUtilsResult = {
   tabActive: TabItem;
@@ -13,6 +15,11 @@ type AdminCareerActionUtilsResult = {
   onSubmitPost: (values: any) => void;
   setTabActive: (value: TabItem) => void;
   filterTags: (searchValue?: string) => void;
+
+  // meta link
+  isLoadingMeta: boolean;
+  metaInfo: MetaInfo | null;
+  onChangeShareLink: (url: string) => void;
 };
 
 export function AdminCareerActionUtils({
@@ -23,6 +30,7 @@ export function AdminCareerActionUtils({
   const t = useTranslations();
   const { options: postCategoriesOpts } = usePostCategories();
   const { options: jobCategories } = useJobCategories();
+  const { loading: isLoadingMeta, metaInfo, fetchingMetaByUrl } = useMetaInfo();
   const tabs = [
     { label: t('common.newPost'), value: 'post' },
     { label: t('common.shareALink'), value: 'link' }
@@ -34,6 +42,11 @@ export function AdminCareerActionUtils({
   };
   const onSubmitPost = (values: any) => {};
 
+  const onChangeShareLink = debounce((url: string) => {
+    console.log('url====>', url);
+    // fetchingMetaByUrl(url);
+  }, 300);
+
   return {
     tabs,
     tabActive,
@@ -41,6 +54,9 @@ export function AdminCareerActionUtils({
     postCategoriesOpts,
     onSubmitPost,
     filterTags,
-    setTabActive
+    setTabActive,
+
+    // meta info
+    onChangeShareLink
   };
 }

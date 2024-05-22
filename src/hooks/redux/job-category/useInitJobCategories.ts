@@ -22,7 +22,6 @@ export default function useInitPostCategories() {
   }, [jobCategories]);
 
   const transformJobCategoriesOptions = () => {
-    console.log('jobCategories====>', jobCategories);
     const defaults = jobCategories.filter((item) => item.isDefault);
     const top5 = jobCategories.filter((item) => item.isTheFive);
     const featured = jobCategories.filter((item) => item.isFeature);

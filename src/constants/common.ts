@@ -9,7 +9,12 @@ export const PAGINATION = {
 
 export const FILE_IMAGE = {
   accepts: ['image/png', 'image/jpeg', 'image/jpg', 'image/webp', 'image/gif'],
-  size: 5 * 1000000 // 5MB
+  size: 5 * 1000000 // 5MB,
+};
+
+export const FILE_VIDEO = {
+  accepts: ['video/*'],
+  size: 10 * 1000000 // 10MB,
 };
 export const FallbackImage = {
   avatarUrl:

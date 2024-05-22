@@ -16,7 +16,9 @@ type UploadProps = Omit<
   classNameWrap?: string;
   subPlaceholder?: string;
   values?: UploadItem[];
+  size?: number;
   max?: number;
+  isTouched?: boolean;
 
   error?: string;
   layout?: 'horizontal' | 'vertical';
@@ -43,16 +45,19 @@ export const UploadMultiple = forwardRef(function UploadMultipleInput(
     placeholder,
     values = [],
     subPlaceholder,
+    size = FILE_IMAGE.size,
     max = 5,
+    isTouched,
     setError,
     onChange,
     ...reset
   } = props;
   const [isFocus, setIsFocus] = useState<boolean>(false);
   const t = useTranslations();
-  const isHaveError = useMemo(() => error && error.length > 0 && isFocus, [error, isFocus]);
-
-  const { accepts, size } = FILE_IMAGE;
+  const isHaveError = useMemo(
+    () => error && error.length > 0 && (isFocus || isTouched),
+    [error, isFocus, isTouched]
+  );
 
   const onHandleChangeFile = async (event: ChangeEvent<HTMLInputElement>) => {
     const files = event.target?.files ?? [];
@@ -65,8 +70,10 @@ export const UploadMultiple = forwardRef(function UploadMultipleInput(
       const fileSize = file.size;
       const fileId = `${new Date().toISOString()}-${file?.name}`;
 
-      if (!accepts.includes(fileType)) return showError(t('validation.fileNotInAccepts'));
-      if (size < fileSize) return showError(t('validation.fileLarge'));
+      const acceptsList = accept.split(',').map((item) => item.trim());
+      if (!acceptsList.includes(fileType))
+        return showError(t('validation.fileNotInAccepts', { types: accept }));
+      if (size < fileSize) return showError(t('validation.fileLarge', { max: size }));
       if (file) {
         const reader = new FileReader();
         await new Promise((resolve: any, reject) => {
@@ -125,7 +132,7 @@ export const UploadMultiple = forwardRef(function UploadMultipleInput(
         htmlFor={name}
         onClick={() => setIsFocus(true)}
         className={clsx(
-          'box-border flex flex-col gap-2 w-fit min-w-[304px] items-center border border-dashed transition-all bg-white ease-linear hover:border-info cursor-pointer px-4 py-6 rounded-xl',
+          'box-border flex flex-col gap-2 w-fit min-w-full md:min-w-[304px] items-center border border-dashed transition-all bg-white ease-linear hover:border-info cursor-pointer px-4 py-6 rounded-xl',
           {
             '!border-danger': isHaveError,
             'border-gray-100': !isHaveError,

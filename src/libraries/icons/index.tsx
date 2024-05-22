@@ -53,6 +53,8 @@ import Star from './star';
 import Success from './success';
 import Trash from './trash';
 import TrashSolid from './trash-solid';
+import ExportIcon from './export-icon';
+import ImportIcon from './import-icon';
 
 export type IconProps = {
   className?: string;
@@ -117,7 +119,9 @@ export type IconName =
   | 'trash-solid'
   | 'caret-up-solid'
   | 'caret-down-solid'
-  | 'buildings';
+  | 'buildings'
+  | 'export-icon'
+  | 'import-icon';
 
 export type IconsType = Record<IconName, Icon>;
 
@@ -283,6 +287,12 @@ export const Icons: IconsType = {
   },
   buildings: (props: IconProps) => {
     return <Buildings {...props} />;
+  },
+  'export-icon': (props: IconProps) => {
+    return <ExportIcon {...props} />;
+  },
+  'import-icon': (props: IconProps) => {
+    return <ImportIcon {...props} />;
   }
 };
 

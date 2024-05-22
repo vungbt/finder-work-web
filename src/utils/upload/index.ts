@@ -41,7 +41,8 @@ const uploadByUrl = (url: string, formData: FormData) => {
 
 const uploadFile = async (name: string, formData: FormData) => {
   const url = await getUrl(name);
-  return axios.post(url, formData, {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return axios.post<any, { data: FileCloudinary }>(url, formData, {
     headers: {
       'Content-Type': 'multipart/form-data'
     }

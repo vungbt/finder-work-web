@@ -2,15 +2,19 @@
 import { AdminCareerActionUtils } from '@/@handles/career';
 import {
   Button,
+  Divider,
   EditorForm,
+  InputLinkForm,
   SelectAsyncCreatable,
   SelectForm,
   Tab,
   TextareaForm,
   UploadMultiple
 } from '@/libraries/common';
+import { validationCustoms } from '@/utils/helpers/validation';
 import { Field, Form, Formik } from 'formik';
 import { useTranslations } from 'next-intl';
+import { ChangeEvent } from 'react';
 import * as Yup from 'yup';
 
 type CareersViewProps = {
@@ -26,35 +30,31 @@ export function CareersActionView({ isEdit }: CareersViewProps) {
     jobCategories,
     setTabActive,
     onSubmitPost,
-    filterTags
+    filterTags,
+    onChangeShareLink
   } = AdminCareerActionUtils({ isEdit });
 
   const validationSchema = Yup.object({
-    title: Yup.string().required('Title is required'),
-    categories: Yup.array()
-      .of(Yup.string().required('Please select an option'))
-      .min(1, 'Please select at least one option'),
-    jobTitle: Yup.string().required('Title is required'),
-    content: Yup.string().required('Title is required'),
-    tags: Yup.array()
-      .of(Yup.string().required('Please select an option'))
-      .min(1, 'Please select at least one option'),
-    thumbnails: Yup.array()
-      .min(1, 'Thumbnails must be required')
-      .of(
-        Yup.object()
-          .shape({
-            id: Yup.string().required('Thumbnail required'),
-            url: Yup.string().required('Thumbnail required')
-          })
-          .nullable()
-      )
+    title: Yup.string().required(
+      t('validation.required', { label: t('form.title').toLowerCase() })
+    ),
+    shareLink: Yup.string().required(
+      t('validation.required', { label: t('common.shareALink').toLowerCase() })
+    ),
+    categories: validationCustoms.selectMultiple(t, t('form.categories'), { max: 5, min: 1 }),
+    jobCategory: validationCustoms.select(t, t('common.jobCategory')),
+    content: Yup.string().required(
+      t('validation.required', { label: t('form.content').toLowerCase() })
+    ),
+    tags: validationCustoms.selectMultiple(t, t('common.careerTags'), { max: 5, min: 1 }),
+    thumbnails: validationCustoms.uploadMultiple(t, t('form.thumbnails'), { max: 5, min: 1 })
   });
 
   const initialValues = {
     title: '',
+    shareLink: '',
     categories: [],
-    jobTitle: '',
+    jobCategory: null,
     content: '',
     tags: [],
     thumbnails: []
@@ -70,7 +70,7 @@ export function CareersActionView({ isEdit }: CareersViewProps) {
           validationSchema={validationSchema}
           onSubmit={onSubmitPost}
         >
-          {({ setFieldValue, values, errors, setErrors }) => {
+          {({ setFieldValue, values, errors, touched, setErrors }) => {
             return (
               <Form className="flex flex-col gap-6">
                 <Field
@@ -83,24 +83,54 @@ export function CareersActionView({ isEdit }: CareersViewProps) {
                   })}
                 />
 
-                <div className="flex items-start gap-6">
-                  <Field
-                    label={t('common.categories')}
-                    isRequired={true}
-                    name="categories"
-                    component={SelectForm}
-                    options={postCategoriesOpts}
-                    isMulti={true}
-                  />
+                <Field
+                  label={t('common.shareALink')}
+                  isRequired
+                  name="shareLink"
+                  component={InputLinkForm}
+                  placeholder={t('placeholder.enter', {
+                    label: t('common.shareALink').toLowerCase()
+                  })}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                    onChangeShareLink(e?.target?.value)
+                  }
+                />
 
-                  <Field
-                    label={t('common.jobCategory')}
-                    isRequired={true}
-                    name="jobCategory"
-                    component={SelectForm}
-                    options={jobCategories}
-                    isMulti={false}
-                  />
+                <div className="grid grid-cols-12 items-start gap-6">
+                  {/* Tags */}
+                  <div className="col-span-12 md:order-last md:col-span-6 xl:order-first xl:col-span-4">
+                    <Field
+                      label={t('common.careerTags')}
+                      isRequired={true}
+                      name="tags"
+                      component={SelectAsyncCreatable}
+                      options={[]}
+                      filterOptions={filterTags}
+                      isMulti={true}
+                    />
+                  </div>
+
+                  <div className="col-span-12 md:col-span-6 xl:col-span-4">
+                    <Field
+                      label={t('common.categories')}
+                      isRequired={true}
+                      name="categories"
+                      component={SelectForm}
+                      options={postCategoriesOpts}
+                      isMulti={true}
+                    />
+                  </div>
+
+                  <div className="col-span-12 md:col-span-6 xl:col-span-4">
+                    <Field
+                      label={t('common.jobCategory')}
+                      isRequired={true}
+                      name="jobCategory"
+                      component={SelectForm}
+                      options={jobCategories}
+                      isMulti={false}
+                    />
+                  </div>
                 </div>
 
                 {/* Description */}
@@ -112,22 +142,12 @@ export function CareersActionView({ isEdit }: CareersViewProps) {
                   component={EditorForm}
                 />
 
-                {/* Tags */}
-                <Field
-                  label={t('common.careerTags')}
-                  isRequired={true}
-                  name="tags"
-                  component={SelectAsyncCreatable}
-                  options={[]}
-                  filterOptions={filterTags}
-                  isMulti={true}
-                />
-
                 {/* Thumbnails */}
                 <UploadMultiple
                   isRequired={true}
                   label={t('form.thumbnails')}
                   name="thumbnails"
+                  isTouched={touched.thumbnails !== undefined}
                   values={values?.thumbnails}
                   placeholder={t('common.dropOrDragPhotos')}
                   subPlaceholder={t('common.supported', { type: 'png, jpeg, jpg, webp, gif' })}
@@ -138,7 +158,13 @@ export function CareersActionView({ isEdit }: CareersViewProps) {
                   setError={(mess) => setErrors(mess)}
                 />
 
-                <Button className="w-fit" styleType="info" type="submit" label={t('common.post')} />
+                <Divider />
+                <Button
+                  className="w-fit min-w-48 !justify-center"
+                  styleType="info"
+                  type="submit"
+                  label={t('common.post')}
+                />
               </Form>
             );
           }}
