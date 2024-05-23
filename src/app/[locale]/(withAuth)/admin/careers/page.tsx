@@ -1,5 +1,5 @@
-import React from 'react';
+import { CareersView } from '@/@views/admin/careers';
 
 export default function CareersPage() {
-  return <div>CareersPage</div>;
+  return <CareersView />;
 }

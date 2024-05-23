@@ -6,8 +6,7 @@ fragment PostFragment on Post {
   metadata
   slug
   minRead
-  thumbnailId
-  thumbnail {
+  thumbnails {
     ...Image
   }
   jobCategory {

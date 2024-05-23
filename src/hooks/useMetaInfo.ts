@@ -20,10 +20,19 @@ export default function useMetaInfo() {
         `/api/meta-extract?url=${url}`
       );
       setLoading(false);
-      setMetaInfo({
-        ...response.data,
-        url: response.data?.url ?? url
-      });
+      const result = response.data;
+      if (result && Object.keys(result).length > 0) {
+        const url = result?.url ?? result?.originUrl;
+        const title = result?.title ?? url;
+        const desc = result?.description ?? url;
+
+        setMetaInfo({
+          ...result,
+          title: title,
+          description: desc,
+          url: url
+        });
+      }
     } catch (_) {
       setLoading(false);
       setMetaInfo(defaultShareInfo);
@@ -61,6 +70,7 @@ export default function useMetaInfo() {
     metaInfo,
     getDefault,
     validationLink,
+    setMetaInfo,
     fetchingMetaByUrl
   };
 }

@@ -167,9 +167,10 @@ export const SelectAsyncCreatable = forwardRef(function SelectAsyncCreatable(
     setValueForFormField(fieldValues);
   };
 
-  const debouncedFetch = debounce((searchTerm, callback) => {
+  const debouncedFetch: any = debounce(async (searchTerm, callback) => {
     if (filterOptions) {
-      callback(filterOptions(searchTerm));
+      const result = await filterOptions(searchTerm);
+      callback(result);
     }
   }, delay);
 

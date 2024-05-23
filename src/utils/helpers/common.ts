@@ -1,10 +1,20 @@
-import { COUNTRY_CODE_DEFAULT } from '@/constants/common';
+import { User } from '@/configs/graphql/generated';
+import { COUNTRY_CODE_DEFAULT, FallbackImage } from '@/constants/common';
 import chroma from 'chroma-js';
 import * as ct from 'countries-and-timezones';
 
 export const colorScaleGenerator = (color: string, number?: number) => {
   const primaryColor = chroma(color);
   return chroma.scale(['white', primaryColor]).colors(number ?? 10);
+};
+
+export const randomHexColor = () => {
+  try {
+    const color = chroma.random();
+    return color.hex();
+  } catch (error) {
+    return '#7afb3d'; // Default to black in case of an error
+  }
 };
 
 export const getCountryCode = () => {
@@ -28,4 +38,10 @@ export const countWords = (str: string) => {
     .trim()
     .split(/\s+/)
     .filter((word) => word.length > 0).length;
+};
+
+export const getAvatar = (user: User) => {
+  const avatarUrl = user?.avatarUrl ?? user.avatar?.url;
+  if (!avatarUrl) return FallbackImage.avatarUrl;
+  return avatarUrl;
 };

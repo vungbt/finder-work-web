@@ -2,9 +2,10 @@
 query allPost(
   $where: PostWhereInput
   $orderBy: [PostOrderByWithRelationInput!]
+  $searchValue: String
   $pagination: PaginationInput
 ) {
-  all_post(where: $where, orderBy: $orderBy, pagination: $pagination) {
+  all_post(where: $where, orderBy: $orderBy, searchValue: $searchValue, pagination: $pagination) {
     data {
       ...PostFragment
     }
@@ -20,7 +21,7 @@ query onePost($where: PostWhereInput) {
   }
 }
 
-mutation createPost($data: PostCreateInput!) {
+mutation createPost($data: CreatePostInput!) {
   create_post(data: $data) {
     ...PostFragment
   }

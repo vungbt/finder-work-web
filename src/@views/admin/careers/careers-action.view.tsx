@@ -12,9 +12,10 @@ import {
   UploadMultiple
 } from '@/libraries/common';
 import { validationCustoms } from '@/utils/helpers/validation';
+import clsx from 'clsx';
 import { Field, Form, Formik } from 'formik';
 import { useTranslations } from 'next-intl';
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useMemo } from 'react';
 import * as Yup from 'yup';
 
 type CareersViewProps = {
@@ -28,44 +29,70 @@ export function CareersActionView({ isEdit }: CareersViewProps) {
     tabs,
     postCategoriesOpts,
     jobCategories,
-    setTabActive,
+    formikRef,
+    loading,
     onSubmitPost,
+
+    tagOptions,
     filterTags,
+
+    // handle for tab action
+    isPageNewPost,
+    onHandleChangeTab,
+
+    // meta info
+    metaInfo,
+    isLoadingMeta,
     onChangeShareLink
   } = AdminCareerActionUtils({ isEdit });
 
-  const validationSchema = Yup.object({
-    title: Yup.string().required(
-      t('validation.required', { label: t('form.title').toLowerCase() })
-    ),
-    shareLink: Yup.string().required(
-      t('validation.required', { label: t('common.shareALink').toLowerCase() })
-    ),
-    categories: validationCustoms.selectMultiple(t, t('form.categories'), { max: 5, min: 1 }),
-    jobCategory: validationCustoms.select(t, t('common.jobCategory')),
-    content: Yup.string().required(
-      t('validation.required', { label: t('form.content').toLowerCase() })
-    ),
-    tags: validationCustoms.selectMultiple(t, t('common.careerTags'), { max: 5, min: 1 }),
-    thumbnails: validationCustoms.uploadMultiple(t, t('form.thumbnails'), { max: 5, min: 1 })
-  });
+  const validationSchema = useMemo(() => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const schema: any = {
+      title: Yup.string().required(
+        t('validation.required', { label: t('form.title').toLowerCase() })
+      ),
 
-  const initialValues = {
-    title: '',
-    shareLink: '',
-    categories: [],
-    jobCategory: null,
-    content: '',
-    tags: [],
-    thumbnails: []
-  };
+      categories: validationCustoms.selectMultiple(t, t('form.categories'), { max: 5, min: 1 }),
+      jobCategory: validationCustoms.select(t, t('common.jobCategory')),
+      content: Yup.string().required(
+        t('validation.required', { label: t('form.content').toLowerCase() })
+      ),
+      tags: validationCustoms.selectMultiple(t, t('common.careerTags'), { max: 5, min: 1 }),
+      thumbnails: validationCustoms.uploadMultiple(t, t('form.thumbnails'), { max: 5, min: 1 })
+    };
+    if (!isPageNewPost) {
+      schema['shareLink'] = Yup.string().required(
+        t('validation.required', { label: t('common.shareALink').toLowerCase() })
+      );
+      delete schema.thumbnails;
+    }
+    return Yup.object(schema);
+  }, [isPageNewPost, t]);
+
+  const initialValues = useMemo(() => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const init: any = {
+      title: '',
+      categories: [],
+      jobCategory: null,
+      content: '',
+      tags: [],
+      thumbnails: []
+    };
+    if (!isPageNewPost) {
+      init['shareLink'] = '';
+    }
+    return init;
+  }, [isPageNewPost]);
 
   return (
     <div>
-      <Tab options={tabs} active={tabActive} onChange={(item) => setTabActive(item)} />
+      <Tab options={tabs} active={tabActive} onChange={onHandleChangeTab} />
       {/* form content */}
       <div className="bg-gray-200 p-6 rounded-2xl mt-5">
         <Formik
+          innerRef={formikRef}
           initialValues={initialValues}
           validationSchema={validationSchema}
           onSubmit={onSubmitPost}
@@ -83,18 +110,27 @@ export function CareersActionView({ isEdit }: CareersViewProps) {
                   })}
                 />
 
-                <Field
-                  label={t('common.shareALink')}
-                  isRequired
-                  name="shareLink"
-                  component={InputLinkForm}
-                  placeholder={t('placeholder.enter', {
-                    label: t('common.shareALink').toLowerCase()
+                <div
+                  className={clsx({
+                    block: !isPageNewPost,
+                    hidden: isPageNewPost
                   })}
-                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                    onChangeShareLink(e?.target?.value)
-                  }
-                />
+                >
+                  <Field
+                    label={t('common.shareALink')}
+                    isRequired
+                    name="shareLink"
+                    component={InputLinkForm}
+                    isLoading={isLoadingMeta}
+                    metaInfo={metaInfo}
+                    placeholder={t('placeholder.enter', {
+                      label: t('common.shareALink').toLowerCase()
+                    })}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                      onChangeShareLink(e?.target?.value)
+                    }
+                  />
+                </div>
 
                 <div className="grid grid-cols-12 items-start gap-6">
                   {/* Tags */}
@@ -104,7 +140,7 @@ export function CareersActionView({ isEdit }: CareersViewProps) {
                       isRequired={true}
                       name="tags"
                       component={SelectAsyncCreatable}
-                      options={[]}
+                      defaultOptions={tagOptions}
                       filterOptions={filterTags}
                       isMulti={true}
                     />
@@ -144,7 +180,7 @@ export function CareersActionView({ isEdit }: CareersViewProps) {
 
                 {/* Thumbnails */}
                 <UploadMultiple
-                  isRequired={true}
+                  isRequired={isPageNewPost}
                   label={t('form.thumbnails')}
                   name="thumbnails"
                   isTouched={touched.thumbnails !== undefined}
@@ -164,6 +200,7 @@ export function CareersActionView({ isEdit }: CareersViewProps) {
                   styleType="info"
                   type="submit"
                   label={t('common.post')}
+                  isLoading={loading}
                 />
               </Form>
             );

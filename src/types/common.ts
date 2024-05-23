@@ -66,6 +66,7 @@ export type OptionItem = {
   isDisabled?: boolean;
   isFixed?: boolean;
   color?: string;
+  __isNew__?: boolean;
 };
 
 export type GroupedOptionItem = {
