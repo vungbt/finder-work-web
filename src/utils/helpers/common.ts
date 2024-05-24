@@ -1,5 +1,6 @@
-import { User } from '@/configs/graphql/generated';
+import { Post, User } from '@/configs/graphql/generated';
 import { COUNTRY_CODE_DEFAULT, FallbackImage } from '@/constants/common';
+import { MetaInfo } from '@/types';
 import chroma from 'chroma-js';
 import * as ct from 'countries-and-timezones';
 
@@ -44,4 +45,15 @@ export const getAvatar = (user: User) => {
   const avatarUrl = user?.avatarUrl ?? user.avatar?.url;
   if (!avatarUrl) return FallbackImage.avatarUrl;
   return avatarUrl;
+};
+
+export const getFullName = (user: User) => {
+  const fullName = `${user.firstName} ${user.lastName}`;
+  return fullName;
+};
+
+export const getPostMetaInfo = (item: Post) => {
+  const metadata = item.metadata;
+  if (!metadata || Object.keys(metadata).length <= 0) return null;
+  return metadata as MetaInfo;
 };

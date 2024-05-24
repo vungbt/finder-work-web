@@ -132,7 +132,8 @@
     "featuredCategories": "Featured categories",
     "others": "Others",
     "dropOrDragPhotos": "Drop or Drag photos",
-    "supported": "Supported {type}"
+    "supported": "Supported {type}",
+    "readTime": "{number} read time"
   },
   "subTitle": {
     "forgotPassword": "Enter your email address and we will send you a link to reset your password",

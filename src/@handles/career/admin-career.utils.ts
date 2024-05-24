@@ -32,7 +32,26 @@ export function AdminCareerUtils(): AdminCareerUtilsResult {
           name: 'Information Technology Services'
         },
         categories: null,
-        tags: null,
+        tags: [
+          {
+            id: '4415a884-6d9c-48b7-b999-907f7a452f29',
+            type: 'post',
+            name: 'How Do I Choose A Career?',
+            color: '#5bec2c'
+          },
+          {
+            id: '716573d9-2329-4d58-b71a-5891bacc748c',
+            type: 'post',
+            name: 'What Should I Learn Today?',
+            color: '#911ab6'
+          },
+          {
+            id: '1c52a512-a80d-46d0-9296-e9845e00e2eb',
+            type: 'job',
+            name: 'ReactJs',
+            color: '#d49f09'
+          }
+        ],
         createdAt: '2024-05-23T09:57:11.726Z',
         updatedAt: '2024-05-23T09:57:11.726Z',
         deletedAt: null,
