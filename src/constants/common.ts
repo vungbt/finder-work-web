@@ -18,7 +18,8 @@ export const FILE_VIDEO = {
 };
 export const FallbackImage = {
   avatarUrl:
-    'https://res.cloudinary.com/dgxciqlts/image/upload/v1709873667/assets/avatar-1_r0wv7q.webp'
+    'https://res.cloudinary.com/dgxciqlts/image/upload/v1709873667/assets/avatar-1_r0wv7q.webp',
+  thumbnail: ''
 };
 
 export const SettingKeys = [

@@ -842,3 +842,68 @@
   max-height: calc(100vh - 73px);
   overflow: auto;
 }
+
+// CARD
+.card {
+  @apply relative block h-auto transition-all ease-linear border border-solid border-transparent;
+
+  &__flag {
+    @apply absolute -top-1 left-4 text-[11px] font-bold text-white uppercase pt-[2px] px-[2px] pb-1 min-h-5 rounded-t-[4px] transition-all ease-linear;
+  }
+
+  &__flag-hot {
+    @apply bg-danger;
+  }
+
+  .header-action {
+    @apply hidden transition-all ease-linear;
+  }
+
+  &:hover {
+    @apply border-gray-100;
+    .card__flag {
+      @apply -top-[18px];
+    }
+
+    .header-action {
+      @apply flex;
+    }
+  }
+}
+
+// Card action
+.action-blue-cheese {
+  &:hover {
+    @apply text-blue-cheese-hover;
+    button {
+      @apply bg-blue-cheese-hover-bg text-blue-cheese-hover;
+    }
+  }
+}
+
+.action-bun {
+  &:hover {
+    @apply text-bun-hover;
+    button {
+      @apply bg-bun-hover-bg text-bun-hover;
+    }
+  }
+}
+
+.action-cabbage {
+  &:hover {
+    @apply text-cabbage-hover;
+    button {
+      @apply bg-cabbage-hover-bg text-cabbage-hover;
+    }
+  }
+}
+
+.action-avocado {
+  &:hover {
+    @apply text-avocado-hover;
+    button {
+      @apply bg-avocado-hover-bg text-avocado-hover;
+    }
+  }
+}

@@ -66,7 +66,9 @@
     "mostAppliedJobs": "Most Applied Jobs"
   },
   "plural": {
-    "openPositions": "{count, plural, =0 {no open positions yet} =1 {open position} other {# open positions}"
+    "openPositions": "{count, plural, =0 {no open positions yet} =1 {open position} other {# open positions}",
+    "tags": "{count, plural, =0 {no tag} =1 {tag} other {# tags}",
+    "message": "You have {count, plural, =0 {no followers yet} =1 {one follower} other {# followers}}."
   },
   "selecting": {
     "charCount": "{count}/{max} {type, select, char {characters} word {words} other {}}"
@@ -100,6 +102,8 @@
     "registerHere": "Register here",
     "registerWithEmail": "Register with email",
     "alreadyHaveAnAccount": "Already have an account?",
+    "hot": "Hot",
+    "readPost": "Read post",
     "or": "Or",
     "back": "Back",
     "next": "Next",

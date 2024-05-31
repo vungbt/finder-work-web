@@ -30,6 +30,34 @@ html[data-theme='light'] {
   --color-gray-100: #e0e6eb;
   --color-gray-200: #f7f9fb;
 
+  // BlueCheese
+  --blue-cheese-hover-color: #2cdce6;
+  --blue-cheese-hover-background: #0dcfdc3d;
+  --blue-cheese-active-color: #0dcfdc52;
+  --blue-cheese-active-background: #6ff1f633;
+  --blue-cheese-pressed-color: #2cdce6;
+
+  // Avocado
+  --avocado-hover-color: #39e58c;
+  --avocado-hover-background: #1ddc6f3d;
+  --avocado-active-color: #1ddc6f52;
+  --avocado-active-background: #74f3bc33;
+  --avocado-pressed-color: #39e58c;
+
+  // Bun
+  --bun-hover-color: #ff8e3b;
+  --bun-hover-background: #ff7a2b3d;
+  --bun-active-color: #ff7a2b52;
+  --bun-active-background: #ffb76033;
+  --bun-pressed-color: #ff8e3b;
+
+  // Cabbage
+  --cabbage-hover-color: #ce3df3;
+  --cabbage-hover-background: #c029f03d;
+  --cabbage-active-color: #c029f052;
+  --cabbage-active-background: #e669fb33;
+  --cabbage-pressed-color: #ce3df3;
+
   // Gradient
   --neon: linear-gradient(106deg, var(--primary-color) 0%, var(--info) 85.61%);
   --neon-x: linear-gradient(45deg, var(--info) 0%, var(--dark) 85.61%);

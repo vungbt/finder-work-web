@@ -8,7 +8,7 @@ export default function VoteDown({ className, transform, ...reset }: Readonly<Ic
       height="1em"
       viewBox="0 0 24 24"
       xmlns="http://www.w3.org/2000/svg"
-      className={clsx('h-6 w-6', className)}
+      className={clsx('h-6 w-6 rotate-180', className)}
       transform={transform}
       {...reset}
     >

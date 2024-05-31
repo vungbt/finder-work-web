@@ -55,6 +55,11 @@ import Trash from './trash';
 import TrashSolid from './trash-solid';
 import ExportIcon from './export-icon';
 import ImportIcon from './import-icon';
+import VoteDown from './vote-down';
+import VoteUp from './vote-up';
+import Bookmark from './bookmark';
+import Link2 from './link-2';
+import MessageText from './message-text';
 
 export type IconProps = {
   className?: string;
@@ -121,7 +126,12 @@ export type IconName =
   | 'caret-down-solid'
   | 'buildings'
   | 'export-icon'
-  | 'import-icon';
+  | 'import-icon'
+  | 'vote-up'
+  | 'vote-down'
+  | 'bookmark'
+  | 'link-2'
+  | 'message-text';
 
 export type IconsType = Record<IconName, Icon>;
 
@@ -293,6 +303,21 @@ export const Icons: IconsType = {
   },
   'import-icon': (props: IconProps) => {
     return <ImportIcon {...props} />;
+  },
+  'vote-down': (props: IconProps) => {
+    return <VoteDown {...props} />;
+  },
+  'vote-up': (props: IconProps) => {
+    return <VoteUp {...props} />;
+  },
+  bookmark: (props: IconProps) => {
+    return <Bookmark {...props} />;
+  },
+  'link-2': (props: IconProps) => {
+    return <Link2 {...props} />;
+  },
+  'message-text': (props: IconProps) => {
+    return <MessageText {...props} />;
   }
 };
 
