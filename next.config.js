@@ -15,10 +15,17 @@ const nextConfig = {
     PAGE_PROPS_REVALIDATE: process.env.PAGE_PROPS_REVALIDATE
   },
   images: {
+    domains: ['res.cloudinary.com'],
     remotePatterns: [
       {
         protocol: 'https',
         hostname: '**'
+      },
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
+        port: '',
+        pathname: '/dx66fumod/**'
       }
     ]
   }

@@ -47,10 +47,9 @@ export const Pagination = ({
       pageRangeDisplayed={5}
       forcePage={currentPage && currentPage - 1}
       pageCount={Math.ceil(total / limit)}
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      onPageChange={(event: any) => {
-        if (event.nextSelectedPage === undefined) return;
-        onChangePage(event.nextSelectedPage);
+      onPageChange={(event: { selected: number }) => {
+        if (event.selected === undefined) return;
+        onChangePage(event.selected + 1);
       }}
       renderOnZeroPageCount={null}
     />

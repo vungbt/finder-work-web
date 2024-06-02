@@ -44,7 +44,6 @@ export function PostCard({ item, className, isHot }: PostCardProps) {
     };
   }, [item]);
 
-  console.log('newTags====<', newTags.more);
   return (
     <article className={clsx('card min-h-96 rounded-2xl shadow-md bg-gray-200 w-full', className)}>
       <div className="justify-between h-full w-full p-4 flex flex-col gap-3 relative z-[1] rounded-2xl shadow-md bg-gray-200">

@@ -97,10 +97,6 @@ export default function PortalAdmin() {
         }}
         onChangePage={(page) => console.log('page====>', page)}
       />
-      {/* 
-      <PostCard item={
-
-      } /> */}
     </div>
   );
 }
