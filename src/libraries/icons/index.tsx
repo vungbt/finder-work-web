@@ -60,6 +60,9 @@ import VoteUp from './vote-up';
 import Bookmark from './bookmark';
 import Link2 from './link-2';
 import MessageText from './message-text';
+import BookmarkBold from './bookmark-bold';
+import VoteDownBold from './vote-down-bold';
+import VoteUpBold from './vote-up-bold';
 
 export type IconProps = {
   className?: string;
@@ -131,7 +134,10 @@ export type IconName =
   | 'vote-down'
   | 'bookmark'
   | 'link-2'
-  | 'message-text';
+  | 'message-text'
+  | 'bookmark-bold'
+  | 'vote-up-bold'
+  | 'vote-down-bold';
 
 export type IconsType = Record<IconName, Icon>;
 
@@ -318,6 +324,15 @@ export const Icons: IconsType = {
   },
   'message-text': (props: IconProps) => {
     return <MessageText {...props} />;
+  },
+  'bookmark-bold': (props: IconProps) => {
+    return <BookmarkBold {...props} />;
+  },
+  'vote-down-bold': (props: IconProps) => {
+    return <VoteDownBold {...props} />;
+  },
+  'vote-up-bold': (props: IconProps) => {
+    return <VoteUpBold {...props} />;
   }
 };
 

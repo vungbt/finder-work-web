@@ -73,3 +73,8 @@ export type GroupedOptionItem = {
   label: string;
   options: OptionItem[];
 };
+
+export enum ActionStatus {
+  Deleted = 'deleted',
+  Created = 'created'
+}

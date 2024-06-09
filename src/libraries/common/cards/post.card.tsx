@@ -1,6 +1,8 @@
+import { getPostThumbnail, getShareUrl } from '@/@handles/career';
 import { Post } from '@/configs/graphql/generated';
+import useProfile from '@/hooks/redux/profile/useProfile';
 import { RenderIcon } from '@/libraries/icons';
-import { getAvatar, getPostMetaInfo } from '@/utils/helpers/common';
+import { copyToClipboard, getAvatar } from '@/utils/helpers/common';
 import { EDateFormat, formatDate } from '@/utils/helpers/formatter';
 import { Link } from '@/utils/navigation';
 import clsx from 'clsx';
@@ -13,20 +15,14 @@ type PostCardProps = {
   item: Post;
   className?: string;
   isHot?: boolean;
+  onBookmark?: (item: Post) => void;
 };
 
-export function PostCard({ item, className, isHot }: PostCardProps) {
+export function PostCard({ item, className, isHot, onBookmark }: PostCardProps) {
   const t = useTranslations();
-  const thumbnail = useMemo(() => {
-    if (item.thumbnails && item.thumbnails.length > 0) return item.thumbnails[0];
-    const metadata = getPostMetaInfo(item);
-    if (metadata)
-      return {
-        id: metadata.title,
-        url: metadata.imageUrl
-      };
-    return null;
-  }, [item]);
+  const thumbnail = useMemo(() => getPostThumbnail(item), [item]);
+  const shareUrl = useMemo(() => getShareUrl(item), [item]);
+  const { profile } = useProfile();
 
   const totalUpVote = useMemo(() => {
     const likes = item?._count?.likes ?? 0;
@@ -37,12 +33,19 @@ export function PostCard({ item, className, isHot }: PostCardProps) {
   const totalComment = useMemo(() => item?._count?.comments ?? 0, [item]);
   const newTags = useMemo(() => {
     const tags = item?.tags ?? [];
-    if (tags.length < 3) return { tags };
+    if (tags.length <= 3) return { tags };
     return {
-      tags: tags.slice(0, 2),
-      more: tags.slice(2, tags.length).length
+      tags: tags.slice(0, 3),
+      more: tags.slice(3, tags.length).length
     };
   }, [item]);
+
+  const isBookmark = useMemo(() => {
+    const bookmarks = item.bookmarks;
+    const currentUserId = profile?.id;
+    if (!bookmarks || bookmarks.length <= 0 || !currentUserId) return false;
+    return bookmarks.some((item) => item.userId === currentUserId);
+  }, [item, profile]);
 
   return (
     <article className={clsx('card min-h-96 rounded-2xl shadow-md bg-gray-200 w-full', className)}>
@@ -64,7 +67,7 @@ export function PostCard({ item, className, isHot }: PostCardProps) {
             <div className="header-action">
               {/* read post button */}
               <Link
-                href="/"
+                href={shareUrl}
                 target="_blank"
                 className="flex items-center gap-2 text-sm text-white bg-dark rounded-lg w-fit h-auto py-2 px-2 font-bold max-h-8"
               >
@@ -83,8 +86,10 @@ export function PostCard({ item, className, isHot }: PostCardProps) {
             {(newTags.tags ?? []).map((item) => (
               <Tag type="outline" content={item.name} key={item.id} color={item.color as string} />
             ))}
-            {newTags.more && (
-              <Tag icon="add" content={t('plural.message', { count: newTags.more })} />
+            {newTags.more ? (
+              <Tag icon="add" content={t('plural.tags', { count: newTags.more })} />
+            ) : (
+              ''
             )}
           </div>
 
@@ -136,15 +141,19 @@ export function PostCard({ item, className, isHot }: PostCardProps) {
           </div>
 
           {/* bookmark */}
-          <div className="action-bun items-center flex gap-1 text-text-tertiary">
-            <button className="p-[3px] rounded-lg">
-              <RenderIcon name="bookmark" />
+          <div
+            className={clsx('action-bun items-center flex gap-1 text-text-tertiary', {
+              'text-bun-pressed': isBookmark
+            })}
+          >
+            <button className="p-[3px] rounded-lg" onClick={() => onBookmark && onBookmark(item)}>
+              <RenderIcon name={isBookmark ? 'bookmark-bold' : 'bookmark'} />
             </button>
           </div>
 
           {/* share link */}
           <div className="action-cabbage first-line:items-center flex gap-1 text-text-tertiary ">
-            <button className="p-[3px] rounded-lg">
+            <button className="p-[3px] rounded-lg" onClick={() => copyToClipboard(shareUrl, t)}>
               <RenderIcon name="link-2" />
             </button>
           </div>

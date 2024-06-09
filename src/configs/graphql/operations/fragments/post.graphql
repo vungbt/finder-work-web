@@ -9,6 +9,9 @@ fragment PostFragment on Post {
   thumbnails {
     ...Image
   }
+  bookmarks {
+    userId
+  }
   jobCategory {
     id
     name

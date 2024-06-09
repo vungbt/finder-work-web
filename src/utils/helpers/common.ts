@@ -1,4 +1,5 @@
 import { Post, User } from '@/configs/graphql/generated';
+import { toastError, toastSuccess } from '@/configs/toast';
 import { COUNTRY_CODE_DEFAULT, FallbackImage } from '@/constants/common';
 import { MetaInfo } from '@/types';
 import chroma from 'chroma-js';
@@ -56,4 +57,18 @@ export const getPostMetaInfo = (item: Post) => {
   const metadata = item.metadata;
   if (!metadata || Object.keys(metadata).length <= 0) return null;
   return metadata as MetaInfo;
+};
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const copyToClipboard = (text: string, mess?: { error?: string; success: string } | any) => {
+  let messError = mess?.error;
+  let messSuccess = mess?.success;
+
+  if (typeof mess === 'function') {
+    messError = mess('noti.copiedLinkToClipboardFailed');
+    messSuccess = mess('noti.copiedLinkToClipboard');
+  }
+  if (!navigator || !navigator.clipboard || !text || text.length <= 0) return toastError(messError);
+  navigator.clipboard.writeText(text);
+  return toastSuccess(messSuccess);
 };

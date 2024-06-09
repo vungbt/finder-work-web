@@ -67,7 +67,7 @@
   },
   "plural": {
     "openPositions": "{count, plural, =0 {no open positions yet} =1 {open position} other {# open positions}",
-    "tags": "{count, plural, =0 {no tag} =1 {tag} other {# tags}",
+    "tags": "{count, plural, =0 {no tags yet} =1 {one tag} other {# tags}}.",
     "message": "You have {count, plural, =0 {no followers yet} =1 {one follower} other {# followers}}."
   },
   "selecting": {
@@ -201,6 +201,8 @@
     "createError": "Create error, please try again",
     "deleteConfirm": "Are you sure you want to delete this {label}?",
     "deleteConfirmFrom": "Are you sure you want to delete this {label} from {from}?",
-    "deleteConfirmEffectTo": "By deleting this {label}, {number} other {effectKey} will also be permanently deleted."
+    "deleteConfirmEffectTo": "By deleting this {label}, {number} other {effectKey} will also be permanently deleted.",
+    "copiedLinkToClipboard": "Copied link to clipboard",
+    "copiedLinkToClipboardFailed": "Copied link to clipboard failed"
   }
 }

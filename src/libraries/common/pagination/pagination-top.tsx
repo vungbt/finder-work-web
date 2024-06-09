@@ -38,7 +38,7 @@ export function PaginationTop({
         className={clsx(
           'bg-gray-200 h-full min-h-8 min-w-8 flex items-center justify-center rounded transition-all ease-linear hover:bg-info hover:text-white ml-2',
           {
-            'opacity-55 hover:bg-gray-200 hover:text-dark cursor-not-allowed': currentPage === 1
+            'opacity-55 hover:!bg-gray-200 hover:!text-dark cursor-not-allowed': currentPage === 1
           }
         )}
       >
@@ -50,7 +50,7 @@ export function PaginationTop({
         className={clsx(
           'bg-gray-200 h-full min-h-8 min-w-8 flex items-center justify-center rounded transition-all ease-linear hover:bg-info hover:text-white',
           {
-            'opacity-55 hover:bg-gray-200 hover:text-dark cursor-not-allowed':
+            'opacity-55 hover:!bg-gray-200 hover:!text-dark cursor-not-allowed':
               currentPage === totalPage
           }
         )}
