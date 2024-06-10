@@ -1,0 +1,15 @@
+subscription votePost {
+  vote_post {
+    data {
+      id
+      userId
+      postId
+      commentId
+      totalVoteInPost
+    }
+    metadata {
+      status
+      action
+    }
+  }
+}

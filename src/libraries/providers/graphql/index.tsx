@@ -1,10 +1,16 @@
 'use client';
-import { apiClientInstance, getApiClient } from '@/configs/graphql';
+import {
+  apiClientInstance,
+  getApiClient,
+  getSubscriptionClient,
+  subscriptionClientInstance
+} from '@/configs/graphql';
 import useSessionClient from '@/hooks/redux/session/useSession';
 import React, { ReactNode, useContext, useMemo } from 'react';
 
 export const ApiClientContext = React.createContext({
-  apiClient: apiClientInstance
+  apiClient: apiClientInstance,
+  subscription: subscriptionClientInstance
 });
 
 type ApiClientProviderProps = {
@@ -22,10 +28,19 @@ export const ApiClientProvider = ({ children }: ApiClientProviderProps) => {
     return apiClientInstance;
   }, [session]);
 
+  const subscription = useMemo(() => {
+    const accessToken = session?.token?.accessToken;
+    if (accessToken) {
+      return getSubscriptionClient(accessToken);
+    }
+    return subscriptionClientInstance;
+  }, [session]);
+
   return (
     <ApiClientContext.Provider
       value={{
-        apiClient
+        apiClient,
+        subscription
       }}
     >
       {children}

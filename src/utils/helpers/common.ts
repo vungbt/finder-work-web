@@ -1,4 +1,4 @@
-import { Post, User } from '@/configs/graphql/generated';
+import { PostItem, User, UserOnly } from '@/configs/graphql/generated';
 import { toastError, toastSuccess } from '@/configs/toast';
 import { COUNTRY_CODE_DEFAULT, FallbackImage } from '@/constants/common';
 import { MetaInfo } from '@/types';
@@ -42,18 +42,18 @@ export const countWords = (str: string) => {
     .filter((word) => word.length > 0).length;
 };
 
-export const getAvatar = (user: User) => {
+export const getAvatar = (user: User | UserOnly) => {
   const avatarUrl = user?.avatarUrl ?? user.avatar?.url;
   if (!avatarUrl) return FallbackImage.avatarUrl;
   return avatarUrl;
 };
 
-export const getFullName = (user: User) => {
+export const getFullName = (user: User | UserOnly) => {
   const fullName = `${user.firstName} ${user.lastName}`;
   return fullName;
 };
 
-export const getPostMetaInfo = (item: Post) => {
+export const getPostMetaInfo = (item: PostItem) => {
   const metadata = item.metadata;
   if (!metadata || Object.keys(metadata).length <= 0) return null;
   return metadata as MetaInfo;

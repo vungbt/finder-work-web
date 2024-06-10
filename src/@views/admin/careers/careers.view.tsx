@@ -8,6 +8,7 @@ import { PostCard } from '@/libraries/common/cards';
 export function CareersView() {
   const { data, pagination, metadata, setSearchValue, setPagination, onBookmark } =
     AdminCareerUtils();
+
   return (
     <div>
       <FunctionBar

@@ -1,4 +1,4 @@
-import { Post } from '@/configs/graphql/generated';
+import { PostItem } from '@/configs/graphql/generated';
 import { RouterPath } from '@/constants/router-path';
 import { UploadItem } from '@/libraries/common';
 import { MetaInfo, OptionItem } from '@/types';
@@ -18,7 +18,7 @@ export type CareerPostForm = {
   metaInfo?: MetaInfo | null;
 };
 
-export const getPostThumbnail = (item: Post) => {
+export const getPostThumbnail = (item: PostItem) => {
   if (item.thumbnails && item.thumbnails.length > 0) return item.thumbnails[0];
   const metadata = getPostMetaInfo(item);
   if (metadata)
@@ -29,7 +29,7 @@ export const getPostThumbnail = (item: Post) => {
   return null;
 };
 
-export const getShareUrl = (item: Post) => {
+export const getShareUrl = (item: PostItem) => {
   let shareUrl = item.shareUrl;
   const metadata = getPostMetaInfo(item);
   if (!shareUrl || shareUrl.length <= 1) {

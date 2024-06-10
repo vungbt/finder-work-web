@@ -1,6 +1,5 @@
 import { getPostThumbnail, getShareUrl } from '@/@handles/career';
-import { Post } from '@/configs/graphql/generated';
-import useProfile from '@/hooks/redux/profile/useProfile';
+import { PostItem } from '@/configs/graphql/generated';
 import { RenderIcon } from '@/libraries/icons';
 import { copyToClipboard, getAvatar } from '@/utils/helpers/common';
 import { EDateFormat, formatDate } from '@/utils/helpers/formatter';
@@ -12,17 +11,16 @@ import { useMemo } from 'react';
 import { Tag } from '../tags';
 
 type PostCardProps = {
-  item: Post;
+  item: PostItem;
   className?: string;
   isHot?: boolean;
-  onBookmark?: (item: Post) => void;
+  onBookmark?: (item: PostItem) => void;
 };
 
 export function PostCard({ item, className, isHot, onBookmark }: PostCardProps) {
   const t = useTranslations();
   const thumbnail = useMemo(() => getPostThumbnail(item), [item]);
   const shareUrl = useMemo(() => getShareUrl(item), [item]);
-  const { profile } = useProfile();
 
   const totalUpVote = useMemo(() => {
     const likes = item?._count?.likes ?? 0;
@@ -41,11 +39,11 @@ export function PostCard({ item, className, isHot, onBookmark }: PostCardProps) 
   }, [item]);
 
   const isBookmark = useMemo(() => {
-    const bookmarks = item.bookmarks;
-    const currentUserId = profile?.id;
-    if (!bookmarks || bookmarks.length <= 0 || !currentUserId) return false;
-    return bookmarks.some((item) => item.userId === currentUserId);
-  }, [item, profile]);
+    const currentUserBookmark = item.userBookmark;
+    if (!currentUserBookmark) return false;
+    return true;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [item.userBookmark]);
 
   return (
     <article className={clsx('card min-h-96 rounded-2xl shadow-md bg-gray-200 w-full', className)}>
@@ -143,7 +141,7 @@ export function PostCard({ item, className, isHot, onBookmark }: PostCardProps) 
           {/* bookmark */}
           <div
             className={clsx('action-bun items-center flex gap-1 text-text-tertiary', {
-              'text-bun-pressed': isBookmark
+              '!text-bun-pressed': isBookmark
             })}
           >
             <button className="p-[3px] rounded-lg" onClick={() => onBookmark && onBookmark(item)}>

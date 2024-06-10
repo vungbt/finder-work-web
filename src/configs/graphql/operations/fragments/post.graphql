@@ -1,4 +1,4 @@
-fragment PostFragment on Post {
+fragment PostFragment on PostItem {
   id
   title
   content
@@ -8,9 +8,6 @@ fragment PostFragment on Post {
   minRead
   thumbnails {
     ...Image
-  }
-  bookmarks {
-    userId
   }
   jobCategory {
     id
@@ -41,5 +38,11 @@ fragment PostFragment on Post {
     email
     color
     role
+  }
+  userBookmark {
+    id
+  }
+  userVote {
+    id
   }
 }

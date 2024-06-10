@@ -2,7 +2,7 @@ import {
   AllPostQueryVariables,
   Metadata,
   PaginationInput,
-  Post
+  PostItem
 } from '@/configs/graphql/generated';
 import { useApiClient } from '@/libraries/providers/graphql';
 import { ActionStatus } from '@/types';
@@ -11,7 +11,7 @@ import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 
 type AdminCareerUtilsResult = {
-  data: Post[];
+  data: PostItem[];
   metadata?: Metadata;
   loading: boolean;
   pagination: PaginationInput;
@@ -19,14 +19,14 @@ type AdminCareerUtilsResult = {
   setSearchValue: (value: string) => void;
 
   // bookmark
-  onBookmark: (item: Post) => void;
+  onBookmark: (item: PostItem) => void;
 };
 export function AdminCareerUtils(): AdminCareerUtilsResult {
   const t = useTranslations();
   const { apiClient } = useApiClient();
   const [searchValue, setSearchValue] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
-  const [data, setData] = useState<Post[]>([]);
+  const [data, setData] = useState<PostItem[]>([]);
   const [metadata, setMetadata] = useState<Metadata>();
   const [pagination, setPagination] = useState<PaginationInput>({ page: 1, limit: 30 });
 
@@ -45,7 +45,7 @@ export function AdminCareerUtils(): AdminCareerUtilsResult {
       setLoading(false);
       const result = res.all_post;
       if (result && result.data) {
-        setData(result.data as Post[]);
+        setData(result.data as PostItem[]);
         setMetadata(result?.metadata as Metadata);
       }
     } catch (error) {
@@ -54,7 +54,7 @@ export function AdminCareerUtils(): AdminCareerUtilsResult {
     }
   };
 
-  const onBookmark = async (item: Post) => {
+  const onBookmark = async (item: PostItem) => {
     try {
       if (loadingBookmark || !item.id) return;
       setLoadingBookmark(true);
@@ -70,16 +70,17 @@ export function AdminCareerUtils(): AdminCareerUtilsResult {
         const { data: newBookmarkPost, metadata } = bookmark_post;
         const bookmarkStatus = metadata?.status;
 
-        let bookmarks: { userId: string }[] = postItem.bookmarks ?? [];
+        let userBookmark: { id: string } | null = postItem.userBookmark ?? null;
         if (bookmarkStatus === ActionStatus.Created) {
-          bookmarks.push({ userId: newBookmarkPost.userId });
+          userBookmark = { id: newBookmarkPost.userId };
         } else {
-          bookmarks = bookmarks.filter((bookmark) => bookmark.userId !== newBookmarkPost.userId);
+          userBookmark = null;
         }
 
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        postItem.bookmarks = bookmarks as any;
+        postItem.userBookmark = userBookmark as any;
         newPosts[itemIndex] = postItem;
+        setData(newPosts);
       }
     } catch (error) {
       setLoadingBookmark(false);
