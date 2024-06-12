@@ -1,11 +1,33 @@
-subscription votePost {
+subscription subscriptionVotePost {
   vote_post {
     data {
       id
       userId
       postId
       commentId
-      totalVoteInPost
+      _postCount {
+        likes
+        dislikes
+      }
+    }
+    metadata {
+      status
+      action
+    }
+  }
+}
+
+mutation votePost($postId: String!, $commentId: String, $action: VoteAction!) {
+  vote_post(postId: $postId, commentId: $commentId, action: $action) {
+    data {
+      id
+      userId
+      postId
+      commentId
+      _postCount {
+        likes
+        dislikes
+      }
     }
     metadata {
       status

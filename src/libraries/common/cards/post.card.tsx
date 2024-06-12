@@ -1,32 +1,37 @@
 import { getPostThumbnail, getShareUrl } from '@/@handles/career';
-import { PostItem } from '@/configs/graphql/generated';
+import { PostItem, VoteAction } from '@/configs/graphql/generated';
+import useProfile from '@/hooks/redux/profile/useProfile';
 import { RenderIcon } from '@/libraries/icons';
 import { copyToClipboard, getAvatar } from '@/utils/helpers/common';
 import { EDateFormat, formatDate } from '@/utils/helpers/formatter';
-import { Link } from '@/utils/navigation';
+import { Link, useRouter } from '@/utils/navigation';
 import clsx from 'clsx';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { useMemo } from 'react';
 import { Tag } from '../tags';
+import { RouterPath } from '@/constants/router-path';
 
 type PostCardProps = {
   item: PostItem;
   className?: string;
   isHot?: boolean;
   onBookmark?: (item: PostItem) => void;
+  onVotePost?: (item: PostItem, action: VoteAction) => void;
 };
 
-export function PostCard({ item, className, isHot, onBookmark }: PostCardProps) {
+export function PostCard({ item, className, isHot, onBookmark, onVotePost }: PostCardProps) {
   const t = useTranslations();
+  const router = useRouter();
   const thumbnail = useMemo(() => getPostThumbnail(item), [item]);
   const shareUrl = useMemo(() => getShareUrl(item), [item]);
+  const { profile } = useProfile();
 
   const totalUpVote = useMemo(() => {
     const likes = item?._count?.likes ?? 0;
     const dislikes = item?._count?.dislikes ?? 0;
     return likes - dislikes;
-  }, [item]);
+  }, [item._count]);
 
   const totalComment = useMemo(() => item?._count?.comments ?? 0, [item]);
   const newTags = useMemo(() => {
@@ -36,15 +41,29 @@ export function PostCard({ item, className, isHot, onBookmark }: PostCardProps) 
       tags: tags.slice(0, 3),
       more: tags.slice(3, tags.length).length
     };
-  }, [item]);
+  }, [item.tags]);
 
   const isBookmark = useMemo(() => {
     const currentUserBookmark = item.userBookmark;
-    if (!currentUserBookmark) return false;
-    return true;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [item.userBookmark]);
+    if (currentUserBookmark && currentUserBookmark.id === profile?.id) return true;
+    return false;
+  }, [item, profile]);
 
+  const isUpVote = useMemo(() => {
+    const currentUserVote = item.userVote;
+    if (
+      currentUserVote &&
+      currentUserVote.action === VoteAction.UpVote &&
+      currentUserVote.id === profile?.id
+    )
+      return true;
+    return false;
+  }, [item, profile]);
+
+  const onClickComment = () => {
+    if (!item || !item.id) return;
+    router.push(`${RouterPath.ADMIN_CAREERS_READ}/${item.slug}`);
+  };
   return (
     <article className={clsx('card min-h-96 rounded-2xl shadow-md bg-gray-200 w-full', className)}>
       <div className="justify-between h-full w-full p-4 flex flex-col gap-3 relative z-[1] rounded-2xl shadow-md bg-gray-200">
@@ -106,7 +125,7 @@ export function PostCard({ item, className, isHot, onBookmark }: PostCardProps) 
                 height={162}
                 alt="thumbnail"
                 src={thumbnail.url}
-                className="rounded-xl w-full max-h-[136px]"
+                className="rounded-xl w-full h-[136px]"
               />
             ) : (
               <Image
@@ -123,16 +142,23 @@ export function PostCard({ item, className, isHot, onBookmark }: PostCardProps) 
         {/* footer */}
         <div className="flex items-center justify-between">
           {/* vote */}
-          <div className="action-avocado items-center flex gap-1 text-text-tertiary">
-            <button className="p-[3px] rounded-lg">
-              <RenderIcon name="vote-up" />
+          <div
+            className={clsx('action-avocado items-center flex gap-1 text-text-tertiary', {
+              '!text-avocado-pressed': isUpVote
+            })}
+          >
+            <button
+              className="p-[3px] rounded-lg"
+              onClick={() => onVotePost && onVotePost(item, VoteAction.UpVote)}
+            >
+              <RenderIcon name={isUpVote ? 'vote-up-bold' : 'vote-up'} />
             </button>
             <span className="font-medium">{totalUpVote}</span>
           </div>
 
           {/* comment */}
           <div className="action-blue-cheese items-center flex gap-1 text-text-tertiary">
-            <button className="p-[3px] rounded-lg">
+            <button className="p-[3px] rounded-lg" onClick={onClickComment}>
               <RenderIcon name="message-text" />
             </button>
             <span className="font-medium">{totalComment}</span>

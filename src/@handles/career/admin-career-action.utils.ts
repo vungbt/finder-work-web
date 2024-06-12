@@ -1,21 +1,22 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { CreatePostInput, Tag, TagType } from '@/configs/graphql/generated';
+import { toastError, toastSuccess } from '@/configs/toast';
+import { RouterPath } from '@/constants/router-path';
 import useJobCategories from '@/hooks/redux/job-category/useJobCategories';
 import usePostCategories from '@/hooks/redux/post-category/usePostCategories';
 import useTags from '@/hooks/redux/tags/useTags';
 import useMetaInfo from '@/hooks/useMetaInfo';
 import { TabItem } from '@/libraries/common';
+import { useApiClient } from '@/libraries/providers/graphql';
 import { GroupedOptionItem, MetaInfo, OptionItem } from '@/types';
-import { useSearchQuery } from '@/utils/navigation';
+import { randomHexColor } from '@/utils/helpers/common';
+import { useRouter, useSearchQuery } from '@/utils/navigation';
+import { upload } from '@/utils/upload';
+import { FormikProps } from 'formik';
 import debounce from 'lodash/debounce';
 import { useTranslations } from 'next-intl';
 import { RefObject, useEffect, useRef, useState } from 'react';
 import { CareerPostForm } from '.';
-import { useApiClient } from '@/libraries/providers/graphql';
-import { upload } from '@/utils/upload';
-import { randomHexColor } from '@/utils/helpers/common';
-import { toastError, toastSuccess } from '@/configs/toast';
-import { FormikProps } from 'formik';
 
 type AdminCareerActionUtilsResult = {
   tabActive: TabItem;
@@ -46,6 +47,7 @@ export function AdminCareerActionUtils({
   isEdit?: boolean;
 }): AdminCareerActionUtilsResult {
   const t = useTranslations();
+  const router = useRouter();
   const tabs = [
     { label: t('common.newPost'), value: 'post' },
     { label: t('common.shareALink'), value: 'link' }
@@ -134,7 +136,11 @@ export function AdminCareerActionUtils({
         },
         jobCategory: { connect: { id: jobCategory.value } },
         tags: {
-          create: newTags.map((item) => ({ name: item.label, color: randomHexColor() })),
+          create: newTags.map((item) => ({
+            name: item.label,
+            color: randomHexColor(),
+            type: TagType.Post
+          })),
           connect: tagsReady.map((item) => ({ id: item.value }))
         },
         thumbnailIds
@@ -143,16 +149,18 @@ export function AdminCareerActionUtils({
       if (isEdit) {
         console.log('Edit here====>', data);
       } else {
-        setLoading(false);
-        const res = await apiClient.createPost({ data });
         setLoading(true);
+        const res = await apiClient.createPost({ data });
+        setLoading(false);
         resetForm();
         if (res.create_post) {
           toastSuccess(t('noti.createSuccess'));
         }
       }
+      router.push(RouterPath.ADMIN_CAREERS);
     } catch (error) {
       resetForm();
+      setLoading(false);
       toastError((error as any)?.message);
     }
   };

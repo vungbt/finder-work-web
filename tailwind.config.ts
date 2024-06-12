@@ -106,6 +106,14 @@ const config: Config = {
         'hover-bg': 'var(--cabbage-hover-background)',
         'active-bg': 'var(--cabbage-active-background)',
         pressed: 'var(--cabbage-pressed-color)'
+      },
+      ketchup: {
+        DEFAULT: 'var(--ketchup-pressed-color)',
+        hover: 'var(--ketchup-hover-color)',
+        active: 'var(--ketchup-active-color)',
+        'hover-bg': 'var(--ketchup-hover-background)',
+        'active-bg': 'var(--ketchup-active-background)',
+        pressed: 'var(--ketchup-pressed-color)'
       }
     },
     extend: {

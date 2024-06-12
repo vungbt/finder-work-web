@@ -2,13 +2,15 @@ import {
   AllPostQueryVariables,
   Metadata,
   PaginationInput,
-  PostItem
+  PostItem,
+  VoteAction
 } from '@/configs/graphql/generated';
 import { useApiClient } from '@/libraries/providers/graphql';
 import { ActionStatus } from '@/types';
 import { getErrorMss } from '@/utils/helpers/formatter';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
+import { useVotePost } from './useVotePost';
 
 type AdminCareerUtilsResult = {
   data: PostItem[];
@@ -20,6 +22,7 @@ type AdminCareerUtilsResult = {
 
   // bookmark
   onBookmark: (item: PostItem) => void;
+  onVotePost: (item: PostItem, action: VoteAction) => void;
 };
 export function AdminCareerUtils(): AdminCareerUtilsResult {
   const t = useTranslations();
@@ -29,6 +32,7 @@ export function AdminCareerUtils(): AdminCareerUtilsResult {
   const [data, setData] = useState<PostItem[]>([]);
   const [metadata, setMetadata] = useState<Metadata>();
   const [pagination, setPagination] = useState<PaginationInput>({ page: 1, limit: 30 });
+  const { onVotePost: handleVotePost } = useVotePost(data, setData);
 
   // bookmark
   const [loadingBookmark, setLoadingBookmark] = useState<boolean>(false);
@@ -88,6 +92,11 @@ export function AdminCareerUtils(): AdminCareerUtilsResult {
     }
   };
 
+  const onVotePost = (item: PostItem, action: VoteAction) => {
+    if (!item.id || !action) return;
+    handleVotePost({ postId: item.id, action });
+  };
+
   return {
     loading,
     data,
@@ -98,6 +107,7 @@ export function AdminCareerUtils(): AdminCareerUtilsResult {
     setSearchValue,
 
     // bookmark
-    onBookmark
+    onBookmark,
+    onVotePost
   };
 }

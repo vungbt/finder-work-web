@@ -42,7 +42,13 @@ fragment PostFragment on PostItem {
   userBookmark {
     id
   }
+  _count {
+    likes
+    dislikes
+    comments
+  }
   userVote {
     id
+    action
   }
 }

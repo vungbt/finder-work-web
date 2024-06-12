@@ -58,6 +58,13 @@ html[data-theme='light'] {
   --cabbage-active-background: #e669fb33;
   --cabbage-pressed-color: #ce3df3;
 
+  // Ketchup
+  --ketchup-hover-color: #e04337;
+  --ketchup-hover-background: #d52b203d;
+  --ketchup-active-color: #d52b2052;
+  --ketchup-active-background: #f3796c33;
+  --ketchup-pressed-color: #e04337;
+
   // Gradient
   --neon: linear-gradient(106deg, var(--primary-color) 0%, var(--info) 85.61%);
   --neon-x: linear-gradient(45deg, var(--info) 0%, var(--dark) 85.61%);

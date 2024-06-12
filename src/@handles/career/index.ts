@@ -6,6 +6,7 @@ import { getPostMetaInfo } from '@/utils/helpers/common';
 
 export * from './admin-career-action.utils';
 export * from './admin-career.utils';
+export * from './admin-career-detail.utils';
 
 export type CareerPostForm = {
   title: string;
@@ -27,6 +28,19 @@ export const getPostThumbnail = (item: PostItem) => {
       url: metadata.imageUrl
     };
   return null;
+};
+
+export const getPostThumbnails = (item: PostItem) => {
+  if (item.thumbnails && item.thumbnails.length > 0) return item.thumbnails;
+  const metadata = getPostMetaInfo(item);
+  if (metadata)
+    return [
+      {
+        id: metadata.title,
+        url: metadata.imageUrl
+      }
+    ];
+  return [];
 };
 
 export const getShareUrl = (item: PostItem) => {

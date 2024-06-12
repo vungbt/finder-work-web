@@ -907,3 +907,12 @@
     }
   }
 }
+
+.action-ketchup {
+  &:hover {
+    @apply text-ketchup-hover;
+    button {
+      @apply bg-ketchup-hover-bg text-ketchup-hover;
+    }
+  }
+}
