@@ -1,4 +1,4 @@
-import { PostItem } from '@/configs/graphql/generated';
+import { PostItem, UserOnly, VoteAction } from '@/configs/graphql/generated';
 import { RouterPath } from '@/constants/router-path';
 import { UploadItem } from '@/libraries/common';
 import { MetaInfo, OptionItem } from '@/types';
@@ -7,6 +7,8 @@ import { getPostMetaInfo } from '@/utils/helpers/common';
 export * from './admin-career-action.utils';
 export * from './admin-career.utils';
 export * from './admin-career-detail.utils';
+export * from './useVotePosts';
+export * from './useVotePost';
 
 export type CareerPostForm = {
   title: string;
@@ -50,4 +52,17 @@ export const getShareUrl = (item: PostItem) => {
     shareUrl = metadata?.url as string;
   }
   return shareUrl ?? RouterPath?.Home;
+};
+
+export const userIsBookmarkPost = (post: PostItem, profile: UserOnly) => {
+  const currentUserBookmark = post.userBookmark;
+  if (currentUserBookmark && currentUserBookmark.id === profile?.id) return true;
+  return false;
+};
+
+export const userIsUpVote = (post: PostItem, profile: UserOnly, action: VoteAction) => {
+  const currentUserVote = post.userVote;
+  if (currentUserVote && currentUserVote.action === action && currentUserVote.id === profile?.id)
+    return true;
+  return false;
 };

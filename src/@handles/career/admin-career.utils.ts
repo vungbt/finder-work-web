@@ -10,7 +10,7 @@ import { ActionStatus } from '@/types';
 import { getErrorMss } from '@/utils/helpers/formatter';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
-import { useVotePost } from './useVotePost';
+import { useVotePosts } from './useVotePosts';
 
 type AdminCareerUtilsResult = {
   data: PostItem[];
@@ -32,7 +32,7 @@ export function AdminCareerUtils(): AdminCareerUtilsResult {
   const [data, setData] = useState<PostItem[]>([]);
   const [metadata, setMetadata] = useState<Metadata>();
   const [pagination, setPagination] = useState<PaginationInput>({ page: 1, limit: 30 });
-  const { onVotePost: handleVotePost } = useVotePost(data, setData);
+  const { onVotePost: handleVotePost } = useVotePosts(data, setData);
 
   // bookmark
   const [loadingBookmark, setLoadingBookmark] = useState<boolean>(false);

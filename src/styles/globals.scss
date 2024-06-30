@@ -916,3 +916,12 @@
     }
   }
 }
+
+.action-subtlest {
+  &:hover {
+    @apply text-subtlest-hover;
+    button {
+      @apply bg-subtlest-hover-bg text-subtlest-hover;
+    }
+  }
+}

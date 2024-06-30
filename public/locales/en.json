@@ -70,10 +70,10 @@
   },
   "plural": {
     "openPositions": "{count, plural, =0 {no open positions yet} =1 {open position} other {# open positions}",
-    "tags": "{count, plural, =0 {no tags yet} =1 {one tag} other {# tags}}.",
-    "upVotes": "{count, plural, =0 {no upvotes yet} =1 {one upvote} other {# upvotes}}.",
-    "comments": "{count, plural, =0 {no comments yet} =1 {one comment} other {# comments}}.",
-    "message": "You have {count, plural, =0 {no followers yet} =1 {one follower} other {# followers}}."
+    "tags": "{count, plural, =0 {no tags yet} =1 {one tag} other {# tags}}",
+    "upVotes": "{count, plural, =0 {no upvotes yet} =1 {one upvote} other {# upvotes}}",
+    "comments": "{count, plural, =0 {no comments yet} =1 {one comment} other {# comments}}",
+    "message": "You have {count, plural, =0 {no followers yet} =1 {one follower} other {# followers}}"
   },
   "selecting": {
     "charCount": "{count}/{max} {type, select, char {characters} word {words} other {}}"

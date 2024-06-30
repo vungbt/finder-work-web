@@ -1,4 +1,4 @@
-import { getPostThumbnail, getShareUrl } from '@/@handles/career';
+import { getPostThumbnail, getShareUrl, userIsBookmarkPost, userIsUpVote } from '@/@handles/career';
 import { PostItem, VoteAction } from '@/configs/graphql/generated';
 import useProfile from '@/hooks/redux/profile/useProfile';
 import { RenderIcon } from '@/libraries/icons';
@@ -43,22 +43,9 @@ export function PostCard({ item, className, isHot, onBookmark, onVotePost }: Pos
     };
   }, [item.tags]);
 
-  const isBookmark = useMemo(() => {
-    const currentUserBookmark = item.userBookmark;
-    if (currentUserBookmark && currentUserBookmark.id === profile?.id) return true;
-    return false;
-  }, [item, profile]);
+  const isBookmark = useMemo(() => userIsBookmarkPost(item, profile), [item, profile]);
 
-  const isUpVote = useMemo(() => {
-    const currentUserVote = item.userVote;
-    if (
-      currentUserVote &&
-      currentUserVote.action === VoteAction.UpVote &&
-      currentUserVote.id === profile?.id
-    )
-      return true;
-    return false;
-  }, [item, profile]);
+  const isUpVote = useMemo(() => userIsUpVote(item, profile, VoteAction.UpVote), [item, profile]);
 
   const onClickComment = () => {
     if (!item || !item.id) return;

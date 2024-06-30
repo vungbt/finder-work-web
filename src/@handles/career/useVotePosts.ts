@@ -11,16 +11,15 @@ import { ActionStatus } from '@/types';
 import { getErrorMss } from '@/utils/helpers/formatter';
 import { useEffect, useRef, useState } from 'react';
 
-export function useVotePost(data?: PostItem, callback?: (items: PostItem) => void) {
+export function useVotePosts(data: PostItem[], callback: (items: PostItem[]) => void) {
   const { data: votePost } = useSubscription<SubscriptionVotePostSubscription>(
     SubscriptionVotePostDocument
   );
   const { apiClient } = useApiClient();
   const [loading, setLoading] = useState<boolean>(false);
-  const prevDataRef = useRef<PostItem>();
+  const prevDataRef = useRef<PostItem[]>([]);
 
   useEffect(() => {
-    if (!data) return;
     if (prevDataRef.current !== data && votePost) {
       handleVotePost();
     }
@@ -29,27 +28,30 @@ export function useVotePost(data?: PostItem, callback?: (items: PostItem) => voi
   }, [votePost]);
 
   const handleVotePost = () => {
-    if (!data || !votePost) return;
-    const newData = { ...data };
+    if (!data || data.length <= 0 || !votePost) return;
+    const newData = [...data];
     const { data: votePostResult, metadata } = votePost.vote_post;
     const status = metadata?.status;
     const action = metadata?.action;
 
-    if (newData.id === votePostResult.postId) {
+    const postIndexValid = newData.findIndex((item) => item.id === votePostResult.postId);
+    if (postIndexValid !== -1) {
+      const postItem = newData[postIndexValid];
       if (status === ActionStatus.Deleted) {
-        const postCount = newData._count;
+        const postCount = postItem._count;
         const likesCount = VoteAction.UpVote === action ? postCount.likes - 1 : postCount.likes;
         const dislikesCount =
           VoteAction.DownVote === action ? postCount.dislikes - 1 : postCount.dislikes;
-        newData._count = { ...postCount, likes: likesCount, dislikes: dislikesCount };
+        postItem._count = { ...postCount, likes: likesCount, dislikes: dislikesCount };
       } else {
-        const postCount = newData._count;
+        const postCount = postItem._count;
         const likesCount = VoteAction.UpVote === action ? postCount.likes + 1 : postCount.likes;
         const dislikesCount =
           VoteAction.DownVote === action ? postCount.dislikes + 1 : postCount.dislikes;
-        newData._count = { ...postCount, likes: likesCount, dislikes: dislikesCount };
+        postItem._count = { ...postCount, likes: likesCount, dislikes: dislikesCount };
       }
-      callback && callback(newData);
+      newData.splice(postIndexValid, 1, postItem);
+      callback(newData);
     }
   };
 
@@ -64,18 +66,21 @@ export function useVotePost(data?: PostItem, callback?: (items: PostItem) => voi
       const status = metadata?.status;
       const action = metadata?.action;
 
-      const newData = { ...data };
-      if (newData.id === votePostResult.postId) {
+      const newData = [...data];
+      const postIndexValid = newData.findIndex((item) => item.id === votePostResult.postId);
+      if (postIndexValid !== -1) {
+        const postItem = newData[postIndexValid];
         if (status === ActionStatus.Deleted) {
-          newData.userVote = null;
+          postItem.userVote = null;
         } else {
-          newData.userVote = {
+          postItem.userVote = {
             id: votePostResult?.userId,
             action: action
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
           } as any;
         }
-        callback && callback(newData as PostItem);
+        newData.splice(postIndexValid, 1, postItem);
+        callback(newData);
       }
     } catch (error) {
       getErrorMss(error);

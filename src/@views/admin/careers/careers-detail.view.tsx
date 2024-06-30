@@ -1,9 +1,13 @@
 'use client';
-import { getPostThumbnails, getShareUrl } from '@/@handles/career';
+import {
+  getPostThumbnails,
+  getShareUrl,
+  userIsBookmarkPost,
+  userIsUpVote
+} from '@/@handles/career';
 import { PostItem, VoteAction } from '@/configs/graphql/generated';
 import useProfile from '@/hooks/redux/profile/useProfile';
-import { Tag } from '@/libraries/common';
-import { RenderIcon } from '@/libraries/icons';
+import { IconButton, Tag } from '@/libraries/common';
 import { copyToClipboard, getAvatar, getFullName } from '@/utils/helpers/common';
 import { EDateFormat, formatDate } from '@/utils/helpers/formatter';
 import { Link } from '@/utils/navigation';
@@ -13,7 +17,6 @@ import Image from 'next/image';
 import { useMemo } from 'react';
 
 export function CareersDetailView({ data }: { data: PostItem }) {
-  console.log('data====>', data);
   const t = useTranslations();
   const { profile } = useProfile();
   const post: PostItem = {
@@ -89,22 +92,14 @@ export function CareersDetailView({ data }: { data: PostItem }) {
 
   const totalComment = useMemo(() => post?._count?.comments ?? 0, [post]);
 
-  const isBookmark = useMemo(() => {
-    const currentUserBookmark = post.userBookmark;
-    if (currentUserBookmark && currentUserBookmark.id === profile?.id) return true;
-    return false;
-  }, [post, profile]);
+  const isBookmark = useMemo(() => userIsBookmarkPost(post, profile), [post, profile]);
 
-  const isUpVote = useMemo(() => {
-    const currentUserVote = post.userVote;
-    if (
-      currentUserVote &&
-      currentUserVote.action === VoteAction.UpVote &&
-      currentUserVote.id === profile?.id
-    )
-      return true;
-    return false;
-  }, [post, profile]);
+  const isUpVote = useMemo(() => userIsUpVote(post, profile, VoteAction.UpVote), [post, profile]);
+
+  const isDownVote = useMemo(
+    () => userIsUpVote(post, profile, VoteAction.DownVote),
+    [post, profile]
+  );
 
   return (
     <section>
@@ -144,7 +139,9 @@ export function CareersDetailView({ data }: { data: PostItem }) {
               height={210}
               alt="thumbnail"
               src={item.url ?? '/assets/not-found.jpg'}
-              className="rounded-xl w-full max-w-[400px] h-[210px]"
+              className={clsx('rounded-xl w-full max-w-[400px] h-[210px]', {
+                '!w-full !max-w-full !h-auto': thumbnails.length === 1
+              })}
             />
           ))
         ) : (
@@ -171,66 +168,79 @@ export function CareersDetailView({ data }: { data: PostItem }) {
         ))}
       </div>
 
-      {/*  */}
-      <div>
+      {/* comment & vote */}
+      <div className="flex items-center text-sm gap-3 text-text-tertiary">
         <p className="capitalize">{t('plural.upVotes', { count: totalUpVote })}</p>
         <p className="capitalize">{t('plural.comments', { count: totalComment })}</p>
       </div>
 
       {/* actions */}
-      <div className="flex items-center justify-start border border-solid border-gray-100 rounded-2xl">
-        <div className="flex items-center border border-solid border-gray-100 rounded-2xl p-2 gap-2">
-          {/* vote up */}
-          <div
-            className={clsx('action-avocado items-center flex gap-1 text-text-tertiary', {
-              '!text-avocado-pressed': isUpVote
-            })}
-          >
-            <button className="p-[6px] rounded-lg">
-              <RenderIcon className="!w-7 !h-7" name={isUpVote ? 'vote-up-bold' : 'vote-up'} />
-            </button>
+      <div className="flex items-center justify-between border border-solid border-gray-100 rounded-2xl mt-2 pr-2">
+        <div className="flex items-center justify-start">
+          <div className="flex items-center border border-solid border-gray-100 rounded-2xl p-2 gap-2">
+            {/* vote up */}
+            <IconButton
+              onClick={() => copyToClipboard(shareUrl, t)}
+              iconName={isUpVote ? 'vote-up-bold' : 'vote-up'}
+              styleType="avocado"
+              classNameIcon="!w-7 !h-7"
+              classNameWrap={clsx({
+                '!text-avocado-pressed': isUpVote
+              })}
+            />
+            {/* vote down */}
+            <IconButton
+              onClick={() => copyToClipboard(shareUrl, t)}
+              iconName={isDownVote ? 'vote-down-bold' : 'vote-down'}
+              styleType="ketchup"
+              classNameIcon="!w-7 !h-7"
+              classNameWrap={clsx({
+                '!text-ketchup-pressed': isDownVote
+              })}
+            />
           </div>
-          {/* vote down */}
-          <div
-            className={clsx('action-ketchup items-center flex gap-1 text-text-tertiary', {
-              '!text-ketchup-pressed': isUpVote
-            })}
-          >
-            <button className="p-[6px] rounded-lg">
-              <RenderIcon className="!w-7 !h-7" name={isUpVote ? 'vote-down-bold' : 'vote-down'} />
-            </button>
+
+          <div className="flex items-center px-4 justify-between gap-4">
+            {/* comment */}
+            <IconButton
+              onClick={() => copyToClipboard(shareUrl, t)}
+              label={t('comment')}
+              iconName="message-text"
+              styleType="blue-cheese"
+              classNameIcon="!w-7 !h-7"
+              classNameWrap={clsx({
+                '!text-bun-pressed': isBookmark
+              })}
+            />
+
+            {/* bookmark */}
+            <IconButton
+              onClick={() => copyToClipboard(shareUrl, t)}
+              classNameIcon="!w-7 !h-7"
+              classNameWrap={clsx({
+                '!text-bun-pressed': isBookmark
+              })}
+              label={t('bookmark')}
+              iconName={isBookmark ? 'bookmark-bold' : 'bookmark'}
+              styleType="bun"
+            />
+
+            {/* share link */}
+            <IconButton
+              onClick={() => copyToClipboard(shareUrl, t)}
+              classNameIcon="!w-7 !h-7"
+              iconName="link-2"
+              styleType="cabbage"
+              label={t('copy')}
+            />
           </div>
         </div>
-
-        <div className="flex items-center px-4 justify-between gap-4">
-          {/* comment */}
-          <div className="action-blue-cheese items-center flex gap-1 text-text-tertiary">
-            <button className="p-[6px] rounded-lg">
-              <RenderIcon className="!w-7 !h-7" name="message-text" />
-            </button>
-            <span className="font-medium">{t('comment')}</span>
-          </div>
-
-          {/* bookmark */}
-          <div
-            className={clsx('action-bun items-center flex gap-1 text-text-tertiary', {
-              '!text-bun-pressed': isBookmark
-            })}
-          >
-            <button className="p-[6px] rounded-lg">
-              <RenderIcon className="!w-7 !h-7" name={isBookmark ? 'bookmark-bold' : 'bookmark'} />
-            </button>
-            <span className="font-medium">{t('bookmark')}</span>
-          </div>
-
-          {/* share link */}
-          <div className="action-cabbage first-line:items-center items-center flex gap-1 text-text-tertiary ">
-            <button className="p-[6px] rounded-lg" onClick={() => copyToClipboard(shareUrl, t)}>
-              <RenderIcon className="!w-7 !h-7" name="link-2" />
-            </button>
-            <span className="font-medium">{t('copy')}</span>
-          </div>
-        </div>
+        <IconButton
+          onClick={() => copyToClipboard(shareUrl, t)}
+          classNameIcon="!w-7 !h-7"
+          iconName="warning-2"
+          styleType="subtlest"
+        />
       </div>
     </section>
   );

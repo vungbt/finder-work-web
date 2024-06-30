@@ -114,6 +114,14 @@ const config: Config = {
         'hover-bg': 'var(--ketchup-hover-background)',
         'active-bg': 'var(--ketchup-active-background)',
         pressed: 'var(--ketchup-pressed-color)'
+      },
+      subtlest: {
+        DEFAULT: 'var(--subtlest-pressed-color)',
+        hover: 'var(--subtlest-hover-color)',
+        active: 'var(--subtlest-active-color)',
+        'hover-bg': 'var(--subtlest-hover-background)',
+        'active-bg': 'var(--subtlest-active-background)',
+        pressed: 'var(--subtlest-pressed-color)'
       }
     },
     extend: {
