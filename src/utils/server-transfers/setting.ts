@@ -25,13 +25,13 @@ const defaultMenus = [
     ]
   }
 ];
-export const getPortalLayoutSetting = async () => {
+export const getPortalLayoutSetting = async (isInit?: boolean) => {
   const apiClient = await apiClientServer();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const session = (apiClient as any).session as Session;
   const res = await apiClient.allSettingPortal({
     where: { key: { contains: session.userRole } },
-    isInit: true
+    isInit
   });
   const result = res?.setting_portal?.data ?? [];
   const menus =

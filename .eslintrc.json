@@ -5,12 +5,13 @@
     "eslint-config-prettier",
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
-    "next"
+    "next",
+    "prettier"
   ],
   "parserOptions": {
     "project": "./tsconfig.json"
   },
-  "plugins": ["eslint-plugin-prettier"],
+  "plugins": ["eslint-plugin-prettier", "prettier"],
   "rules": {
     "prettier/prettier": ["error", {}, { "usePrettierrc": true }],
     "@typescript-eslint/explicit-module-boundary-types": 0,

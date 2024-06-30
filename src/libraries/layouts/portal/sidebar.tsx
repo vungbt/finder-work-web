@@ -20,7 +20,6 @@ export type MenuItem = {
 
 export function SideBar({ menus, className }: { menus: SidebarMenu[]; className?: string }) {
   const pathname = usePathname();
-
   const activeMenuItem = useMemo(() => {
     const newList: MenuItem[] = [];
     menus.forEach((menuItem) => {
@@ -123,7 +122,8 @@ const Menu = ({
               className={clsx('ease-linear transition-colors p-2', {
                 'bg-neon rounded-xl':
                   (pathname === item.href || active?.href === item.href) && !item.isFavorite
-              })}>
+              })}
+            >
               <MenuItem
                 item={item}
                 child={child}

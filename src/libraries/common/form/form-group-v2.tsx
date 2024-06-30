@@ -33,7 +33,8 @@ export function FormGroupV2({
             'flex-col items-start': layout === 'vertical'
           },
           className
-        )}>
+        )}
+      >
         {label && <FormLabel label={label} name={name ?? ''} isRequired={isRequired} />}
         <div className="w-full">{children}</div>
       </div>

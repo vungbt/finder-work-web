@@ -10,7 +10,8 @@ export default function CheckIcon({ className, transform, ...reset }: Readonly<I
       viewBox="0 0 24 24"
       className={clsx('h-6 w-6', className)}
       transform={transform}
-      {...reset}>
+      {...reset}
+    >
       <path
         fill="none"
         stroke="currentColor"

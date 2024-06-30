@@ -29,7 +29,8 @@ export function Steps({ steps, active, excludeSteps, className, onChangeStep }: 
               hidden: excludeSteps && excludeSteps.includes(index)
             })}
             key={index}
-            id={`step-${index}`}></span>
+            id={`step-${index}`}
+          ></span>
         ))}
     </div>
   );

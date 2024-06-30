@@ -79,7 +79,8 @@ export default function GeneralDetailPage() {
         validationSchema={validationSchema}
         initialValues={initialValues}
         innerRef={form}
-        onSubmit={onSubmitSetting}>
+        onSubmit={onSubmitSetting}
+      >
         {() => {
           return (
             <Form className="flex flex-col gap-6">

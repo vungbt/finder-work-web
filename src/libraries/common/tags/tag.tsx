@@ -48,7 +48,8 @@ export function Tag({
         },
         className
       )}
-      style={colorStyle}>
+      style={colorStyle}
+    >
       {icon && <RenderIcon name={icon} className="!h-3 !w-3" />}
       {content}
       {(closeIcon || onClose) && (

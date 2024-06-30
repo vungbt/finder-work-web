@@ -63,7 +63,8 @@ export const CheckboxGroup = ({
             'flex-col gap-4': layout === 'vertical'
           },
           className
-        )}>
+        )}
+      >
         {options.map((item) => (
           <CheckboxItem
             key={item.value}

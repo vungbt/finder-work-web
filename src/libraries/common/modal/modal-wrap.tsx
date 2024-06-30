@@ -48,7 +48,8 @@ export function ModalWrap({
             variants={dropIn}
             initial="hidden"
             animate="visible"
-            exit="exit">
+            exit="exit"
+          >
             {children}
           </motion.div>
         </Backdrop>
@@ -75,7 +76,8 @@ export const Backdrop = ({
       )}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}>
+      exit={{ opacity: 0 }}
+    >
       {children}
     </motion.div>
   );

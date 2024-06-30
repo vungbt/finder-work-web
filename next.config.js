@@ -12,13 +12,21 @@ const nextConfig = {
   generateBuildId: () => nextBuildId({ dir: __dirname }),
   env: {
     GRAPHQL_API_URL: process.env.GRAPHQL_API_URL,
+    GRAPHQL_API_WS_URL: process.env.GRAPHQL_API_WS_URL,
     PAGE_PROPS_REVALIDATE: process.env.PAGE_PROPS_REVALIDATE
   },
   images: {
+    domains: ['res.cloudinary.com'],
     remotePatterns: [
       {
         protocol: 'https',
         hostname: '**'
+      },
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
+        port: '',
+        pathname: '/dx66fumod/**'
       }
     ]
   }

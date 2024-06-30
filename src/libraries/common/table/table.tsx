@@ -65,7 +65,8 @@ export function Table<T>(props: TableProps<T>) {
           style={{
             width: scroll?.x
           }}
-          className={clsx('table-auto border-collapse min-w-full text-sm')}>
+          className={clsx('table-auto border-collapse min-w-full text-sm')}
+        >
           {/* table header */}
           <thead>
             <tr className="h-12 font-medium text-text-secondary">
@@ -86,7 +87,8 @@ export function Table<T>(props: TableProps<T>) {
               {columns.map((column, index) => (
                 <td
                   key={index}
-                  className="px-4 py-2 text-left border-b border-solid border-text-secondary tracking-wider break-words relative">
+                  className="px-4 py-2 text-left border-b border-solid border-text-secondary tracking-wider break-words relative"
+                >
                   {column.title}
 
                   {/* border */}
@@ -94,7 +96,8 @@ export function Table<T>(props: TableProps<T>) {
                     style={{ transform: 'translate(0, -50%)' }}
                     className={clsx('absolute right-0 top-1/2 w-[1px] h-4 bg-text-secondary', {
                       hidden: index === columns.length - 1
-                    })}></div>
+                    })}
+                  ></div>
                 </td>
               ))}
             </tr>

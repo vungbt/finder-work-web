@@ -31,6 +31,12 @@ const getUrl = async (name: string) => {
   return toastError('Get upload url failed.');
 };
 
+const getUrls = async (names: string[]) => {
+  const res = await apiClientInstance.uploadUrls({ names });
+  if (res.upload_urls && res?.upload_urls.length > 0) return res.upload_urls;
+  return toastError('Get upload url failed.');
+};
+
 const uploadByUrl = (url: string, formData: FormData) => {
   return axios.post(url, formData, {
     headers: {
@@ -41,11 +47,32 @@ const uploadByUrl = (url: string, formData: FormData) => {
 
 const uploadFile = async (name: string, formData: FormData) => {
   const url = await getUrl(name);
-  return axios.post(url, formData, {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return axios.post<any, { data: FileCloudinary }>(url, formData, {
     headers: {
       'Content-Type': 'multipart/form-data'
     }
   });
+};
+
+const uploadFiles = async (files: (File | undefined)[]) => {
+  if (!files || files.length <= 0) return [];
+  const cleanFiles = files.filter((item): item is File => item !== undefined);
+  const names = cleanFiles.map((item) => item?.name ?? '');
+  const urls = (await getUrls(names)) as string[];
+
+  const results = await Promise.all(
+    urls.map((url, index) => {
+      const formData = imgFormData(cleanFiles[index]);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      return axios.post<any, { data: FileCloudinary }>(url, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+    })
+  );
+  return results.map((item) => item.data);
 };
 
 const imgFormData = (file: File) => {
@@ -57,7 +84,9 @@ const imgFormData = (file: File) => {
 
 export const upload = {
   getUrl,
+  getUrls,
   imgFormData,
   uploadByUrl,
-  uploadFile
+  uploadFile,
+  uploadFiles
 };

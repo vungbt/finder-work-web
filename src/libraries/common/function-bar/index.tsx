@@ -4,12 +4,20 @@ import { Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import { InputForm } from '../inputs';
 import clsx from 'clsx';
+import { PaginationTop } from '../pagination';
 
 type FunctionBarProps = {
   onSearch?: (value: string) => void;
   onAdd?: () => void;
   addUrl?: string;
   onSort?: () => void;
+  onChangePage?: (page: number) => void;
+  pagination?: {
+    total: number;
+    currentPage?: number;
+    limit?: number;
+    className?: string;
+  };
   searchValidation?: Yup.ObjectSchema<
     {
       search: string;
@@ -27,7 +35,9 @@ export function FunctionBar({
   onSearch,
   onAdd,
   onSort,
+  onChangePage,
   addUrl,
+  pagination,
   className,
   searchValidation
 }: FunctionBarProps) {
@@ -40,7 +50,8 @@ export function FunctionBar({
       className={clsx(
         'flex items-center justify-between p-2 bg-gray-100 rounded-lg gap-4',
         className
-      )}>
+      )}
+    >
       <div className="flex items-center gap-2">
         {/* add button */}
         {onAdd && (
@@ -65,14 +76,19 @@ export function FunctionBar({
       </div>
 
       {onSearch && (
-        <div>
+        <div className="flex items-center justify-end gap-4">
+          {/* pagination */}
+          {onChangePage && pagination && (
+            <PaginationTop {...pagination} onChangePage={onChangePage} />
+          )}
           <Formik
             initialValues={{ search: '' }}
             validationSchema={searchValidation ?? validationSchema}
-            onSubmit={(values) => onSearch(values.search.trim())}>
+            onSubmit={(values) => onSearch(values.search.trim())}
+          >
             {() => {
               return (
-                <Form>
+                <Form className="max-h-8">
                   <Field
                     size="middle"
                     classNameWrap="bg-gray-200 max-w-[160px]"

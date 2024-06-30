@@ -66,7 +66,8 @@ export const SelectAsync = forwardRef(function SelectAsync(
           className={clsx({
             '!pr-4': size === 'large' || size === 'middle',
             '!pr-2': size === 'small'
-          })}>
+          })}
+        >
           <RenderIcon
             name="chevron-down"
             className={clsx('text-dark transition-all ease-linear', {
@@ -297,7 +298,8 @@ export const SelectAsync = forwardRef(function SelectAsync(
         <div
           className={clsx('mt-2 flex flex-wrap gap-2', {
             hidden: (fieldValues as IOptItem[]).length <= 0
-          })}>
+          })}
+        >
           {(fieldValues as IOptItem[]).map((item) => (
             <Tag key={item.value} content={item.label} onClose={() => onHandleCloseTag(item)} />
           ))}

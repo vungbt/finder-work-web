@@ -11,7 +11,8 @@ export default function ArrowLeft({ className, transform, ...reset }: Readonly<I
       xmlns="http://www.w3.org/2000/svg"
       className={clsx('h-6 w-6', className)}
       transform={transform}
-      {...reset}>
+      {...reset}
+    >
       <path
         d="M9.57 5.92993L3.5 11.9999L9.57 18.0699"
         stroke="currentColor"

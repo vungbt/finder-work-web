@@ -1,4 +1,4 @@
-fragment PostFragment on Post {
+fragment PostFragment on PostItem {
   id
   title
   content
@@ -6,11 +6,10 @@ fragment PostFragment on Post {
   metadata
   slug
   minRead
-  thumbnailId
-  thumbnail {
+  thumbnails {
     ...Image
   }
-  jobTitle {
+  jobCategory {
     id
     name
   }
@@ -39,5 +38,17 @@ fragment PostFragment on Post {
     email
     color
     role
+  }
+  userBookmark {
+    id
+  }
+  _count {
+    likes
+    dislikes
+    comments
+  }
+  userVote {
+    id
+    action
   }
 }

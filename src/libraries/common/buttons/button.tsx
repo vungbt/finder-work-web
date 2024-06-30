@@ -67,7 +67,8 @@ export const Button = forwardRef(function ButtonBase(
       )}
       type={reset.type ?? 'button'}
       {...reset}
-      ref={ref}>
+      ref={ref}
+    >
       {iconLeft && (
         <IconViewSize
           className={clsx({

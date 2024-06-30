@@ -37,7 +37,7 @@ export default function useProfile() {
     profile: {
       ...profile,
       fullName: getFullName(profile)
-    },
+    } as UserOnly,
     loading,
     setProfile,
     getProfile

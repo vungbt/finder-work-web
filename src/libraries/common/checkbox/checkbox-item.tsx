@@ -37,7 +37,8 @@ export const CheckboxItem = forwardRef(function CheckboxItem(
           'checkbox-custom-checked': !indeterminate && checked
         },
         className
-      )}>
+      )}
+    >
       <input
         checked={checked && !indeterminate}
         hidden
@@ -57,7 +58,8 @@ export const CheckboxItem = forwardRef(function CheckboxItem(
           'checkbox-custom__checkmark-info': styleType === 'info',
 
           'checkbox-custom__error': isHaveError
-        })}>
+        })}
+      >
         <RenderIcon
           className={clsx('checkbox-custom__icon', {
             'checkbox-custom__icon__small': size === 'small',

@@ -4,6 +4,7 @@ import { RenderIcon } from '@/libraries/icons';
 import clsx from 'clsx';
 import { ChangeEvent, Ref, forwardRef, useMemo, useState } from 'react';
 import { FormGroup, UploadItem, UploadPreview } from '..';
+import { useTranslations } from 'next-intl';
 
 type UploadProps = Omit<
   React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>,
@@ -15,6 +16,7 @@ type UploadProps = Omit<
   classNameWrap?: string;
   subPlaceholder?: string;
   value?: UploadItem | null;
+  size?: number;
 
   error?: string;
   layout?: 'horizontal' | 'vertical';
@@ -27,6 +29,7 @@ export const Upload = forwardRef(function UploadInput(
   props: UploadProps,
   ref: Ref<HTMLInputElement>
 ) {
+  const t = useTranslations();
   const {
     className,
     classNameWrap,
@@ -37,6 +40,7 @@ export const Upload = forwardRef(function UploadInput(
     label,
     error,
     accept = FILE_IMAGE.accepts.join(', '),
+    size = FILE_IMAGE.size,
     name,
     placeholder,
     value,
@@ -47,18 +51,19 @@ export const Upload = forwardRef(function UploadInput(
   } = props;
   const [isFocus, setIsFocus] = useState<boolean>(false);
   const isHaveError = useMemo(() => error && error.length > 0 && isFocus, [error, isFocus]);
-  const { accepts, size } = FILE_IMAGE;
 
   const onHandleChangeFile = (event: ChangeEvent<HTMLInputElement>) => {
     const files = event.target?.files ?? [];
-    if (!files || files.length <= 0) return showError('File invalid');
+    if (!files || files.length <= 0) return showError(t('validation.fileInvalid'));
     const file = files[0];
     const fileType = file.type;
     const fileSize = file.size;
     const fileId = `${new Date().toISOString()}-${file?.name}`;
 
-    if (!accepts.includes(fileType)) return showError('File not in accepts');
-    if (size < fileSize) return showError('File large');
+    const acceptsList = accept.split(',').map((item) => item.trim());
+    if (!acceptsList.includes(fileType))
+      return showError(t('validation.fileNotInAccepts', { types: accept }));
+    if (size < fileSize) return showError(t('validation.fileLarge', { max: size }));
 
     if (file) {
       const reader = new FileReader();
@@ -95,7 +100,8 @@ export const Upload = forwardRef(function UploadInput(
       layout={layout}
       label={label}
       name={name}
-      isRequired={isRequired}>
+      isRequired={isRequired}
+    >
       <label
         htmlFor={name}
         className={clsx(
@@ -107,7 +113,8 @@ export const Upload = forwardRef(function UploadInput(
           },
           classNameWrap
         )}
-        onClick={() => setIsFocus(true)}>
+        onClick={() => setIsFocus(true)}
+      >
         <RenderIcon name="image-icon" />
         <p className="text-sm text-dark">{placeholder}</p>
         <p className="text-sm text-text-secondary">{subPlaceholder}</p>
@@ -134,7 +141,8 @@ export const Upload = forwardRef(function UploadInput(
         <div
           className={clsx('mt-1', {
             'grid grid-cols-12 gap-2': layout === 'horizontal'
-          })}>
+          })}
+        >
           <div
             className={clsx({
               hidden: layout === 'vertical',

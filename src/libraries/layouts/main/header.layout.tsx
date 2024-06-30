@@ -31,7 +31,8 @@ export function HeaderMainLayout({ navigation, labelButton }: HeaderMainLayoutPr
   return (
     <div
       suppressHydrationWarning
-      className="fixed left-0 right-0 top-0 z-10 flex items-center justify-between px-8 py-4 md:px-12 md:py-6">
+      className="fixed left-0 right-0 top-0 z-10 flex items-center justify-between px-8 py-4 md:px-12 md:py-6"
+    >
       <Link href={RouterPath.Home} className="z-[51]">
         <Logo type={sizes.sm ? 'default' : 'square'} />
       </Link>
@@ -44,7 +45,8 @@ export function HeaderMainLayout({ navigation, labelButton }: HeaderMainLayoutPr
         <DrawerMenu items={navDrawer} />
         <label
           htmlFor="navigation-checkbox"
-          className="overlay invisible fixed bottom-0 left-0 right-0 top-0 z-[40] h-screen bg-dark opacity-0 transition-all ease-linear xl:hidden"></label>
+          className="overlay invisible fixed bottom-0 left-0 right-0 top-0 z-[40] h-screen bg-dark opacity-0 transition-all ease-linear xl:hidden"
+        ></label>
         <Button
           onClick={() =>
             setViewRole(viewRole === UserRole.Employee ? UserRole.Employer : UserRole.Employee)

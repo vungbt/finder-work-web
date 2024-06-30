@@ -34,7 +34,8 @@ export function LeftContentSignAuth({
             restDelta: 0.001
           }
         }}
-        className="w-full h-full flex justify-center items-center">
+        className="w-full h-full flex justify-center items-center"
+      >
         <div className="relative w-4/5 min-h-[514px] aspect-1">
           <Image
             priority

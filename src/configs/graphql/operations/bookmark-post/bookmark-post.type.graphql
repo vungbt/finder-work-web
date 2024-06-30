@@ -1,0 +1,12 @@
+mutation bookmark($postId: String!) {
+  bookmark_post(postId: $postId) {
+    data {
+      id
+      userId
+      postId
+    }
+    metadata {
+      status
+    }
+  }
+}

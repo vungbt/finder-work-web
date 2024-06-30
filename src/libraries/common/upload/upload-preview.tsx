@@ -28,7 +28,8 @@ export function UploadPreview({ items, className, onRemove }: UploadPreviewProps
       {itemRender.map((item) => (
         <div
           key={item.id}
-          className="relative rounded-lg w-fit h-fit border border-solid border-gray-100">
+          className="relative rounded-lg w-fit h-fit border border-solid border-gray-100"
+        >
           <Image
             className="rounded-lg"
             width={212}
@@ -39,7 +40,8 @@ export function UploadPreview({ items, className, onRemove }: UploadPreviewProps
 
           <span
             onClick={() => onRemove && onRemove(item)}
-            className="w-fit h-fit min-w-6 min-h-6 rounded-full cursor-pointer absolute top-2 right-2 bg-white flex items-center justify-center">
+            className="w-fit h-fit min-w-6 min-h-6 rounded-full cursor-pointer absolute top-2 right-2 bg-white flex items-center justify-center"
+          >
             <RenderIcon name="close" className="!w-5 !h-5" />
           </span>
         </div>
