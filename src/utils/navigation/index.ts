@@ -1,6 +1,7 @@
 import { createSharedPathnamesNavigation } from 'next-intl/navigation';
 export * from './Link';
 export * from './useRouter';
+export * from './useSearchQuery';
 
 export const locales = ['en', 'vi'] as const;
 

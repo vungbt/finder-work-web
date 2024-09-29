@@ -19,3 +19,4 @@ export * from './tab';
 export * from './upload';
 export * from './function-bar';
 export * from './modal';
+export * from './divider';

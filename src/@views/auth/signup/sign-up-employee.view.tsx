@@ -41,18 +41,21 @@ export function SignUpEmployeeView() {
         delay: 0.2,
         ease: [0, 0.71, 0.2, 1.01]
       }}
-      className="flex-1 flex flex-col items-center relative py-5 md:pt-[5%] md:pb-10 overflow-auto">
+      className="flex-1 flex flex-col items-center relative py-5 md:pt-[5%] md:pb-10 overflow-auto"
+    >
       <AnimatePresence
         initial={false}
         mode="wait"
-        custom={stepIndex > 0 && stepIndex < steps.length}>
+        custom={stepIndex > 0 && stepIndex < steps.length}
+      >
         <motion.div
           variants={variants}
           animate="animate"
           initial="initial"
           exit="exit"
           custom={stepIndex > 0 && stepIndex < steps.length}
-          className="w-[90%] sm:w-[80%] md:w-[500px] h-full">
+          className="w-[90%] sm:w-[80%] md:w-[500px] h-full"
+        >
           {/** Step Content */}
           {steps[stepIndex].component}
         </motion.div>

@@ -1,0 +1,29 @@
+query allJobCategory(
+  $where: JobCategoryWhereInput
+  $pagination: PaginationInput
+  $searchValue: String
+  $orderBy: [JobCategoryOrderByWithRelationInput!]
+) {
+  all_job_category(
+    where: $where
+    pagination: $pagination
+    searchValue: $searchValue
+    orderBy: $orderBy
+  ) {
+    data {
+      id
+      name
+      slug
+      isFeature
+      isTheFive
+      isDefault
+      createdAt
+      updatedAt
+    }
+    metadata {
+      total
+      limit
+      page
+    }
+  }
+}

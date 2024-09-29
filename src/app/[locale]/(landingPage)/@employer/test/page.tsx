@@ -132,27 +132,6 @@ export default function EmployerTestPage() {
       const file = files[0];
       const formData = upload.imgFormData(file);
       const res = await upload.uploadFile(file.name, formData);
-      // api_key: '283742229642811';
-      // asset_id: '1d0d9ff447242bf8ed824e9f4151cca2';
-      // bytes: 751441;
-      // created_at: '2024-01-28T05:27:32Z';
-      // etag: '6e30cd44abc5fa3209651694367f8bbb';
-      // folder: 'temp';
-      // format: 'png';
-      // height: 2160;
-      // original_filename: 'file';
-      // placeholder: false;
-      // public_id: 'temp/20240128122729-screenshot-2023-05-10-at-143231png';
-      // resource_type: 'image';
-      // secure_url: 'https://res.cloudinary.com/dx66fumod/image/upload/v1706419652/temp/20240128122729-screenshot-2023-05-10-at-143231png.png';
-      // signature: 'e53ffb12a9a446fe921ae43d3b0a743e7e38ecd5';
-      // tags: [];
-      // type: 'upload';
-      // url: 'http://res.cloudinary.com/dx66fumod/image/upload/v1706419652/temp/20240128122729-screenshot-2023-05-10-at-143231png.png';
-      // version: 1706419652;
-      // version_id: 'aed48bbb21b8492a907fb018bd337fb2';
-      // width: 3456;
-
       if (res.data && Object.keys(res.data).length > 0)
         return toastSuccess('Upload file successfully.');
       toastError('Upload failed');
@@ -171,7 +150,8 @@ export default function EmployerTestPage() {
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
-          onSubmit={handleSubmit}>
+          onSubmit={handleSubmit}
+        >
           {({ setErrors, errors, setFieldValue, values }) => {
             return (
               <Form>

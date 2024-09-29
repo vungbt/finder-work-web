@@ -12,7 +12,7 @@ const config: Config = {
       md: '740px',
       lg: '1024px',
       xl: '1300px',
-      '2xl': '1300px'
+      '2xl': '1536px'
     },
     container: {
       center: true,
@@ -29,7 +29,7 @@ const config: Config = {
         md: '740px',
         lg: '1024px',
         xl: '1300px',
-        '2xl': '1300px'
+        '2xl': '1536px'
       }
     },
     fontFamily: {
@@ -73,6 +73,55 @@ const config: Config = {
         DEFAULT: 'var(--color-gray-0)',
         100: 'var(--color-gray-100)',
         200: 'var(--color-gray-200)'
+      },
+
+      'blue-cheese': {
+        DEFAULT: 'var(--blue-cheese-pressed-color)',
+        hover: 'var(--blue-cheese-hover-color)',
+        active: 'var(--blue-cheese-active-color)',
+        'hover-bg': 'var(--blue-cheese-hover-background)',
+        'active-bg': 'var(--blue-cheese-active-background)',
+        pressed: 'var(--blue-cheese-pressed-color)'
+      },
+      avocado: {
+        DEFAULT: 'var(--avocado-pressed-color)',
+        hover: 'var(--avocado-hover-color)',
+        active: 'var(--avocado-active-color)',
+        'hover-bg': 'var(--avocado-hover-background)',
+        'active-bg': 'var(--avocado-active-background)',
+        pressed: 'var(--avocado-pressed-color)'
+      },
+      bun: {
+        DEFAULT: 'var(--bun-pressed-color)',
+        hover: 'var(--bun-hover-color)',
+        active: 'var(--bun-active-color)',
+        'hover-bg': 'var(--bun-hover-background)',
+        'active-bg': 'var(--bun-active-background)',
+        pressed: 'var(--bun-pressed-color)'
+      },
+      cabbage: {
+        DEFAULT: 'var(--cabbage-pressed-color)',
+        hover: 'var(--cabbage-hover-color)',
+        active: 'var(--cabbage-active-color)',
+        'hover-bg': 'var(--cabbage-hover-background)',
+        'active-bg': 'var(--cabbage-active-background)',
+        pressed: 'var(--cabbage-pressed-color)'
+      },
+      ketchup: {
+        DEFAULT: 'var(--ketchup-pressed-color)',
+        hover: 'var(--ketchup-hover-color)',
+        active: 'var(--ketchup-active-color)',
+        'hover-bg': 'var(--ketchup-hover-background)',
+        'active-bg': 'var(--ketchup-active-background)',
+        pressed: 'var(--ketchup-pressed-color)'
+      },
+      subtlest: {
+        DEFAULT: 'var(--subtlest-pressed-color)',
+        hover: 'var(--subtlest-hover-color)',
+        active: 'var(--subtlest-active-color)',
+        'hover-bg': 'var(--subtlest-hover-background)',
+        'active-bg': 'var(--subtlest-active-background)',
+        pressed: 'var(--subtlest-pressed-color)'
       }
     },
     extend: {

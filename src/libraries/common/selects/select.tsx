@@ -57,7 +57,8 @@ export const SelectForm = forwardRef(function SelectForm(props: SelectFormProps,
           className={clsx({
             '!pr-4': size === 'large' || size === 'middle',
             '!pr-2': size === 'small'
-          })}>
+          })}
+        >
           <RenderIcon
             name="chevron-down"
             className={clsx('text-dark transition-all ease-linear', {
@@ -281,7 +282,8 @@ export const SelectForm = forwardRef(function SelectForm(props: SelectFormProps,
         <div
           className={clsx('mt-2 flex flex-wrap gap-2', {
             hidden: (fieldValues as IOptItem[]).length <= 0
-          })}>
+          })}
+        >
           {(fieldValues as IOptItem[]).map((item) => (
             <Tag
               key={item.value}

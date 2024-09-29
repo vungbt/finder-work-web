@@ -21,7 +21,8 @@ function SignUpEmployeeMain() {
         delay: 0.2,
         ease: [0, 0.71, 0.2, 1.01]
       }}
-      className="mx-auto">
+      className="mx-auto"
+    >
       <Link href={RouterPath.Home}>
         <Logo />
       </Link>

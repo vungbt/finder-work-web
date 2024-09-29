@@ -14,12 +14,10 @@ export function Tab({ options, active, onChange }: TypeProps) {
         <li
           onClick={() => onChange && onChange(item)}
           key={item.value}
-          className={clsx(
-            'text-dark opacity-50 transition-all ease-linear border-b-2 border-transparent py-1 hover:opacity-100 cursor-pointer',
-            {
-              'opacity-100 border-dark border-solid': active && item.value === active.value
-            }
-          )}>
+          className={clsx('tab', {
+            tab__active: active && item.value === active.value
+          })}
+        >
           <span>{item.label}</span>
         </li>
       ))}

@@ -49,6 +49,8 @@
 
   ::placeholder {
     color: var(--color-tertiary) !important;
+    font-size: 0.875rem /* 14px */ !important;
+    line-height: 1.25rem /* 20px */ !important;
   }
 }
 
@@ -288,6 +290,7 @@
 
   &__placeholder {
     color: var(--color-tertiary) !important;
+    @apply text-sm;
   }
 
   .select-custom__control__focused__large,
@@ -677,7 +680,7 @@
 
 // quill editor
 .custom-quill {
-  @apply font-primary;
+  @apply font-primary bg-white;
   &:hover {
     .quill {
       .ql-toolbar {
@@ -690,7 +693,7 @@
     @apply w-full;
 
     .ql-toolbar {
-      @apply border-t-0 border-r-0 border-l-0 border-solid border-b border-gray-100 transition-all ease-linear bg-gray-200 rounded-tl-3xl rounded-tr-3xl px-5 py-4;
+      @apply border-t-0 border-r-0 border-l-0 border-solid border-b border-gray-100 transition-all ease-linear bg-white rounded-tl-3xl rounded-tr-3xl px-5 py-4;
 
       .ql-formats {
         @apply bg-white border border-solid border-gray-100 rounded-lg;
@@ -727,6 +730,12 @@
 
       .ql-editor {
         @apply min-h-96 p-0 font-primary text-sm;
+      }
+
+      .ql-blank {
+        &::before {
+          @apply not-italic font-primary text-sm text-text-tertiary;
+        }
       }
     }
   }
@@ -808,4 +817,111 @@
 
 .modal-backdrop {
   @apply bg-black bg-opacity-35;
+}
+
+// tab
+.tab {
+  @apply text-dark transition-all ease-linear border-b-2 py-1 hover:opacity-100 cursor-pointer relative border-transparent opacity-50;
+
+  // opacity-100 border-dark border-solid
+  &::before {
+    content: '';
+    @apply absolute w-0 h-[2px] transition-all ease-linear bg-dark bottom-0 right-0 left-0 mx-auto;
+  }
+
+  &__active {
+    @apply opacity-100;
+
+    &::before {
+      @apply w-full;
+    }
+  }
+}
+
+.portal-content-layout {
+  max-height: calc(100vh - 73px);
+  overflow: auto;
+}
+
+// CARD
+.card {
+  @apply relative block h-auto transition-all ease-linear border border-solid border-transparent;
+
+  &__flag {
+    @apply absolute -top-1 left-4 text-[11px] font-bold text-white uppercase pt-[2px] px-[2px] pb-1 min-h-5 rounded-t-[4px] transition-all ease-linear;
+  }
+
+  &__flag-hot {
+    @apply bg-danger;
+  }
+
+  .header-action {
+    @apply hidden transition-all ease-linear;
+  }
+
+  &:hover {
+    @apply border-gray-100;
+    .card__flag {
+      @apply -top-[18px];
+    }
+
+    .header-action {
+      @apply flex;
+    }
+  }
+}
+
+// Card action
+.action-blue-cheese {
+  &:hover {
+    @apply text-blue-cheese-hover;
+    button {
+      @apply bg-blue-cheese-hover-bg text-blue-cheese-hover;
+    }
+  }
+}
+
+.action-bun {
+  &:hover {
+    @apply text-bun-hover;
+    button {
+      @apply bg-bun-hover-bg text-bun-hover;
+    }
+  }
+}
+
+.action-cabbage {
+  &:hover {
+    @apply text-cabbage-hover;
+    button {
+      @apply bg-cabbage-hover-bg text-cabbage-hover;
+    }
+  }
+}
+
+.action-avocado {
+  &:hover {
+    @apply text-avocado-hover;
+    button {
+      @apply bg-avocado-hover-bg text-avocado-hover;
+    }
+  }
+}
+
+.action-ketchup {
+  &:hover {
+    @apply text-ketchup-hover;
+    button {
+      @apply bg-ketchup-hover-bg text-ketchup-hover;
+    }
+  }
+}
+
+.action-subtlest {
+  &:hover {
+    @apply text-subtlest-hover;
+    button {
+      @apply bg-subtlest-hover-bg text-subtlest-hover;
+    }
+  }
 }

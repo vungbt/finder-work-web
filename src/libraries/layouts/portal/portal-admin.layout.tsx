@@ -38,7 +38,8 @@ export function PortalAdminLayout(props: { children: ReactNode; menus?: SidebarM
         htmlFor="admin-sidebar"
         className={clsx(
           'admin-sidebar min-w-[212px] w-[212px] p-4 border-r border-solid border-black border-opacity-15 h-full max-h-screen overflow-y-auto'
-        )}>
+        )}
+      >
         {/* avatar */}
         <div className="flex items-center gap-2 p-2">
           <Image
@@ -91,7 +92,7 @@ export function PortalAdminLayout(props: { children: ReactNode; menus?: SidebarM
             />
           </div>
         </div>
-        <div className="p-7">{props.children}</div>
+        <div className="p-7 portal-content-layout">{props.children}</div>
       </div>
 
       {/* overlay */}

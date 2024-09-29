@@ -11,7 +11,8 @@ export default function Logo({ className, transform, ...reset }: Readonly<IconPr
       xmlns="http://www.w3.org/2000/svg"
       className={clsx('h-6 w-6', className)}
       transform={transform}
-      {...reset}>
+      {...reset}
+    >
       <path
         d="M96.5924 47.9995V62.3996C96.5924 77.6762 90.5238 92.327 79.7217 103.129C68.9195 113.931 54.2686 120 38.992 120H0.591797V71.9997H24.592V95.9998H34.192C44.3764 95.9998 54.1437 91.9541 61.3451 84.7526C68.5466 77.5512 72.5923 67.7839 72.5923 57.5996V47.9995H96.5924Z"
         fill="url(#paint0_angular_1855_71671)"
@@ -29,7 +30,8 @@ export default function Logo({ className, transform, ...reset }: Readonly<IconPr
           cy="0"
           r="1"
           gradientUnits="userSpaceOnUse"
-          gradientTransform="translate(42.1636 85.7148) rotate(24.444) scale(25.8924 27.2115)">
+          gradientTransform="translate(42.1636 85.7148) rotate(24.444) scale(25.8924 27.2115)"
+        >
           <stop stopColor="#FC9C9C" />
           <stop offset="0.458879" stopColor="#586EE0" />
           <stop offset="0.891544" stopColor="#A8FF80" />

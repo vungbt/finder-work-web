@@ -91,7 +91,8 @@ export default function SignUpEmployeeStepOne() {
         delay: 0.2,
         ease: [0, 0.71, 0.2, 1.01]
       }}
-      className="mx-auto">
+      className="mx-auto"
+    >
       <BackButton onClick={() => actions.previousStep(formData)} />
 
       {/** step active */}
@@ -107,7 +108,8 @@ export default function SignUpEmployeeStepOne() {
       <Formik<IEmployeeRegister>
         initialValues={initialValues}
         validationSchema={validationSchema}
-        onSubmit={onHandleSubmit}>
+        onSubmit={onHandleSubmit}
+      >
         {() => {
           return (
             <Form>
@@ -187,14 +189,16 @@ export default function SignUpEmployeeStepOne() {
                           <Link
                             href="/"
                             target="_blank"
-                            className="underline transition-all ease-linear hover:text-info">
+                            className="underline transition-all ease-linear hover:text-info"
+                          >
                             {t('common.termsOfUse')}
                           </Link>
                           <span>{t('common.and')}</span>
                           <Link
                             href="/"
                             target="_blank"
-                            className="capitalize underline transition-all ease-linear hover:text-info">
+                            className="capitalize underline transition-all ease-linear hover:text-info"
+                          >
                             {t('common.privacyPolicy')}
                           </Link>
                         </div>

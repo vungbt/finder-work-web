@@ -30,7 +30,8 @@ export const RadioItem = forwardRef(function RadioItem(
           'radio-custom__checkmark-info': styleType === 'info',
 
           'radio-custom__error': isHaveError
-        })}></span>
+        })}
+      ></span>
       <span>{label}</span>
     </label>
   );

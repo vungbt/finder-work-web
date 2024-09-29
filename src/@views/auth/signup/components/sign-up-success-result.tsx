@@ -27,7 +27,8 @@ export default function SignUpSuccessResult() {
         delay: 0.2,
         ease: [0, 0.71, 0.2, 1.01]
       }}
-      className="mx-auto h-full flex items-center justify-center pb-[30%]">
+      className="mx-auto h-full flex items-center justify-center pb-[30%]"
+    >
       <SuccessResult
         title={t('common.registrationSuccessful')}
         subTitle={t('common.yourSignupHasBeenCompleted')}

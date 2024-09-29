@@ -1,57 +1,69 @@
 import { CSSProperties, FC } from 'react';
-import Loading from './loading';
+import Add from './add';
 import ArrowLeft from './arrow-left';
 import ArrowRight from './arrow-right';
-import Logo from './logo';
-import BannerEmployer from './banner-employer';
 import BannerEmployee from './banner-employee';
-import LoadingV2 from './loading-v2';
+import BannerEmployer from './banner-employer';
+import Briefcase from './briefcase';
+import Buildings from './buildings';
+import CaretDownSolid from './caret-down-solid';
+import CaretUpSolid from './caret-up-solid';
+import CheckIcon from './check-icon';
 import ChevronDown from './chevron-down';
 import ChevronLeft from './chevron-left';
 import ChevronRight from './chevron-right';
-import Danger from './danger';
-import EyeSlash from './eye-slash';
-import Eye from './eye';
-import HeartBold from './heart-bold';
-import Heart from './heart';
-import Messages from './messages';
-import Notification from './notification';
-import Search from './search';
-import SettingBold from './setting-bold';
-import Setting from './setting';
-import SMS from './sms';
-import Home from './home';
-import HomeBold from './home-bold';
-import CloseCircleBold from './close-circle-bold';
-import CloseCircle from './close-circle';
 import ChevronUp from './chevron-up';
 import Close from './close';
-import CheckIcon from './check-icon';
+import CloseCircle from './close-circle';
+import CloseCircleBold from './close-circle-bold';
+import Danger from './danger';
+import DangerSolid from './danger-solid';
 import DateIcon from './date-icon';
-import Google from './google';
-import Facebook from './facebook';
-import Success from './success';
-import Briefcase from './briefcase';
 import DocumentForward from './document-forward';
 import DocumentNormal from './document-normal';
 import DollarCircle from './dollar-circle';
+import EditIcon from './edit-icon';
+import Eye from './eye';
+import EyeSlash from './eye-slash';
+import Facebook from './facebook';
 import Flash from './flash';
+import Google from './google';
 import Graph from './graph';
+import Heart from './heart';
+import HeartBold from './heart-bold';
+import History from './history';
+import Home from './home';
+import HomeBold from './home-bold';
+import ImageIcon from './image-icon';
+import Loading from './loading';
+import LoadingV2 from './loading-v2';
+import Logo from './logo';
+import Messages from './messages';
+import Notification from './notification';
 import Profile2User from './profile-2user';
 import ReceiptSearch from './receipt-search';
-import History from './history';
+import Search from './search';
+import Setting from './setting';
+import SettingBold from './setting-bold';
 import SidebarLeft from './sidebar-left';
 import SidebarRight from './sidebar-right';
-import Star from './star';
-import ImageIcon from './image-icon';
-import EditIcon from './edit-icon';
-import Trash from './trash';
-import Add from './add';
+import SMS from './sms';
 import Sort from './sort';
-import DangerSolid from './danger-solid';
+import Star from './star';
+import Success from './success';
+import Trash from './trash';
 import TrashSolid from './trash-solid';
-import CaretDownSolid from './caret-down-solid';
-import CaretUpSolid from './caret-up-solid';
+import ExportIcon from './export-icon';
+import ImportIcon from './import-icon';
+import VoteDown from './vote-down';
+import VoteUp from './vote-up';
+import Bookmark from './bookmark';
+import Link2 from './link-2';
+import MessageText from './message-text';
+import BookmarkBold from './bookmark-bold';
+import VoteDownBold from './vote-down-bold';
+import VoteUpBold from './vote-up-bold';
+import Warning2 from './warning-2';
 
 export type IconProps = {
   className?: string;
@@ -115,7 +127,19 @@ export type IconName =
   | 'danger-solid'
   | 'trash-solid'
   | 'caret-up-solid'
-  | 'caret-down-solid';
+  | 'caret-down-solid'
+  | 'buildings'
+  | 'export-icon'
+  | 'import-icon'
+  | 'vote-up'
+  | 'vote-down'
+  | 'bookmark'
+  | 'link-2'
+  | 'message-text'
+  | 'bookmark-bold'
+  | 'vote-up-bold'
+  | 'vote-down-bold'
+  | 'warning-2';
 
 export type IconsType = Record<IconName, Icon>;
 
@@ -278,6 +302,42 @@ export const Icons: IconsType = {
   },
   'caret-up-solid': (props: IconProps) => {
     return <CaretUpSolid {...props} />;
+  },
+  buildings: (props: IconProps) => {
+    return <Buildings {...props} />;
+  },
+  'export-icon': (props: IconProps) => {
+    return <ExportIcon {...props} />;
+  },
+  'import-icon': (props: IconProps) => {
+    return <ImportIcon {...props} />;
+  },
+  'vote-down': (props: IconProps) => {
+    return <VoteDown {...props} />;
+  },
+  'vote-up': (props: IconProps) => {
+    return <VoteUp {...props} />;
+  },
+  bookmark: (props: IconProps) => {
+    return <Bookmark {...props} />;
+  },
+  'link-2': (props: IconProps) => {
+    return <Link2 {...props} />;
+  },
+  'message-text': (props: IconProps) => {
+    return <MessageText {...props} />;
+  },
+  'bookmark-bold': (props: IconProps) => {
+    return <BookmarkBold {...props} />;
+  },
+  'vote-down-bold': (props: IconProps) => {
+    return <VoteDownBold {...props} />;
+  },
+  'vote-up-bold': (props: IconProps) => {
+    return <VoteUpBold {...props} />;
+  },
+  'warning-2': (props: IconProps) => {
+    return <Warning2 {...props} />;
   }
 };
 

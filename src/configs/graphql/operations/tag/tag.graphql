@@ -1,0 +1,29 @@
+query allTag(
+  $where: TagWhereInput
+  $orderBy: [TagOrderByWithRelationInput!]
+  $pagination: PaginationInput
+  $searchValue: String
+) {
+  all_tag(
+    where: $where
+    orderBy: $orderBy
+    pagination: $pagination
+    searchValue: $searchValue
+  ) {
+    data {
+      id
+      name
+      color
+      type
+      isJobDefault
+      isPostDefault
+      createdAt
+      updatedAt
+    }
+    metadata {
+      total
+      page
+      limit
+    }
+  }
+}

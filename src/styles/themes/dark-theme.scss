@@ -1,7 +1,9 @@
-html[data-theme='dark'] {
+html,
+html[data-theme='light'] {
   // Brand
   --primary-color: #7afb3d;
   --secondary-color: #ddf7d4;
+  --tertiary-color: #919cd4;
 
   // Default
   --white: #ffffff;
@@ -9,7 +11,10 @@ html[data-theme='dark'] {
   --success: #20ac2e;
   --info: #586ee0;
   --danger: #e05858;
+  --danger-100: #feeddc;
+  --danger-200: #ad3304;
   --warning: #e0e058;
+  --warning-100: #d9d21e;
 
   // Color
   --color-primary: #ffffff;
@@ -18,12 +23,64 @@ html[data-theme='dark'] {
   --color-brand: var(--primary-color);
   --color-invert: var(--white);
   --color-error: var(--danger);
-  --color-success: var(--success);
-  --color-accent: var(--info);
+  --color-success: var(--success) --color-accent: var(--info);
 
   // Gray
   --color-gray-0: #f6f6f9;
   --color-gray-100: #e0e6eb;
+  --color-gray-200: #f7f9fb;
+
+  // BlueCheese
+  --blue-cheese-hover-color: #2cdce6;
+  --blue-cheese-hover-background: #0dcfdc3d;
+  --blue-cheese-active-color: #0dcfdc52;
+  --blue-cheese-active-background: #6ff1f633;
+  --blue-cheese-pressed-color: #2cdce6;
+
+  // Avocado
+  --avocado-hover-color: #39e58c;
+  --avocado-hover-background: #1ddc6f3d;
+  --avocado-active-color: #1ddc6f52;
+  --avocado-active-background: #74f3bc33;
+  --avocado-pressed-color: #39e58c;
+
+  // Bun
+  --avocado-hover-color: #ff8e3b;
+  --avocado-hover-background: #ff7a2b3d;
+  --avocado-active-color: #ff7a2b52;
+  --avocado-active-background: #ffb76033;
+  --avocado-pressed-color: #ff8e3b;
+
+  // --theme-accent-cheese-subtlest: #fff76f;
+  //   --theme-accent-cheese-subtler: #fff35a;
+  //   --theme-accent-cheese-subtle: #ffef40;
+  //   --theme-accent-cheese-default: #ffe923;
+  //   --theme-accent-cheese-bolder: #ffdf00;
+  // Subtlest
+  --subtlest-hover-color: #7147ed;
+  --subtlest-hover-background: #7929f03d;
+  --subtlest-active-color: #7229f052;
+  --subtlest-active-background: #9c69fb33;
+  --subtlest-pressed-color: #7147ed;
+
+  // Cabbage
+  --cabbage-hover-color: #ce3df3;
+  --cabbage-hover-background: #c029f03d;
+  --cabbage-active-color: #c029f052;
+  --cabbage-active-background: #e669fb33;
+  --cabbage-pressed-color: #ce3df3;
+
+  // Ketchup
+  --ketchup-hover-color: #e04337;
+  --ketchup-hover-background: #d52b203d;
+  --ketchup-active-color: #d52b2052;
+  --ketchup-active-background: #f3796c33;
+  --ketchup-pressed-color: #e04337;
+
+  // Gradient
+  --neon: linear-gradient(106deg, var(--primary-color) 0%, var(--info) 85.61%);
+  --neon-x: linear-gradient(45deg, var(--info) 0%, var(--dark) 85.61%);
+  --neon-z: linear-gradient(45deg, var(--primary-color) 0%, var(--dark) 85.61%);
 
   // FONT FAMILY
   --font-primary: 'Inter', sans-serif;

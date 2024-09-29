@@ -24,12 +24,14 @@ export default function Banner({
       className={clsx('top-[-92px] min-h-[572px] pt-[92px]', {
         'bg-neon-x': type === 'employee',
         'bg-neon-y': type === 'employer'
-      })}>
+      })}
+    >
       <h1
         className={clsx('mx-auto mt-8 max-w-80 text-center text-3xl font-bold text-white', {
           // "": type === 'employee',
           // "text-3xl": type === 'employer',
-        })}>
+        })}
+      >
         {title}
       </h1>
 
@@ -46,7 +48,8 @@ const SearchBanner = ({ className }: { className?: string }) => {
       className={clsx(
         'mx-auto mt-12 flex min-h-16 max-w-[90%] items-center gap-6 rounded-4xl bg-dark p-3.5',
         className
-      )}>
+      )}
+    >
       <div></div>
       <Button styleType="neon" label={t('common.search')} />
     </div>

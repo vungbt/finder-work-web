@@ -59,7 +59,8 @@ export const InputForm = forwardRef(function Input(props: InputProps, ref: Ref<H
             'cursor-not-allowed !bg-gray-100': disabled
           },
           classNameWrap
-        )}>
+        )}
+      >
         {iconLeft && (
           <IconViewSize className="icon-left" name={iconLeft} isLoading={isLoading} size={size} />
         )}

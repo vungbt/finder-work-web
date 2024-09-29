@@ -46,7 +46,8 @@ export default function RowTable<T>(props: RowTableProps<T>) {
     <tr
       className={clsx(className, 'h-12 hover:bg-gray transition-all ease-linear', {
         '!bg-tertiary': isSelected
-      })}>
+      })}
+    >
       {rowSelection && (
         <RowSelection
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -79,7 +80,8 @@ export function RowSelection(props: RowSelectionRender) {
           className={clsx('px-4 py-2 text-left border-b border-solid tracking-wider break-words', {
             'border-text-tertiary': isHeader,
             'border-gray-100': !isHeader
-          })}>
+          })}
+        >
           <CheckboxItem
             id={id}
             name={id}
@@ -97,7 +99,8 @@ export function RowSelection(props: RowSelectionRender) {
           className={clsx('px-4 py-2 text-left border-b border-solid tracking-wider break-words', {
             'border-text-tertiary': isHeader,
             'border-gray-100': !isHeader
-          })}>
+          })}
+        >
           {!isHeader ? (
             <RadioItem
               id={id}

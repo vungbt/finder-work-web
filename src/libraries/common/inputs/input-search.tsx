@@ -54,7 +54,8 @@ export const InputSearch = forwardRef(function Input(
             'cursor-not-allowed !bg-gray-100': disabled
           },
           classNameWrap
-        )}>
+        )}
+      >
         {iconLeft && (
           <IconViewSize className="icon-left" name={iconLeft} isLoading={isLoading} size={size} />
         )}

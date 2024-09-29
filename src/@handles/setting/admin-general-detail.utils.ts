@@ -96,8 +96,6 @@ export function AdminGeneralDetailUtils(): AdminGeneralDetailUtilsResult {
   const fetchDetailSetting = async (key: string, type: string) => {
     try {
       setLoadingDetail(true);
-      console.log('key====>', key);
-      console.log('type====>', type);
       const res = await apiClient.oneSetting({
         where: {
           AND: [
@@ -118,7 +116,10 @@ export function AdminGeneralDetailUtils(): AdminGeneralDetailUtilsResult {
         const key = SettingKeys.find((item) => item.value === result.key) ?? SettingKeys[0];
         const showWith = (
           UserRoleOptions.filter((item) => (result.showWith ?? []).includes(item.value)) ?? []
-        ).map((item) => ({ ...item, label: t(item.label) }));
+        ).map((item) => ({
+          ...item,
+          label: t(item.label)
+        }));
 
         formProp.setFieldValue('value', result.value ?? '');
         formProp.setFieldValue('type', { ...type, label: t(type.label) });

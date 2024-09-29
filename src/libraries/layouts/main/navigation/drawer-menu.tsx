@@ -31,7 +31,8 @@ const NavItem = (item: NavigationItem) => {
       onClick={onHandleClickNavMobile}
       className="px-4 py-3 font-semibold"
       key={item.url}
-      href={item.url}>
+      href={item.url}
+    >
       {item.title}
     </Link>
   );
