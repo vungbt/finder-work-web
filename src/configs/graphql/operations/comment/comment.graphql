@@ -12,9 +12,7 @@ query allComment(
   ) {
     data {
       id
-      userId
       content
-      parentId
       parent {
         id
       }
@@ -29,11 +27,12 @@ query allComment(
       post {
         id
       }
+      userId
       postId
+      parentId
       deletedAt
       updatedAt
       deletedAt
-      parentId
     }
     metadata {
       total
@@ -42,7 +41,6 @@ query allComment(
     }
   }
 }
-
 
 mutation createComment($data: CreateCommentInput!) {
   create_comment(data: $data) {

@@ -4,9 +4,17 @@ subscription subscriptionCommentPost {
     content
     user {
       id
+      avatarUrl
+      firstName
+      lastName
+      email
     }
-    parent {
-      id
-    }
+    totalReplies
+    postId
+    parentId
+    userId
+    deletedAt
+    updatedAt
+    deletedAt
   }
 }

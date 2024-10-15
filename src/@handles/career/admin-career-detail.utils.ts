@@ -3,10 +3,13 @@ import {
   CommentItem,
   File,
   PostItem,
+  SubscriptionCommentPostDocument,
+  SubscriptionCommentPostSubscription,
   UserOnly
 } from '@/configs/graphql/generated';
 import { toastError, toastSuccess } from '@/configs/toast';
 import useProfile from '@/hooks/redux/profile/useProfile';
+import useSubscription from '@/hooks/useSubscription';
 import { useApiClient } from '@/libraries/providers/graphql';
 import { getErrorMss } from '@/utils/helpers/formatter';
 import { FormikHelpers } from 'formik';
@@ -122,6 +125,18 @@ export function AdminCareerDetailUtils({ post }: { post: PostItem }): AdminCaree
     pagination: { limit: 10, page: 1 }
   });
   const [hasMore, setHasMore] = useState(true);
+  const { data: newComment } = useSubscription<SubscriptionCommentPostSubscription>(
+    SubscriptionCommentPostDocument
+  );
+
+  useEffect(() => {
+    const newPostComment = newComment?.post_comment as CommentItem;
+    if (newPostComment && newPostComment.postId === post.id) {
+      const newComments = [...comments];
+      newComments.unshift(newPostComment);
+      setComments(newComments);
+    }
+  }, [newComment, post.id]);
 
   useEffect(() => {
     fetchCommentList(commentParams);
