@@ -1,5 +1,5 @@
 import { toastError } from '@/configs/toast';
-import { format, formatDistance } from 'date-fns';
+import { format, formatDistance, formatDistanceStrict } from 'date-fns';
 
 export enum EDateFormat {
   MM_dd_yyyy = 'MM/dd/yyyy',
@@ -28,4 +28,10 @@ export const getErrorMss = (error: any, defaultMess?: string) => {
   if (!newMessError || newMessError.length <= 0) return;
 
   toastError(newMessError);
+};
+
+export const getTimeToNow = (date: string | Date | number) => {
+  const currentDate = date ? new Date(date) : new Date();
+  const timeAgo = formatDistanceStrict(currentDate, new Date(), { addSuffix: true });
+  return timeAgo;
 };

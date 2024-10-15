@@ -1,0 +1,12 @@
+subscription subscriptionCommentPost {
+  post_comment {
+    id
+    content
+    user {
+      id
+    }
+    parent {
+      id
+    }
+  }
+}

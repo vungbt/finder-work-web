@@ -42,13 +42,15 @@ export const countWords = (str: string) => {
     .filter((word) => word.length > 0).length;
 };
 
-export const getAvatar = (user: User | UserOnly) => {
+export const getAvatar = (user?: User | UserOnly) => {
+  if (!user) return FallbackImage.avatarUrl;
   const avatarUrl = user?.avatarUrl ?? user.avatar?.url;
   if (!avatarUrl) return FallbackImage.avatarUrl;
   return avatarUrl;
 };
 
-export const getFullName = (user: User | UserOnly) => {
+export const getFullName = (user?: User | UserOnly) => {
+  if (!user) return 'Jobcadu';
   const fullName = `${user.firstName} ${user.lastName}`;
   return fullName;
 };

@@ -1,109 +1,46 @@
 'use client';
-import {
-  getPostThumbnails,
-  getShareUrl,
-  userIsBookmarkPost,
-  userIsUpVote
-} from '@/@handles/career';
-import { PostItem, VoteAction } from '@/configs/graphql/generated';
-import useProfile from '@/hooks/redux/profile/useProfile';
-import { IconButton, Tag } from '@/libraries/common';
+import { AdminCareerDetailUtils } from '@/@handles/career';
+import { PostItem } from '@/configs/graphql/generated';
+import { CommentInput, CommentList } from '@/libraries/comment';
+import { IconButton, ModalReport, Tag } from '@/libraries/common';
 import { copyToClipboard, getAvatar, getFullName } from '@/utils/helpers/common';
 import { EDateFormat, formatDate } from '@/utils/helpers/formatter';
 import { Link } from '@/utils/navigation';
 import clsx from 'clsx';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
-import { useMemo } from 'react';
 
-export function CareersDetailView({ data }: { data: PostItem }) {
+export function CareersDetailView({ data: post }: { data: PostItem }) {
   const t = useTranslations();
-  const { profile } = useProfile();
-  const post: PostItem = {
-    id: '9798a483-2df5-4d81-807d-68cd2a9cf9c1',
-    title: 'Array.reduce() is Goated 🐐✨\n',
-    content:
-      "<p>The title says it all 🐐. I want to talk about my all-time favorite javascript array method:&nbsp;<strong>Array.reduce()</strong>. I know there are a lot of contenders out there, but hear me out. reduce() is not just a method; it's a way of life✨.</p><p>I'm not going to lie though, when I first started and discovered reduce, it was a little intimidating. It took me a while before I was confidently using it everywhere in my code. But when I did, it was a game changer. Suddenly, I could perform complex operations on arrays with ease, transforming them into whatever I needed. My code become faster and cleaner.</p><p>But don't just take my word for it. Let me show you some of the things you can achieve with reduce(). It's time to dive into Array.reduce() and discover why it's absolutely goated! 🐐</p>",
-    shareUrl: 'https://dev.to/mattlewandowski93/arrayreduce-is-goated-1f1j?ref=dailydev',
-    metadata: {
-      url: 'https://dev.to/mattlewandowski93/arrayreduce-is-goated-1f1j',
-      title: 'Array.reduce() is Goated 🐐✨',
-      imageUrl:
-        'https://media.dev.to/cdn-cgi/image/width=1000,height=500,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2F37gxferln48z8dfxsl7b.png',
-      originUrl: 'https://dev.to/mattlewandowski93/arrayreduce-is-goated-1f1j?ref=dailydev',
-      description:
-        'The title says it all 🐐. I want to talk about my all-time favorite javascript array method:... Tagged with webdev, javascript, typescript, beginners.'
-    },
-    slug: 'arrayreduce-is-goated',
-    minRead: 1,
-    thumbnails: [],
-    jobCategory: {
-      id: 'b931ecc1-a056-4e09-a034-92e832b452db',
-      name: 'Software Development'
-    },
-    categories: [],
-    tags: [
-      {
-        id: '0fed2893-3982-4b88-a1ef-7bc06d61a270',
-        type: 'post',
-        name: 'javascript',
-        color: '#b69db4'
-      },
-      {
-        id: '7760b754-60fb-4530-bcc5-53b1895a577f',
-        type: 'post',
-        name: 'webdev',
-        color: '#61fe78'
-      }
-    ],
-    createdAt: '2024-06-11T08:01:01.301Z',
-    updatedAt: '2024-06-11T08:01:01.301Z',
-    deletedAt: null,
-    author: {
-      id: 'c9c0c2a2-05b8-4f50-bef5-1325ff7cdc96',
-      avatarUrl:
-        'https://lh3.googleusercontent.com/a/ACg8ocIHT7K6EWRTSZpyBqlzZNYnU4_t9SWiJ8K71iIq_fZFTnnAlw=s96-c',
-      avatar: null,
-      firstName: 'Vững',
-      lastName: 'Bùi',
-      email: 'vungbt1999@gmail.com',
-      color: '#586EE0',
-      role: 'super_admin'
-    },
-    userBookmark: null,
-    _count: {
-      likes: 2,
-      dislikes: 0,
-      comments: 0
-    },
-    userVote: {
-      id: 'c9c0c2a2-05b8-4f50-bef5-1325ff7cdc96',
-      action: 'UP_VOTE'
-    }
-  };
-  const thumbnails = getPostThumbnails(post);
-  const shareUrl = getShareUrl(post);
+  const {
+    profile,
+    shareUrl,
+    thumbnails,
+    isBookmark,
+    isReported,
+    isDownVote,
+    isUpVote,
+    totalComment,
+    totalUpVote,
 
-  const totalUpVote = useMemo(() => {
-    const likes = post?._count?.likes ?? 0;
-    const dislikes = post?._count?.dislikes ?? 0;
-    return likes - dislikes;
-  }, [post._count]);
+    // report post
+    isOpenReport,
+    loadingReport,
+    setIsOpenReport,
+    onSubmitReport,
 
-  const totalComment = useMemo(() => post?._count?.comments ?? 0, [post]);
-
-  const isBookmark = useMemo(() => userIsBookmarkPost(post, profile), [post, profile]);
-
-  const isUpVote = useMemo(() => userIsUpVote(post, profile, VoteAction.UpVote), [post, profile]);
-
-  const isDownVote = useMemo(
-    () => userIsUpVote(post, profile, VoteAction.DownVote),
-    [post, profile]
-  );
+    // comment
+    loadingComment,
+    loadingCommentList,
+    comments,
+    onLoadMoreComments,
+    hasMore,
+    onSendComment
+  } = AdminCareerDetailUtils({ post });
 
   return (
     <section>
-      {/* TODO: Implement redirect */}
+      {/* TODO: Implement redirect to Author */}
       <div className="flex items-center gap-6">
         <Link href="/" className="w-fit h-fit block">
           <Image
@@ -111,7 +48,7 @@ export function CareersDetailView({ data }: { data: PostItem }) {
             height={64}
             alt="post-author"
             src={getAvatar(post.author)}
-            className="rounded-full"
+            className="rounded-full w-16 h-16"
           />
         </Link>
         <div>
@@ -209,7 +146,7 @@ export function CareersDetailView({ data }: { data: PostItem }) {
               styleType="blue-cheese"
               classNameIcon="!w-7 !h-7"
               classNameWrap={clsx({
-                '!text-bun-pressed': isBookmark
+                '!text-blue-cheese-pressed': isBookmark
               })}
             />
 
@@ -235,13 +172,47 @@ export function CareersDetailView({ data }: { data: PostItem }) {
             />
           </div>
         </div>
+
+        {/* report post */}
         <IconButton
-          onClick={() => copyToClipboard(shareUrl, t)}
+          onClick={() => setIsOpenReport(true)}
           classNameIcon="!w-7 !h-7"
-          iconName="warning-2"
+          classNameWrap={clsx({
+            '!text-subtlest-pressed': isReported
+          })}
+          iconName={isReported ? 'warning-2-bold' : 'warning-2'}
           styleType="subtlest"
+          disabled={isReported}
         />
       </div>
+
+      {/* comments */}
+      <CommentInput
+        avatarUrl={getAvatar(profile)}
+        onSubmit={onSendComment}
+        loading={loadingComment}
+        className="my-2"
+      />
+
+      {/* list comments */}
+      <CommentList
+        onLoadMore={onLoadMoreComments}
+        hasMore={hasMore}
+        items={comments}
+        loading={loadingCommentList}
+        loadingReply={loadingComment}
+        onReplyComment={onSendComment}
+      />
+
+      {/* model report */}
+      <ModalReport
+        message={t('noti.deleteConfirm', { label: t('setting').toLowerCase() })}
+        isOpen={isOpenReport}
+        isLoading={loadingReport}
+        onClose={() => setIsOpenReport(false)}
+        onCancel={() => setIsOpenReport(false)}
+        onSubmit={onSubmitReport}
+      />
     </section>
   );
 }

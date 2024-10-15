@@ -60,6 +60,12 @@ export const userIsBookmarkPost = (post: PostItem, profile: UserOnly) => {
   return false;
 };
 
+export const userIsReportPost = (post: PostItem, profile: UserOnly) => {
+  const currentUserReport = post.userReport;
+  if (currentUserReport && currentUserReport.id === profile?.id) return true;
+  return false;
+};
+
 export const userIsUpVote = (post: PostItem, profile: UserOnly, action: VoteAction) => {
   const currentUserVote = post.userVote;
   if (currentUserVote && currentUserVote.action === action && currentUserVote.id === profile?.id)

@@ -20,3 +20,4 @@ export * from './upload';
 export * from './function-bar';
 export * from './modal';
 export * from './divider';
+export * from './infinity-scroll';

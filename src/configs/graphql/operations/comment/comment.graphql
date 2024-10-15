@@ -1,0 +1,57 @@
+query allComment(
+  $where: CommentWhereInput
+  $orderBy: [CommentOrderByWithRelationInput!]
+  $searchValue: String
+  $pagination: PaginationInput
+) {
+  all_comment(
+    where: $where
+    orderBy: $orderBy
+    searchValue: $searchValue
+    pagination: $pagination
+  ) {
+    data {
+      id
+      userId
+      content
+      parentId
+      parent {
+        id
+      }
+      totalReplies
+      user {
+        id
+        avatarUrl
+        firstName
+        lastName
+        email
+      }
+      post {
+        id
+      }
+      postId
+      deletedAt
+      updatedAt
+      deletedAt
+      parentId
+    }
+    metadata {
+      total
+      page
+      limit
+    }
+  }
+}
+
+
+mutation createComment($data: CreateCommentInput!) {
+  create_comment(data: $data) {
+    id
+    content
+    userId
+    postId
+    createdAt
+    updatedAt
+    deletedAt
+  }
+}
