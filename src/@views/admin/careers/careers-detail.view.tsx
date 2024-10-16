@@ -30,12 +30,13 @@ export function CareersDetailView({ data: post }: { data: PostItem }) {
     onSubmitReport,
 
     // comment
+    hasMore,
+    comments,
     loadingComment,
     loadingCommentList,
-    comments,
-    onLoadMoreComments,
-    hasMore,
-    onSendComment
+    commentSubscription,
+    onSendComment,
+    onLoadMoreComments
   } = AdminCareerDetailUtils({ post });
 
   return (
@@ -201,6 +202,7 @@ export function CareersDetailView({ data: post }: { data: PostItem }) {
         items={comments}
         loading={loadingCommentList}
         loadingReply={loadingComment}
+        commentSubscription={commentSubscription}
         onReplyComment={onSendComment}
       />
 

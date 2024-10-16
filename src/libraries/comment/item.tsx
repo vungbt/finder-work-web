@@ -1,6 +1,7 @@
 import {
   AllCommentQueryVariables,
   CommentItem as CommentItemType,
+  SortOrder,
   User
 } from '@/configs/graphql/generated';
 import useProfile from '@/hooks/redux/profile/useProfile';
@@ -8,18 +9,20 @@ import { getAvatar, getFullName } from '@/utils/helpers/common';
 import { getErrorMss, getTimeToNow } from '@/utils/helpers/formatter';
 import clsx from 'clsx';
 import { FormikHelpers } from 'formik';
+import concat from 'lodash/concat';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useApiClient } from '../providers/graphql';
 import { CommentInput } from './input';
-import { CommentList } from './list';
 
 type CommentItemProps = {
   item: CommentItemType;
   loadingReply?: boolean;
   isReplying?: boolean;
   activeReplyId: string | null;
+  commentSubscription: CommentItemType | null;
+  className?: string;
   setActiveReplyId: (id: string | null) => void;
   onReplyComment: (
     values: { content: string; parentId?: string },
@@ -30,9 +33,10 @@ type CommentItemProps = {
 export function CommentItem({
   item,
   loadingReply,
-  isReplying = false,
+  className,
   onReplyComment,
   activeReplyId,
+  commentSubscription,
   setActiveReplyId
 }: CommentItemProps) {
   const t = useTranslations();
@@ -42,10 +46,25 @@ export function CommentItem({
   const { apiClient } = useApiClient();
   const [replies, setReplies] = useState<CommentItemType[]>([]);
   const [hasMore, setHasMore] = useState(true);
+  const [firstInit, setFirstInit] = useState<boolean>(false);
   const [commentParams, setCommentParams] = useState<AllCommentQueryVariables>({
     pagination: { limit: 10, page: 1 },
-    where: { parentId: { equals: item.id } }
+    where: { parentId: { equals: item.id } },
+    orderBy: [{ createdAt: SortOrder.Asc }]
   });
+
+  useEffect(() => {
+    if (
+      commentSubscription &&
+      commentSubscription.parentId === item.id &&
+      (firstInit || profile?.id === commentSubscription?.userId)
+    ) {
+      const newReplies = [...replies];
+      newReplies.push(commentSubscription);
+      setReplies(newReplies);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [commentSubscription, item.id, firstInit]);
 
   const fetchReplyList = async (params?: AllCommentQueryVariables) => {
     try {
@@ -61,39 +80,35 @@ export function CommentItem({
         setHasMore(false);
       }
 
-      setReplies(data as CommentItemType[]);
+      const newComments = params?.pagination?.page === 1 ? data : concat(replies, data);
+      setReplies(newComments as CommentItemType[]);
     } catch (error) {
       setLoading(false);
       getErrorMss(error);
     }
   };
 
-  const onViewReplies = () => {
-    fetchReplyList(commentParams);
-  };
-
-  // load more comment
-  const onLoadMoreComments = () => {
-    if (hasMore && !loading) {
-      const params = {
+  const onViewReplies = (next?: boolean) => {
+    let params = { ...commentParams };
+    if (next) {
+      params = {
         ...commentParams,
         pagination: {
           ...commentParams.pagination,
           page: (commentParams?.pagination?.page ?? 1) + 1
         }
       };
-      setCommentParams(params);
-      fetchReplyList(params);
     }
+    if (params.pagination?.page === 1) {
+      setReplies([]);
+    }
+    setFirstInit(true);
+    setCommentParams(params);
+    fetchReplyList(params);
   };
 
-  console.log('replies====>', replies);
   return (
-    <div
-      className={clsx('flex gap-[6px] items-start w-full', {
-        'mb-2': !isReplying
-      })}
-    >
+    <div className={clsx('flex gap-[6px] items-start w-full', className)}>
       <Image
         width={36}
         height={36}
@@ -116,16 +131,56 @@ export function CommentItem({
           </button>
         </div>
 
-        {item.totalReplies ? (
-          <button onClick={onViewReplies} className="text-sm mt-2 cursor-pointer outline-none">
+        {/* click to view all */}
+        {item.totalReplies && replies.length <= 0 ? (
+          <button
+            onClick={() => onViewReplies()}
+            className="text-sm mt-2 cursor-pointer outline-none"
+          >
             {t('common.viewAllReplies', { number: item.totalReplies ?? 0 })}
           </button>
         ) : null}
 
         <div className="mt-2">
+          {/* Render replies */}
+          {replies && replies.length > 0 && (
+            <div className="ml-8 border-l-[1px] border-gray-100 pl-2">
+              {replies.map((replyItem, replyIndex) => (
+                <CommentItem
+                  key={replyItem.id}
+                  onReplyComment={(values, formHelper) =>
+                    onReplyComment({ ...values, parentId: replyItem.id }, formHelper)
+                  }
+                  setActiveReplyId={setActiveReplyId}
+                  activeReplyId={activeReplyId}
+                  loadingReply={loadingReply}
+                  commentSubscription={commentSubscription}
+                  item={replyItem as CommentItemType}
+                  isReplying
+                  className={clsx('pb-2', {
+                    'pb-0': replyIndex === replies.length - 1
+                  })}
+                />
+              ))}
+
+              {item.totalReplies && hasMore ? (
+                <button
+                  onClick={() => onViewReplies(true)}
+                  className="text-sm mt-2 cursor-pointer outline-none"
+                >
+                  {t('common.viewAllReplies', { number: item.totalReplies - replies.length })}
+                </button>
+              ) : null}
+            </div>
+          )}
+
           {/* Reply box */}
           {isShowReplying && (
-            <div className="ml-8 border-l-[1px] border-gray-100 pl-2 pb-2">
+            <div
+              className={clsx('ml-8 border-l-[1px] border-gray-100 pl-2', {
+                'pt-2': replies.length > 0
+              })}
+            >
               <CommentInput
                 id={`reply-${item.id}`}
                 placeholder="Write a reply..."
@@ -134,31 +189,6 @@ export function CommentItem({
                 }
                 loading={loadingReply}
                 avatarUrl={getAvatar(profile)}
-              />
-            </div>
-          )}
-
-          {/* Render replies */}
-          {replies && replies.length > 0 && (
-            <div className="ml-8 border-l-[1px] border-gray-100 pl-2">
-              {/* <CommentItem
-                onReplyComment={(values, formHelper) =>
-                  onReplyComment({ ...values, parentId: reply.id }, formHelper)
-                }
-                setActiveReplyId={setActiveReplyId}
-                activeReplyId={activeReplyId}
-                loadingReply={loadingReply}
-                item={reply as CommentItemType}
-                isReplying
-              /> */}
-
-              <CommentList
-                onLoadMore={onLoadMoreComments}
-                hasMore={hasMore}
-                items={replies}
-                loading={loading}
-                loadingReply={loadingReply}
-                onReplyComment={onReplyComment}
               />
             </div>
           )}

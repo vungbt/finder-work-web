@@ -13,6 +13,7 @@ import useSubscription from '@/hooks/useSubscription';
 import { useApiClient } from '@/libraries/providers/graphql';
 import { getErrorMss } from '@/utils/helpers/formatter';
 import { FormikHelpers } from 'formik';
+import concat from 'lodash/concat';
 import { useTranslations } from 'next-intl';
 import { useEffect, useMemo, useState } from 'react';
 import {
@@ -53,6 +54,7 @@ type AdminCareerDetailUtilsResult = {
   comments: CommentItem[];
   loadingCommentList: boolean;
   hasMore: boolean;
+  commentSubscription: CommentItem | null;
   onLoadMoreComments: () => void;
   setCommentParams: (values: AllCommentQueryVariables) => void;
   onSendComment: (
@@ -125,18 +127,29 @@ export function AdminCareerDetailUtils({ post }: { post: PostItem }): AdminCaree
     pagination: { limit: 10, page: 1 }
   });
   const [hasMore, setHasMore] = useState(true);
-  const { data: newComment } = useSubscription<SubscriptionCommentPostSubscription>(
+  const { data: commentSubscription } = useSubscription<SubscriptionCommentPostSubscription>(
     SubscriptionCommentPostDocument
   );
 
   useEffect(() => {
-    const newPostComment = newComment?.post_comment as CommentItem;
-    if (newPostComment && newPostComment.postId === post.id) {
+    const newPostComment = commentSubscription?.post_comment as CommentItem;
+    if (newPostComment && newPostComment.postId === post.id && !newPostComment?.parentId) {
       const newComments = [...comments];
       newComments.unshift(newPostComment);
       setComments(newComments);
     }
-  }, [newComment, post.id]);
+    if (newPostComment && newPostComment.postId === post.id && newPostComment.parentId) {
+      const newComments = [...comments];
+      const commentIndex = newComments.findIndex((item) => item.id === newPostComment.parentId);
+      const currentComment = newComments[commentIndex];
+      newComments.splice(commentIndex, 1, {
+        ...currentComment,
+        totalReplies: currentComment.totalReplies + 1
+      });
+      setComments(newComments);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [commentSubscription, post.id]);
 
   useEffect(() => {
     fetchCommentList(commentParams);
@@ -157,7 +170,8 @@ export function AdminCareerDetailUtils({ post }: { post: PostItem }): AdminCaree
         setHasMore(false);
       }
 
-      setComments(data as CommentItem[]);
+      const newComment = concat(comments, data);
+      setComments(newComment as CommentItem[]);
     } catch (error) {
       setLoadingCommentList(false);
       getErrorMss(error);
@@ -225,6 +239,7 @@ export function AdminCareerDetailUtils({ post }: { post: PostItem }): AdminCaree
     loadingCommentList,
     comments,
     hasMore,
+    commentSubscription: commentSubscription?.post_comment as CommentItem,
     onLoadMoreComments,
     setCommentParams,
     onSendComment

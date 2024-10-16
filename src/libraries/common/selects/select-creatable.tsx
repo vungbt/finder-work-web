@@ -3,7 +3,7 @@ import { IconName, RenderIcon } from '@/libraries/icons';
 import { IOptItem } from '@/types';
 import clsx from 'clsx';
 import { FieldInputProps, FormikProps } from 'formik';
-import { cloneDeep } from 'lodash';
+import cloneDeep from 'lodash/cloneDeep';
 import { Ref, forwardRef } from 'react';
 import {
   ActionMeta,

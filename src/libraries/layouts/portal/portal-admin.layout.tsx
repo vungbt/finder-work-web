@@ -7,6 +7,7 @@ import Image from 'next/image';
 import { ReactNode, useRef, useState } from 'react';
 import { SideBar, SidebarMenu } from './sidebar';
 import clsx from 'clsx';
+import { getFullName } from '@/utils/helpers/common';
 
 export function PortalAdminLayout(props: { children: ReactNode; menus?: SidebarMenu[] }) {
   const { profile } = useProfile();
@@ -49,7 +50,7 @@ export function PortalAdminLayout(props: { children: ReactNode; menus?: SidebarM
             height={24}
             className="rounded-full"
           />
-          <span className="text-sm line-clamp-1">{profile.fullName}</span>
+          <span className="text-sm line-clamp-1">{getFullName(profile)}</span>
         </div>
 
         {/* sidebar */}
@@ -92,7 +93,9 @@ export function PortalAdminLayout(props: { children: ReactNode; menus?: SidebarM
             />
           </div>
         </div>
-        <div className="p-7 portal-content-layout">{props.children}</div>
+        <div className="p-7 portal-content-layout" id="scrollableTarget">
+          {props.children}
+        </div>
       </div>
 
       {/* overlay */}
