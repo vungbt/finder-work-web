@@ -48,7 +48,7 @@ export function CommentItem({
   const [hasMore, setHasMore] = useState(true);
   const [firstInit, setFirstInit] = useState<boolean>(false);
   const [commentParams, setCommentParams] = useState<AllCommentQueryVariables>({
-    pagination: { limit: 10, page: 1 },
+    pagination: { limit: 10, page: 0 },
     where: { parentId: { equals: item.id } },
     orderBy: [{ createdAt: SortOrder.Asc }]
   });
@@ -88,17 +88,14 @@ export function CommentItem({
     }
   };
 
-  const onViewReplies = (next?: boolean) => {
-    let params = { ...commentParams };
-    if (next) {
-      params = {
-        ...commentParams,
-        pagination: {
-          ...commentParams.pagination,
-          page: (commentParams?.pagination?.page ?? 1) + 1
-        }
-      };
-    }
+  const onViewReplies = () => {
+    const params = {
+      ...commentParams,
+      pagination: {
+        ...commentParams.pagination,
+        page: (commentParams?.pagination?.page ?? 1) + 1
+      }
+    };
     if (params.pagination?.page === 1) {
       setReplies([]);
     }
@@ -133,10 +130,7 @@ export function CommentItem({
 
         {/* click to view all */}
         {item.totalReplies && replies.length <= 0 ? (
-          <button
-            onClick={() => onViewReplies()}
-            className="text-sm mt-2 cursor-pointer outline-none"
-          >
+          <button onClick={onViewReplies} className="text-sm mt-2 cursor-pointer outline-none">
             {t('common.viewAllReplies', { number: item.totalReplies ?? 0 })}
           </button>
         ) : null}
@@ -165,7 +159,7 @@ export function CommentItem({
 
               {item.totalReplies && hasMore ? (
                 <button
-                  onClick={() => onViewReplies(true)}
+                  onClick={onViewReplies}
                   className="text-sm mt-2 cursor-pointer outline-none"
                 >
                   {t('common.viewAllReplies', { number: item.totalReplies - replies.length })}

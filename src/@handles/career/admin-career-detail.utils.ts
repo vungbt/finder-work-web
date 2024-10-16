@@ -144,7 +144,7 @@ export function AdminCareerDetailUtils({ post }: { post: PostItem }): AdminCaree
       const currentComment = newComments[commentIndex];
       newComments.splice(commentIndex, 1, {
         ...currentComment,
-        totalReplies: currentComment.totalReplies + 1
+        totalReplies: (currentComment?.totalReplies ?? 0) + 1
       });
       setComments(newComments);
     }
