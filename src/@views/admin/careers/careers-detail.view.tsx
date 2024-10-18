@@ -193,6 +193,7 @@ export function CareersDetailView({ data: post }: { data: PostItem }) {
         onSubmit={onSendComment}
         loading={loadingComment}
         className="my-2"
+        id="comment-box"
       />
 
       {/* list comments */}

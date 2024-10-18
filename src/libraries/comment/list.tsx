@@ -37,7 +37,7 @@ export function CommentList({
         loading={loading}
         endMessage={<></>}
         className="!overflow-hidden"
-        renderItem={(item, index) => (
+        renderItem={(item: CommentItemType, index: number) => (
           <CommentItem
             onReplyComment={onReplyComment}
             loadingReply={loadingReply}

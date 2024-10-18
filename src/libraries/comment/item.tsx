@@ -63,6 +63,24 @@ export function CommentItem({
       newReplies.push(commentSubscription);
       setReplies(newReplies);
     }
+
+    if (
+      commentSubscription &&
+      commentSubscription.parentId &&
+      commentSubscription.parentId === item.id
+    ) {
+      const newReplies = [...replies];
+      console.log('commentSubscription====>', commentSubscription);
+      console.log('item====>', item);
+      const commentIndex = newReplies.findIndex((item) => item.id === commentSubscription.parentId);
+      const currentComment = newReplies[commentIndex];
+      console.log('currentComment===>', currentComment);
+      newReplies.splice(commentIndex, 1, {
+        ...currentComment,
+        totalReplies: (currentComment?.totalReplies ?? 0) + 1
+      });
+      setReplies(newReplies);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [commentSubscription, item.id, firstInit]);
 
@@ -157,11 +175,10 @@ export function CommentItem({
                 />
               ))}
 
-              {item.totalReplies && hasMore ? (
+              {item.totalReplies && hasMore && item.totalReplies - replies.length > 0 ? (
                 <button
                   onClick={onViewReplies}
-                  className="text-sm mt-2 cursor-pointer outline-none"
-                >
+                  className="text-sm mt-2 cursor-pointer outline-none">
                   {t('common.viewAllReplies', { number: item.totalReplies - replies.length })}
                 </button>
               ) : null}
@@ -173,8 +190,7 @@ export function CommentItem({
             <div
               className={clsx('ml-8 border-l-[1px] border-gray-100 pl-2', {
                 'pt-2': replies.length > 0
-              })}
-            >
+              })}>
               <CommentInput
                 id={`reply-${item.id}`}
                 placeholder="Write a reply..."
