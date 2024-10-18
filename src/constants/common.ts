@@ -1,5 +1,5 @@
 import { UserRole } from '@/configs/graphql/generated';
-import { ESettingType } from '@/types';
+import { EReason, ESettingType } from '@/types';
 
 export const COUNTRY_CODE_DEFAULT = 'VI';
 export const PAGINATION = {
@@ -40,6 +40,14 @@ export const SettingTypes = [
   { label: 'menu.title', value: ESettingType.Menu },
   { label: 'header.title', value: ESettingType.Header },
   { label: 'footer.title', value: ESettingType.Footer }
+];
+
+export const PostReportReasons = [
+  { label: 'reason.brokenLink', value: EReason.BROKEN_LINK },
+  { label: 'reason.clickbait', value: EReason.CLICKBAIT },
+  { label: 'reason.lowQualityContent', value: EReason.LOW_QUALITY_CONTENT },
+  { label: 'reason.falseOrInaccurateInformation', value: EReason.FALSE_OR_INACCURATE_INFORMATION },
+  { label: 'common.other', value: EReason.OTHER }
 ];
 
 export const RouterAction = ['add', 'edit'];

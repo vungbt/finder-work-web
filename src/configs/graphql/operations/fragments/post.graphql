@@ -42,6 +42,9 @@ fragment PostFragment on PostItem {
   userBookmark {
     id
   }
+  userReport {
+    id
+  }
   _count {
     likes
     dislikes

@@ -1,0 +1,20 @@
+subscription subscriptionCommentPost {
+  post_comment {
+    id
+    content
+    user {
+      id
+      avatarUrl
+      firstName
+      lastName
+      email
+    }
+    totalReplies
+    postId
+    parentId
+    userId
+    deletedAt
+    updatedAt
+    deletedAt
+  }
+}

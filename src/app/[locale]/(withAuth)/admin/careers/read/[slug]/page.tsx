@@ -15,6 +15,5 @@ export default async function CareersPageDetail({ params }: { params: { slug: st
   if (!params.slug || params.slug.length <= 0) return notFound();
   const post = await getDetailPost({ where: { slug: { equals: params.slug } } });
   if (!post) return notFound();
-
   return <CareersDetailView data={post as PostItem} />;
 }

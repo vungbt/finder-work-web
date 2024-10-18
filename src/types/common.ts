@@ -78,3 +78,11 @@ export enum ActionStatus {
   Deleted = 'deleted',
   Created = 'created'
 }
+
+export enum EReason {
+  BROKEN_LINK = 'BrokenLink',
+  CLICKBAIT = 'Clickbait',
+  LOW_QUALITY_CONTENT = 'LowQualityContent',
+  FALSE_OR_INACCURATE_INFORMATION = 'FalseOrInaccurateInformation',
+  OTHER = 'Other'
+}
