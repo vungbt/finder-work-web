@@ -228,7 +228,8 @@
     "copiedLinkToClipboardFailed": "Copied link to clipboard failed",
     "reportPostSuccess": "Report post successful",
     "reportPostFailed": "Report post failed",
-    "changeStatusConfirm": "Are you sure to change user status to",
+    "changeStatusToInactiveConfirm": "Are you sure to change user status to inactive?",
+    "changeStatusToActiveConfirm": "Are you sure to change user status to active?",
     "changeStatusSuccess": "Change user status successfully",
     "changeStatusError": "Change user status error,please try again"
   }

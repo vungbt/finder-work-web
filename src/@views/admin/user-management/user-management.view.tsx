@@ -55,12 +55,9 @@ export function UserManagementView() {
         />
         <ModalConfirm
           message={
-            t('noti.changeStatusConfirm') +
-            ' ' +
-            (dataUpdate?.status === UserStatus.Inactive
-              ? t('active').toLowerCase()
-              : t('inactive')
-            ).toLowerCase()
+            dataUpdate?.status === UserStatus.Inactive
+              ? t('noti.changeStatusToInactiveConfirm')
+              : t('noti.changeStatusToActiveConfirm')
           }
           isOpen={!!dataUpdate}
           isLoading={loadingChange}
