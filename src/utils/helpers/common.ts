@@ -42,13 +42,15 @@ export const countWords = (str: string) => {
     .filter((word) => word.length > 0).length;
 };
 
-export const getAvatar = (user: User | UserOnly) => {
+export const getAvatar = (user?: User | UserOnly) => {
+  if (!user) return FallbackImage.avatarUrl;
   const avatarUrl = user?.avatarUrl ?? user.avatar?.url;
   if (!avatarUrl) return FallbackImage.avatarUrl;
   return avatarUrl;
 };
 
-export const getFullName = (user: User | UserOnly) => {
+export const getFullName = (user?: User | UserOnly) => {
+  if (!user) return 'Jobcadu';
   const fullName = `${user.firstName} ${user.lastName}`;
   return fullName;
 };
@@ -71,4 +73,13 @@ export const copyToClipboard = (text: string, mess?: { error?: string; success: 
   if (!navigator || !navigator.clipboard || !text || text.length <= 0) return toastError(messError);
   navigator.clipboard.writeText(text);
   return toastSuccess(messSuccess);
+};
+
+export const focusInput = (id: string) => {
+  if (!document) return;
+  const inputElement = document?.getElementById(id) as HTMLInputElement;
+  if (inputElement) {
+    inputElement.focus();
+    inputElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
 };

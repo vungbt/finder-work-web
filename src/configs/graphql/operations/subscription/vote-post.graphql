@@ -13,6 +13,8 @@ subscription subscriptionVotePost {
     metadata {
       status
       action
+      likes
+      dislikes
     }
   }
 }
@@ -32,6 +34,8 @@ mutation votePost($postId: String!, $commentId: String, $action: VoteAction!) {
     metadata {
       status
       action
+      likes
+      dislikes
     }
   }
 }

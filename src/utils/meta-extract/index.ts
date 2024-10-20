@@ -1,6 +1,6 @@
 import { MetaExtractInfo } from '@/types';
 import axios from 'axios';
-import cheerio from 'cheerio';
+import * as cheerio from 'cheerio';
 import camelCase from 'lodash/camelCase';
 
 export const extractMetaByUrl = async (url: string) => {

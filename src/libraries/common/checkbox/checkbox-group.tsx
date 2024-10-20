@@ -2,7 +2,7 @@
 import { IOptItem } from '@/types';
 import clsx from 'clsx';
 import { ErrorMessage, FieldInputProps, FormikProps } from 'formik';
-import { cloneDeep } from 'lodash';
+import cloneDeep from 'lodash/cloneDeep';
 import { ChangeEvent } from 'react';
 import { CheckboxItem } from '.';
 
