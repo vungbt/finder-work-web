@@ -1,6 +1,6 @@
 import { SortOrder, User } from '@/configs/graphql/generated';
 import { FallbackImage } from '@/constants/common';
-import { ActionsTable, Button, TableColumn } from '@/libraries/common';
+import { ActionsTable, TableColumn } from '@/libraries/common';
 import { SortCell } from '@/libraries/common/table/sort-cell';
 import { formatDate } from '@/utils/helpers/formatter';
 import { useTranslations } from 'next-intl';

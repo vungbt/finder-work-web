@@ -4,7 +4,6 @@ import {
   PaginationInput,
   SortOrder,
   User,
-  UserOnly,
   UserStatus
 } from '@/configs/graphql/generated';
 import { toastSuccess } from '@/configs/toast';

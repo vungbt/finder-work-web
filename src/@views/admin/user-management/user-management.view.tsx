@@ -1,10 +1,8 @@
 'use client';
 
-import { AdminUserManagementUtils } from '@/@handles/user-management/user-management.utils';
 import { AdminUserUManagementColumns } from '@/@handles/user-management/user-management-columns';
+import { AdminUserManagementUtils } from '@/@handles/user-management/user-management.utils';
 import { FunctionBar, ModalConfirm, Pagination, Table } from '@/libraries/common';
-import { keyBy } from 'lodash';
-import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 
 export function UserManagementView() {
@@ -23,7 +21,6 @@ export function UserManagementView() {
     onCloseModalConfirmChange,
     dataUpdate
   } = AdminUserManagementUtils();
-  const [selectedRows, setSelectedRows] = useState<any>({});
   const t = useTranslations();
   return (
     <div>
@@ -45,28 +42,6 @@ export function UserManagementView() {
         columns={AdminUserUManagementColumns({ onSort, sortActives, onChangeStatus })}
         loading={loading}
         className="mt-3"
-        rowSelection={{
-          type: 'checkbox',
-          selectedRows,
-          onSelectAll: () => {
-            const newData = { ...selectedRows };
-            if (Object.keys(newData).length >= 10) {
-              setSelectedRows({});
-            } else {
-              setSelectedRows(keyBy(data, 'id'));
-            }
-          },
-          onSelect: (row) => {
-            const newData = { ...selectedRows };
-            const item = newData[row?.id];
-            if (!item || Object.keys(item).length <= 0) {
-              newData[row?.id] = { ...row };
-            } else {
-              delete newData[item.id];
-            }
-            setSelectedRows(newData);
-          }
-        }}
       />
 
       {/* pagination */}
