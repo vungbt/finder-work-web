@@ -64,6 +64,8 @@ import BookmarkBold from './bookmark-bold';
 import VoteDownBold from './vote-down-bold';
 import VoteUpBold from './vote-up-bold';
 import Warning2 from './warning-2';
+import Warning2Bold from './warning-2-bold';
+import MessageTextBold from './message-text-bold';
 
 export type IconProps = {
   className?: string;
@@ -139,7 +141,9 @@ export type IconName =
   | 'bookmark-bold'
   | 'vote-up-bold'
   | 'vote-down-bold'
-  | 'warning-2';
+  | 'warning-2'
+  | 'warning-2-bold'
+  | 'message-text-bold';
 
 export type IconsType = Record<IconName, Icon>;
 
@@ -338,6 +342,12 @@ export const Icons: IconsType = {
   },
   'warning-2': (props: IconProps) => {
     return <Warning2 {...props} />;
+  },
+  'warning-2-bold': (props: IconProps) => {
+    return <Warning2Bold {...props} />;
+  },
+  'message-text-bold': (props: IconProps) => {
+    return <MessageTextBold {...props} />;
   }
 };
 

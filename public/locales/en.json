@@ -31,6 +31,8 @@
   "setting": "Setting",
   "bookmark": "Bookmark",
   "comment": "Comment",
+  "confirm": "Confirm",
+  "submit": "Submit",
   "copy": "Copy",
   "header": {
     "title": "Header"
@@ -113,7 +115,6 @@
     "back": "Back",
     "next": "Next",
     "emailVerification": "Email verification",
-    "submit": "Submit",
     "post": "Post",
     "plsEnterTheSixDigitVerificationCode": "Please enter the 6-digit verification code that was sent to {email}.",
     "code": "code",
@@ -142,7 +143,17 @@
     "others": "Others",
     "dropOrDragPhotos": "Drop or Drag photos",
     "supported": "Supported {type}",
-    "readTime": "{number} read time"
+    "readTime": "{number} read time",
+    "specify": "Specify",
+    "other": "Other",
+    "reply": "Reply",
+    "viewAllReplies": "View all {number} replies"
+  },
+  "reason": {
+    "brokenLink": "Broken link",
+    "clickbait": "Clickbait",
+    "lowQualityContent": "Low-quality content",
+    "falseOrInaccurateInformation": "False or inaccurate information"
   },
   "subTitle": {
     "forgotPassword": "Enter your email address and we will send you a link to reset your password",
@@ -171,9 +182,11 @@
     "description": "Description",
     "thumbnails": "Thumbnails",
     "content": "Content",
+    "reason": "Reason",
     "categories": "Categories",
     "title": "Title",
-    "link": "Link"
+    "link": "Link",
+    "message": "Message"
   },
   "placeholder": {
     "enter": "Enter {label}",
@@ -181,7 +194,7 @@
   },
   "validation": {
     "required": "Please enter {label}",
-    "select": "Please select {label}",
+    "select": "Please select a {label}",
     "selectMin": "{label} must be at least {number} option",
     "selectMax": "{label} must be at highest {number} options",
     "fileMin": "{label} must be at least {number} file",
@@ -208,6 +221,8 @@
     "deleteConfirmFrom": "Are you sure you want to delete this {label} from {from}?",
     "deleteConfirmEffectTo": "By deleting this {label}, {number} other {effectKey} will also be permanently deleted.",
     "copiedLinkToClipboard": "Copied link to clipboard",
-    "copiedLinkToClipboardFailed": "Copied link to clipboard failed"
+    "copiedLinkToClipboardFailed": "Copied link to clipboard failed",
+    "reportPostSuccess": "Report post successful",
+    "reportPostFailed": "Report post failed"
   }
 }

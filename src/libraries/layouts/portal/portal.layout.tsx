@@ -7,6 +7,7 @@ import { SideBar, SidebarMenu } from './sidebar';
 import { IconButton, InputForm } from '@/libraries/common';
 import ThemeSwitcher from '@/libraries/theme-switcher';
 import { FallbackImage } from '@/constants/common';
+import { getFullName } from '@/utils/helpers/common';
 
 export function PortalLayout(props: { pageView: ReactNode; menus?: SidebarMenu[] }) {
   const { profile } = useProfile();
@@ -49,7 +50,7 @@ export function PortalLayout(props: { pageView: ReactNode; menus?: SidebarMenu[]
             height={24}
             className="rounded-full"
           />
-          <span className="text-sm line-clamp-1">{profile.fullName}</span>
+          <span className="text-sm line-clamp-1">{getFullName(profile)}</span>
         </div>
 
         {/* sidebar */}

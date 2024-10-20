@@ -21,7 +21,7 @@ export const getApiClient = (accessToken: string | null = null) => {
 };
 
 export const getSubscriptionClient = (accessToken: string | null = null) => {
-  return new SubscriptionClient(String(String(process.env.GRAPHQL_API_WS_URL)), {
+  return new SubscriptionClient(String(process.env.GRAPHQL_API_WS_URL), {
     reconnect: true,
     connectionParams: {
       headers: getHeaders(accessToken)

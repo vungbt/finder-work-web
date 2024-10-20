@@ -2,18 +2,16 @@
   "parser": "@typescript-eslint/parser",
   "extends": [
     "eslint:recommended",
-    "eslint-config-prettier",
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
-    "next",
-    "prettier"
+    "next"
   ],
   "parserOptions": {
     "project": "./tsconfig.json"
   },
-  "plugins": ["eslint-plugin-prettier", "prettier"],
+  "plugins": ["@typescript-eslint"],
   "rules": {
-    "prettier/prettier": ["error", {}, { "usePrettierrc": true }],
+    "prettier/prettier": "off",
     "@typescript-eslint/explicit-module-boundary-types": 0,
     "new-cap": 0,
     "require-jsdoc": 0,

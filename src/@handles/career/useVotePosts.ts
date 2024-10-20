@@ -33,7 +33,6 @@ export function useVotePosts(data: PostItem[], callback: (items: PostItem[]) => 
     const { data: votePostResult, metadata } = votePost.vote_post;
     const status = metadata?.status;
     const action = metadata?.action;
-
     const postIndexValid = newData.findIndex((item) => item.id === votePostResult.postId);
     if (postIndexValid !== -1) {
       const postItem = newData[postIndexValid];
@@ -45,10 +44,11 @@ export function useVotePosts(data: PostItem[], callback: (items: PostItem[]) => 
         postItem._count = { ...postCount, likes: likesCount, dislikes: dislikesCount };
       } else {
         const postCount = postItem._count;
-        const likesCount = VoteAction.UpVote === action ? postCount.likes + 1 : postCount.likes;
-        const dislikesCount =
-          VoteAction.DownVote === action ? postCount.dislikes + 1 : postCount.dislikes;
-        postItem._count = { ...postCount, likes: likesCount, dislikes: dislikesCount };
+        postItem._count = {
+          ...postCount,
+          likes: metadata?.likes ?? 0,
+          dislikes: metadata?.dislikes ?? 0
+        };
       }
       newData.splice(postIndexValid, 1, postItem);
       callback(newData);

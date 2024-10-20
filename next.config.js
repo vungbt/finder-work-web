@@ -9,6 +9,12 @@ const nextConfig = {
   output: 'standalone',
   swcMinify: true,
   reactStrictMode: false,
+  webpack: (config, { isServer }) => {
+    if (isServer) {
+      config.externals.push('_http_common', 'undici');
+    }
+    return config;
+  },
   generateBuildId: () => nextBuildId({ dir: __dirname }),
   env: {
     GRAPHQL_API_URL: process.env.GRAPHQL_API_URL,

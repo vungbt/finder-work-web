@@ -1,0 +1,53 @@
+mutation reportPost($data: ReportPostCreateInput!) {
+  create_report_post(data: $data) {
+    id
+    reason
+    message
+    postId
+    userId
+    createdAt
+    updatedAt
+    deletedAt
+  }
+}
+
+query allReportPost(
+  $where: ReportPostWhereInput
+  $orderBy: [ReportPostOrderByWithRelationInput!]
+  $searchValue: String
+  $pagination: PaginationInput
+) {
+  all_report_post(
+    where: $where
+    orderBy: $orderBy
+    searchValue: $searchValue
+    pagination: $pagination
+  ) {
+    data {
+      id
+      reason
+      message
+      postId
+      userId
+      createdAt
+      updatedAt
+      deletedAt
+    }
+    metadata {
+      ...Metadata
+    }
+  }
+}
+
+mutation deleteReportPost($where: ReportPostWhereUniqueInput!) {
+  delete_report_post(where: $where) {
+    id
+    reason
+    message
+    postId
+    userId
+    createdAt
+    updatedAt
+    deletedAt
+  }
+}
