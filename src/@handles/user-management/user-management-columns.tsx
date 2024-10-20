@@ -2,6 +2,7 @@ import { SortOrder, User } from '@/configs/graphql/generated';
 import { FallbackImage } from '@/constants/common';
 import { ActionsTable, TableColumn } from '@/libraries/common';
 import { SortCell } from '@/libraries/common/table/sort-cell';
+import { getFullName } from '@/utils/helpers/common';
 import { formatDate } from '@/utils/helpers/formatter';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
@@ -23,10 +24,6 @@ export const AdminUserUManagementColumns = ({
       width: '20%'
     },
     {
-      title: t('name'),
-      render: (row: User): JSX.Element => <div>{row.lastName}</div>
-    },
-    {
       title: t('user'),
       render: (item: User): JSX.Element => (
         <div className="flex items-center gap-2">
@@ -37,7 +34,7 @@ export const AdminUserUManagementColumns = ({
             height={24}
             className="rounded-full"
           />
-          <span className="text-sm line-clamp-1">{item.firstName}</span>
+          <span className="text-sm line-clamp-1">{getFullName(item)}</span>
         </div>
       )
     },
@@ -62,12 +59,14 @@ export const AdminUserUManagementColumns = ({
     },
 
     {
-      title: t('status'),
+      title: t('common.status'),
       render: (item: User): JSX.Element => <>{item.status}</>
     },
     {
       title: t('actions'),
-      render: (row) => <ActionsTable onChangeStatus={() => onChangeStatus(row)} />
+      render: (row) => (
+        <ActionsTable onChangeStatus={() => onChangeStatus(row)} status={row.status} />
+      )
     }
   ];
 };
