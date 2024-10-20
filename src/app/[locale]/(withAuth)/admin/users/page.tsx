@@ -1,5 +1,6 @@
+import { UserManagementView } from '@/@views/admin/user-management';
 import React from 'react';
 
 export default function AdminUserManager() {
-  return <div>AdminUserManager</div>;
+  return <UserManagementView />;
 }
