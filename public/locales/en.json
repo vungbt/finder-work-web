@@ -148,7 +148,8 @@
     "specify": "Specify",
     "other": "Other",
     "reply": "Reply",
-    "viewAllReplies": "View all {number} replies"
+    "viewAllReplies": "View all {number} replies",
+    "changeStatus": "Change status"
   },
   "reason": {
     "brokenLink": "Broken link",
@@ -228,8 +229,5 @@
     "changeStatusConfirm": "Are you sure to change status",
     "changeStatusSuccess": "Change user status successfully",
     "changeStatusError": "Change user status error,please try again"
-  },
-  "button": {
-    "buttonChangeStatus": "Change status"
   }
 }

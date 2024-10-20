@@ -24,7 +24,7 @@ export function ActionsTable({ onDelete, onGoToDetail, onChangeStatus }: Actions
       )}
       {onChangeStatus && (
         <button onClick={onChangeStatus}>
-          <div className=" text-avocado">{t('button.buttonChangeStatus')}</div>
+          <div className=" text-avocado">{t('common.changeStatus')}</div>
         </button>
       )}
     </div>
