@@ -22,7 +22,7 @@ export function useSearchQuery<T extends Record<string, string>>(
 
   useEffect(() => {
     // Update the searchQuery state when searchParams change
-    const params = new URLSearchParams(searchParams);
+    const params = new URLSearchParams(searchParams as any);
     const updatedQuery: any = initialState ? { ...initialState } : {};
     params.forEach((value, key) => {
       updatedQuery[key] = value;
@@ -32,7 +32,7 @@ export function useSearchQuery<T extends Record<string, string>>(
   }, [searchParams]);
 
   const add = (updatedQuery: any) => {
-    const params = new URLSearchParams(searchParams);
+    const params = new URLSearchParams(searchParams as any);
     Object.keys(updatedQuery).forEach((key) => {
       if (updatedQuery[key]) {
         params.set(key, updatedQuery[key]);
