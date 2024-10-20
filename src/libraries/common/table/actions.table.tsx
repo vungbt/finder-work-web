@@ -16,7 +16,6 @@ export function ActionsTable({
   onChangeStatus,
   status
 }: ActionsTableProps) {
-  console.log('===>', status);
   const t = useTranslations();
   return (
     <div className="flex items-center gap-2">
