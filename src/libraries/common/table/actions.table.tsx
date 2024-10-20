@@ -1,14 +1,22 @@
+import { UserStatus } from '@/configs/graphql/generated';
 import { RenderIcon } from '@/libraries/icons';
 import { useTranslations } from 'next-intl';
-import React from 'react';
+import { Button } from '../buttons';
 
 type ActionsTableProps = {
   onDelete?: () => void;
   onGoToDetail?: () => void;
   onChangeStatus?: () => void;
+  status: UserStatus;
 };
 
-export function ActionsTable({ onDelete, onGoToDetail, onChangeStatus }: ActionsTableProps) {
+export function ActionsTable({
+  onDelete,
+  onGoToDetail,
+  onChangeStatus,
+  status
+}: ActionsTableProps) {
+  console.log('===>', status);
   const t = useTranslations();
   return (
     <div className="flex items-center gap-2">
@@ -23,9 +31,16 @@ export function ActionsTable({ onDelete, onGoToDetail, onChangeStatus }: Actions
         </button>
       )}
       {onChangeStatus && (
-        <button onClick={onChangeStatus}>
-          <div className=" text-avocado">{t('common.changeStatus')}</div>
-        </button>
+        <Button
+          styleType={status === UserStatus.Inactive ? 'success' : 'danger'}
+          label={
+            status == UserStatus.Inactive
+              ? t('common.active').toLowerCase()
+              : t('common.inactive').toLowerCase()
+          }
+          size="small"
+          onClick={onChangeStatus}
+        />
       )}
     </div>
   );

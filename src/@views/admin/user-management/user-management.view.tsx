@@ -2,6 +2,7 @@
 
 import { AdminUserUManagementColumns } from '@/@handles/user-management/user-management-columns';
 import { AdminUserManagementUtils } from '@/@handles/user-management/user-management.utils';
+import { UserStatus } from '@/configs/graphql/generated';
 import { FunctionBar, ModalConfirm, Pagination, Table } from '@/libraries/common';
 import { useTranslations } from 'next-intl';
 
@@ -53,7 +54,14 @@ export function UserManagementView() {
           onChangePage={(page) => setPagination({ ...pagination, page })}
         />
         <ModalConfirm
-          message={t('noti.changeStatusConfirm', { label: t('setting').toLowerCase() })}
+          message={
+            t('noti.changeStatusConfirm') +
+            ' ' +
+            (dataUpdate?.status === UserStatus.Inactive
+              ? t('active').toLowerCase()
+              : t('inactive')
+            ).toLowerCase()
+          }
           isOpen={!!dataUpdate}
           isLoading={loadingChange}
           onClose={onCloseModalConfirmChange}

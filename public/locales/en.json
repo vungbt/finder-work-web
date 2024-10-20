@@ -149,7 +149,9 @@
     "other": "Other",
     "reply": "Reply",
     "viewAllReplies": "View all {number} replies",
-    "changeStatus": "Change status"
+    "status": "Status",
+    "inactive": "Inactive",
+    "active": "Active"
   },
   "reason": {
     "brokenLink": "Broken link",
@@ -226,7 +228,7 @@
     "copiedLinkToClipboardFailed": "Copied link to clipboard failed",
     "reportPostSuccess": "Report post successful",
     "reportPostFailed": "Report post failed",
-    "changeStatusConfirm": "Are you sure to change status",
+    "changeStatusConfirm": "Are you sure to change user status to",
     "changeStatusSuccess": "Change user status successfully",
     "changeStatusError": "Change user status error,please try again"
   }
