@@ -72,7 +72,20 @@ fragment User on User {
   updatedAt
 }
 
-
+fragment UserFragment on UserOnly {
+  id
+  avatarUrl
+  firstName
+  lastName
+  email
+  color
+  addressDetail
+  phoneNumber
+  role
+  createdAt
+  updatedAt
+  status
+}
 fragment Metadata on Metadata {
   page
   total

@@ -3,3 +3,47 @@ query me {
     ...UserOnly
   }
 }
+
+query allUser(
+  $where: UserWhereInput
+  $orderBy: [UserOrderByWithRelationInput!]
+  $searchValue: String
+  $pagination: PaginationInput
+) {
+  all_user(where: $where, orderBy: $orderBy, searchValue: $searchValue, pagination: $pagination) {
+    data {
+      id
+      avatarUrl
+      firstName
+      lastName
+      email
+      color
+      addressDetail
+      phoneNumber
+      role
+      createdAt
+      updatedAt
+      status
+    }
+    metadata {
+      ...Metadata
+    }
+  }
+}
+
+mutation updateUser($data: UserUpdateInput!, $where: UserWhereUniqueInput!) {
+  update_user(data: $data, where: $where) {
+    id
+    avatarUrl
+    firstName
+    lastName
+    email
+    color
+    addressDetail
+    phoneNumber
+    role
+    createdAt
+    updatedAt
+    status
+  }
+}
