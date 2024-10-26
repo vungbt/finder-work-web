@@ -132,7 +132,7 @@ export default function GeneralDetailPage() {
                   styleType="info"
                   isLoading={loading || loadingDetail}
                   type="submit"
-                  label={t('common.submit')}
+                  label={t('submit')}
                   className="w-fit"
                 />
               </div>

@@ -26,7 +26,7 @@ export function ModalSKill({
 }: SkillModelProps) {
   const t = useTranslations();
   const initialValues = {
-    content: data?.content ?? ''
+    content: ''
   };
 
   const validationSchema = Yup.object({
@@ -55,6 +55,7 @@ export function ModalSKill({
             innerRef={formikRef}
             initialValues={initialValues}
             validationSchema={validationSchema}
+            enableReinitialize
             onSubmit={onSubmit}
           >
             {() => {

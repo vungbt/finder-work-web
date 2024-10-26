@@ -82,7 +82,7 @@ export default function SignUpVerifyCode() {
                 minWidth="full"
                 type="submit"
                 styleType="info"
-                label={t('common.submit')}
+                label={t('submit')}
               />
             </Form>
           );
