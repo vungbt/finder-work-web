@@ -91,3 +91,10 @@ fragment Metadata on Metadata {
   total
   limit
 }
+fragment SkillFragment on Skill {
+  id
+  content
+  createdAt
+  deletedAt
+  updatedAt
+}

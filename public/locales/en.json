@@ -35,8 +35,12 @@
   "confirm": "Confirm",
   "submit": "Submit",
   "copy": "Copy",
+  "content": "Content",
+  "skill": "Skill",
   "header": {
-    "title": "Header"
+    "title": "Header",
+    "addNewSkill": "Add new skill",
+    "updateSkill": "Update skill"
   },
   "menu": {
     "title": "Menu"
@@ -151,7 +155,10 @@
     "viewAllReplies": "View all {number} replies",
     "status": "Status",
     "inactive": "Inactive",
-    "active": "Active"
+    "active": "Active",
+    "create": "Create",
+    "update": "Update",
+    "cancel": "Cancel"
   },
   "reason": {
     "brokenLink": "Broken link",
@@ -190,7 +197,8 @@
     "categories": "Categories",
     "title": "Title",
     "link": "Link",
-    "message": "Message"
+    "message": "Message",
+    "contentInput": "Type new skill"
   },
   "placeholder": {
     "enter": "Enter {label}",
@@ -231,6 +239,8 @@
     "changeStatusToInactiveConfirm": "Are you sure to change user status to inactive?",
     "changeStatusToActiveConfirm": "Are you sure to change user status to active?",
     "changeStatusSuccess": "Change user status successfully",
-    "changeStatusError": "Change user status error,please try again"
+    "changeStatusError": "Change user status error,please try again",
+    "createSkillSuccess": "Create skill successfully",
+    "createSkillFail": "Fail to create skill, please try again"
   }
 }

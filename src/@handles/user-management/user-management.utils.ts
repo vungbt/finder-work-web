@@ -66,10 +66,8 @@ export function AdminUserManagementUtils(): UserManagementUtilsResult {
 
   const onChangeStatus = (item: User) => {
     setDataUpdate(item);
-    // console.log(dataUpdate);
   };
   const onConfirmChange = async () => {
-    console.log(dataUpdate);
     try {
       if (loadingChange || !dataUpdate) return;
       setLoadingChange(true);
