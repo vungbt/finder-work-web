@@ -13,7 +13,7 @@ type ButtonProps = React.DetailedHTMLProps<
   iconRight?: IconName;
   isLoading?: boolean;
 
-  styleType?: 'default' | 'neon' | 'danger' | 'info';
+  styleType?: 'default' | 'neon' | 'danger' | 'info' | 'success';
   buttonType?: 'default' | 'outline';
   minWidth?: 'full' | 'fit';
   size?: 'large' | 'middle' | 'small';
@@ -48,6 +48,7 @@ export const Button = forwardRef(function ButtonBase(
             styleType === 'default' && buttonType === 'default',
           'bg-neon text-white': styleType === 'neon' && buttonType === 'default',
           'bg-danger text-white': styleType === 'danger' && buttonType === 'default',
+          'bg-success text-white': styleType === 'success' && buttonType === 'default',
           'bg-info text-white': styleType === 'info' && buttonType === 'default',
 
           'border-1.5 border-danger text-dark': styleType === 'danger' && buttonType === 'outline',
@@ -67,8 +68,7 @@ export const Button = forwardRef(function ButtonBase(
       )}
       type={reset.type ?? 'button'}
       {...reset}
-      ref={ref}
-    >
+      ref={ref}>
       {iconLeft && (
         <IconViewSize
           className={clsx({
