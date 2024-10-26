@@ -61,7 +61,7 @@ export function AdminSkillManagementUtils(): SkillManagementUtilsResult {
   useEffect(() => {
     fetchingSKill({ searchValue, pagination });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchValue, pagination, itemDelete]);
+  }, [searchValue, pagination, itemDelete, sortActives]);
 
   const fetchingSKill = async (variables: AllUserQueryVariables) => {
     try {

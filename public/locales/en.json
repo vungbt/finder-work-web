@@ -241,6 +241,7 @@
     "changeStatusSuccess": "Change user status successfully",
     "changeStatusError": "Change user status error,please try again",
     "createSkillSuccess": "Create skill successfully",
-    "createSkillFail": "Fail to create skill, please try again"
+    "createSkillFail": "Fail to create skill, please try again",
+    "updateSkillSuccess": "Update skill successfully "
   }
 }

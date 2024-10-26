@@ -65,14 +65,16 @@ export function ModalWrap({
         variants={backdropAnimation}
         initial={isOpen ? 'visible' : 'hidden'}
         animate={isOpen ? 'visible' : 'hidden'}
-        exit="exit">
+        exit="exit"
+      >
         <motion.div
           onClick={(e) => e.stopPropagation()}
           className={clsx('modal bg-white shadow-2xl rounded-lg', className)}
           variants={modalAnimation}
           initial="hidden"
           animate={isOpen ? 'visible' : 'hidden'}
-          exit="exit">
+          exit="exit"
+        >
           {children}
         </motion.div>
       </Backdrop>
@@ -107,7 +109,8 @@ export const Backdrop = ({
       className={clsx(
         'modal-backdrop fixed inset-0 h-full w-full flex items-center justify-center bg-black bg-opacity-50 z-[9999]',
         className
-      )}>
+      )}
+    >
       {children}
     </motion.div>
   );

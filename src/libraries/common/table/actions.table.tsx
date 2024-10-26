@@ -9,7 +9,7 @@ type ActionsTableProps = {
   onGoToDetail?: () => void;
   onGoToDetailSkill?: (item?: Skill) => void;
   onChangeStatus?: () => void;
-  status: UserStatus;
+  status?: UserStatus;
   item?: Skill;
 };
 
