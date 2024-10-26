@@ -42,7 +42,7 @@ export function AdminUserManagementUtils(): UserManagementUtilsResult {
   useEffect(() => {
     fetchingUser({ searchValue, pagination });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchValue, pagination, dataUpdate]);
+  }, [searchValue, pagination, dataUpdate, sortActives]);
 
   const fetchingUser = async (variables: AllUserQueryVariables) => {
     try {
