@@ -1,0 +1,79 @@
+name: Deploy to Server
+run-name: ${{ github.actor }} is running Deploy 🚀
+
+on:
+  push:
+    branches:
+      - develop
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.10.0'
+
+      - name: Create .env File from ENV Secret
+        run: |
+          echo -e "${{ vars.ENV }}" > .env  # Creating the .env file
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Generate Graphql
+        run: yarn gen:graphql
+
+      - name: Build WEB
+        run: yarn build
+
+      - name: Copy files
+        run: |
+          cp -r .next/static .next/standalone/.next
+          cp -r .next/cache .next/standalone/.next
+          cp -r public .next/standalone
+
+      - name: Zip files (excluding certain files)
+        run: zip -r target.zip ./.next/standalone/.
+
+      - name: Prepare Server Directory
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          password: ${{ secrets.SERVER_PASSWORD }}
+          script: |
+            pm2 delete ${{ secrets.PM2_NAME }} || true
+            set -e
+            # Clean up existing files and create the working directory
+            rm -rf ${{ secrets.SERVER_WORK_DIR }}
+            mkdir -p ${{ secrets.SERVER_WORK_DIR }}
+
+      - name: Upload code to server
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          password: ${{ secrets.SERVER_PASSWORD }}
+          source: target.zip
+          target: ${{ secrets.SERVER_WORK_DIR }}
+
+      - name: Execute commands on server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          password: ${{ secrets.SERVER_PASSWORD }}
+          script: |
+            unzip -o ${{ secrets.SERVER_WORK_DIR }}/target.zip -d ${{ secrets.SERVER_WORK_DIR }}
+            rm ${{ secrets.SERVER_WORK_DIR }}/target.zip
+            # Install packages and start the app
+            cd ${{ secrets.SERVER_WORK_DIR }}
+            yarn gen:graphql
+            pm2 start .next/standalone/server.js --name ${{ secrets.PM2_NAME }}
