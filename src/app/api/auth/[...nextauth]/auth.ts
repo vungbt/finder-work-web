@@ -11,14 +11,16 @@ export const authOptions: NextAuthOptions = {
       name: 'credentials',
       credentials: {
         email: { label: 'Email', type: 'text', placeholder: 'email' },
-        password: { label: 'Password', type: 'password' }
+        password: { label: 'Password', type: 'password' },
+        role: { label: 'Role', type: 'role' }
       },
       async authorize(credentials) {
         // eslint-disable-next-line no-useless-catch
         try {
           const result = await apiClientInstance.authLogin({
             email: credentials?.email ?? '',
-            password: credentials?.password ?? ''
+            password: credentials?.password ?? '',
+            role: credentials?.role as UserRole
           });
           const authLoginResult = result.auth_login;
           const user: User = {
@@ -29,8 +31,19 @@ export const authOptions: NextAuthOptions = {
             profile: authLoginResult.profile as UserFragment
           };
           return user;
-        } catch (error) {
-          throw error;
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } catch (error: any) {
+          const errResponse = error?.response;
+          const errors = errResponse?.errors ?? [];
+          if (!errors || errors.length <= 0) throw error;
+          const message = errors[0]?.message ?? '';
+          const statusCode = errors[0]?.statusCode ?? '';
+          throw new Error(
+            JSON.stringify({
+              statusCode,
+              message
+            })
+          );
         }
       }
     }),
@@ -49,15 +62,15 @@ export const authOptions: NextAuthOptions = {
           const userInfo: User = {
             accessToken: data?.accessToken,
             refreshToken: data.refreshToken,
-            expires: data.expireTime,
+            expires: data?.expireTime,
             id: data?.profile?.id ?? '',
             profile: data?.profile as UserFragment
           };
-          user.accessToken = userInfo.accessToken;
-          user.refreshToken = userInfo.refreshToken;
-          user.expires = userInfo.expires;
-          user.id = userInfo.id;
-          user.profile = userInfo.profile;
+          user.accessToken = userInfo?.accessToken;
+          user.refreshToken = userInfo?.refreshToken;
+          user.expires = userInfo?.expires;
+          user.id = userInfo?.id;
+          user.profile = userInfo?.profile;
           return true;
         }
         return false;
@@ -103,6 +116,7 @@ export const authOptions: NextAuthOptions = {
     secret: process.env.NEXTAUTH_SECRET
   },
   pages: {
-    signIn: '/auth/sign-in'
+    signIn: '/auth/sign-in',
+    error: '/'
   }
 };

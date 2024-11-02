@@ -17,7 +17,7 @@ export function AuthSignLayout({ employee, employer }: MainLayoutProps) {
 
   return (
     <HydrateWrapper>
-      <div className="flex h-screen">
+      <div className="flex min-h-screen">
         {pageView}
         <LeftContentSignAuth
           thumbUrl={isEmployee ? '/background/auth-employee.jpg' : '/background/auth-employer.jpg'}

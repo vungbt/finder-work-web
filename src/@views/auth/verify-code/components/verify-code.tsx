@@ -1,19 +1,22 @@
-import { BackButton, Button, InputForm, Steps } from '@/libraries/common';
+import { RouterPath } from '@/constants/router-path';
+import { BackButton, Button, InputForm } from '@/libraries/common';
 import { useApiClient } from '@/libraries/providers/graphql';
+import { useRouter } from '@/utils/navigation';
 import { Field, Form, Formik } from 'formik';
 import { motion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import * as Yup from 'yup';
-import { useSignUpEmployee } from '../providers';
+import { useVerifyCode } from '../providers';
 
-export default function SignUpVerifyCode() {
+export default function VerifyCodeStep() {
   const {
     actions,
-    state: { stepIndex, formData, userTemp }
-  } = useSignUpEmployee();
+    state: { formData }
+  } = useVerifyCode();
   const t = useTranslations();
   const { apiClient } = useApiClient();
+  const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
 
   const validationSchema = Yup.object({
@@ -28,16 +31,16 @@ export default function SignUpVerifyCode() {
 
   const onSubmitVerifyCode = async (values: { verificationCode: string }) => {
     try {
-      if (loading || !userTemp?.id) return;
+      if (loading || !formData?.email) return;
       setLoading(true);
       const res = await apiClient.authVerifyAccount({
         verifyCode: values.verificationCode,
-        userId: userTemp?.id
+        email: formData?.email
       });
       setLoading(false);
       const result = res.auth_verify_account;
       if (result.id) {
-        actions.nextStep({ ...formData, verifyCode: Number(values.verificationCode) });
+        actions.nextStep({ ...formData });
       }
     } catch (error) {
       setLoading(false);
@@ -55,21 +58,13 @@ export default function SignUpVerifyCode() {
       }}
       className="mx-auto"
     >
-      <BackButton onClick={() => actions.previousStep(formData)} />
+      <BackButton onClick={() => router.push(RouterPath.Login)} />
       <h1 className="text-[32px] leading-[48px] font-semibold my-4">
         {t('common.emailVerification')}
       </h1>
       <p className="text-base text-text-secondary">
         {t('common.plsEnterTheSixDigitVerificationCode', { email: formData?.email })}
       </p>
-      {/** step active */}
-      <Steps
-        className="my-10"
-        steps={4}
-        active={stepIndex}
-        excludeSteps={[0]}
-        onChangeStep={(stepActive) => actions.changeStep(stepActive)}
-      />
 
       {/** form code verify */}
       <Formik

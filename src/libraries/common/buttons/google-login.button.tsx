@@ -5,7 +5,10 @@ import { Button } from '.';
 export function GoogleLoginButton() {
   const t = useTranslations();
 
-  const onLoginWithGoogle = async () => await signIn('google', { callbackUrl: '/' });
+  const onLoginWithGoogle = async () => {
+    // TODO: Handle error and success
+    await signIn('google', { callbackUrl: '/' });
+  };
 
   return (
     <Button
