@@ -1,22 +1,22 @@
 'use client';
+import { UserRole } from '@/configs/graphql/generated';
 import { toastError } from '@/configs/toast';
-import { StatusCodes } from '@/constants/common';
 import { RouterPath } from '@/constants/router-path';
-import useViewRole from '@/hooks/redux/view-role/useViewRole';
-import { Button, GoogleLoginButton, InputForm, LineText, Logo } from '@/libraries/common';
+import { Button, InputForm, InputPasswordForm, Logo } from '@/libraries/common';
 import { IAuthLogin } from '@/types';
 import { RegexHelper } from '@/utils/helpers/regex';
 import { Link, useRouter } from '@/utils/navigation';
 import { Field, Form, Formik } from 'formik';
-import { motion } from 'framer-motion';
+import { StatusCodes } from 'http-status-codes';
 import { signIn } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
+import React from 'react';
 import * as Yup from 'yup';
 
-export function SignInEmployeeView() {
+export default function AdminLoginView() {
   const t = useTranslations();
   const router = useRouter();
-  const { viewRole } = useViewRole();
+
   const validationSchema = Yup.object({
     email: Yup.string()
       .required(t('validation.required', { label: t('form.email').toLowerCase() }))
@@ -38,43 +38,31 @@ export function SignInEmployeeView() {
   const handleSubmit = async (values: IAuthLogin) => {
     const res = await signIn('credentials', {
       ...values,
-      role: viewRole,
-      callbackUrl: RouterPath.PORTAL,
+      role: UserRole.Admin,
+      callbackUrl: RouterPath.PORTAL_ADMIN,
       redirect: false
     });
     const errors = res?.error;
     if (errors && res?.status !== StatusCodes.OK) {
       const errorData = JSON.parse(errors);
       if (errorData?.statusCode === StatusCodes.UNAUTHORIZED) {
-        router.push(`${RouterPath.VerifyCode}?email=${values.email}&password=${values.password}`);
-        return toastError(errorData.message);
+        toastError(errorData.message);
       }
-      // redirect to error page
-      router.push(
-        `${RouterPath.ERROR}?status=${errorData.statusCode}&message=${errorData?.message}`
-      );
     }
     if (!errors && res?.status === StatusCodes.OK) {
-      router.push(RouterPath.PORTAL);
+      router.push(RouterPath.PORTAL_ADMIN);
     }
   };
   return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.9 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{
-        duration: 0.8,
-        delay: 0.2,
-        ease: [0, 0.71, 0.2, 1.01]
-      }}
-      className="flex-1 flex flex-col justify-start pt-14 items-center lg:pt-0 lg:justify-center"
-    >
-      <div className="w-[90%] sm:w-[80%] md:w-[500px] mx-auto">
+    <section className="w-full h-screen flex items-center p-5 flex-col bg-gray-200">
+      <div className="flex w-full justify-center items-center mt-14 gap-5">
         <Link href={RouterPath.Home}>
           <Logo />
         </Link>
-        <h1 className="text-3xl font-bold mt-4">{t('common.loginAs', { role: t('jobSeeker') })}</h1>
-        <p className="mt-4 mb-10 text-text-secondary">{t('signIn.subTitle')}</p>
+        <h3 className="text-3xl font-bold">{t('common.management')}</h3>
+      </div>
+      <div className="bg-white rounded-2xl shadow-xl py-6 px-10 mt-14 min-w-[423px]">
+        <p className="font-bold text-2xl text-center mb-10">{t('common.adminLogin')}</p>
 
         {/** form content */}
         <Formik<IAuthLogin>
@@ -97,18 +85,9 @@ export function SignInEmployeeView() {
                     label={`${t('form.password')}:`}
                     isRequired={true}
                     name="password"
-                    component={InputForm}
+                    component={InputPasswordForm}
                     placeholder={t('form.password')}
                   />
-                </div>
-
-                <div className="flex items-center justify-end mt-2">
-                  <Link
-                    className="font-semibold text-info text-sm"
-                    href={RouterPath.ForgotPassword}
-                  >
-                    {t('form.forgotPassword')}
-                  </Link>
                 </div>
 
                 <Button
@@ -122,30 +101,7 @@ export function SignInEmployeeView() {
             );
           }}
         </Formik>
-
-        <div className="mt-6 flex flex-col gap-6">
-          <LineText label={t('common.orLoginWith')} />
-
-          {/** btn login with google */}
-          <GoogleLoginButton />
-
-          {/* admin login */}
-          <div className="flex items-center justify-center gap-2">
-            <p>{t('common.areYouManager')}</p>
-            <Link href={RouterPath.ADMIN_LOGIN} className="text-sm font-semibold">
-              {t('form.loginHere')}
-            </Link>
-          </div>
-
-          <div className="flex items-center justify-center gap-2">
-            <p>{t('common.doNotHaveAnAccount')}</p>
-            <Link href={RouterPath.SignUp} className="text-sm font-semibold">
-              {t('common.registerHere')}
-            </Link>
-          </div>
-        </div>
       </div>
-      {/* <LeftContentSignAuth className="hidden w-1/2 flex-1 lg:block" /> */}
-    </motion.div>
+    </section>
   );
 }

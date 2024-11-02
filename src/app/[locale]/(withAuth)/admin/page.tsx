@@ -64,7 +64,6 @@ export default function PortalAdmin() {
 
   return (
     <div>
-      Portal Admin
       <Button label="Sign out" onClick={() => signOut()} />
       <Table
         tableId="testTable"

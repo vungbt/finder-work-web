@@ -1,30 +1,28 @@
+import { RouterPath } from '@/constants/router-path';
 import { Button, SuccessResult } from '@/libraries/common';
 import { motion } from 'framer-motion';
 import { signIn } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
-import { useSignUpEmployee } from '../providers';
-import { RouterPath } from '@/constants/router-path';
-import { StatusCodes } from '@/constants/common';
+import { useVerifyCode } from '../providers';
 import { useRouter } from '@/utils/navigation';
 
-export default function SignUpSuccessResult() {
+export default function VerifySuccessResult() {
   const t = useTranslations();
+  const router = useRouter();
   const {
     state: { formData }
-  } = useSignUpEmployee();
-  const router = useRouter();
+  } = useVerifyCode();
 
   const onHandleLogin = async () => {
-    // TODO: Handle error and success
+    // TODO: Handle error
     const res = await signIn('credentials', {
       email: formData.email,
       password: formData.password,
       redirect: false
     });
     const errors = res?.error;
-    if (!errors && res?.status === StatusCodes.OK) {
-      router.replace(RouterPath.PORTAL);
-    }
+    if (errors) return;
+    router.replace(RouterPath.PORTAL);
   };
 
   return (

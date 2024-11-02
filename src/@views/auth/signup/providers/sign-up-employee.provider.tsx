@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
+import { UserOnly } from '@/configs/graphql/generated';
 import dynamic from 'next/dynamic';
 import {
   Dispatch,
@@ -25,7 +26,8 @@ export enum SignUpEmployeeActionType {
   NEXT_STEP = 'NEXT_STEP',
   PREVIOUS_STEP = 'PREVIOUS_STEP',
   SET_FORM_DATA = 'SET_FORM_DATA',
-  CHANGE_STEP = 'CHANGE_STEP'
+  CHANGE_STEP = 'CHANGE_STEP',
+  SET_USER_TEMP = 'SET_USER_TEMP'
 }
 
 export interface IStepItem {
@@ -56,6 +58,10 @@ type Action =
   | {
       type: SignUpEmployeeActionType.CHANGE_STEP;
       payload: { data: { stepActive: number } };
+    }
+  | {
+      type: SignUpEmployeeActionType.SET_USER_TEMP;
+      payload: { data?: UserOnly };
     };
 
 export interface IPhoneCode {
@@ -79,6 +85,7 @@ type SignUpEmployeeState = {
   formData: IEmployeeRegister;
   steps: IStepItem[];
   stepIndex: number;
+  userTemp?: UserOnly;
 };
 
 type SignUpEmployeeProviderProps = {
@@ -96,7 +103,8 @@ const initContext: SignUpEmployeeState = {
     confirmPassword: ''
   },
   steps: STEPS,
-  stepIndex: 0
+  stepIndex: 0,
+  userTemp: undefined
 };
 
 const SignUpEmployeeContext = createContext({ state: initContext } as {
@@ -114,12 +122,6 @@ export function SignUpEmployeeProvider({ children }: SignUpEmployeeProviderProps
         stepIndex: stepIndex + 1,
         formData: { ...state?.formData, ...data }
       };
-
-    // TODO: Call api register
-    // createCampaignDispatch({
-    //   type: CampaignActionType.SAVE_CAMPAIGN,
-    //   payload: { data: { ...state.formData, ...data } }
-    // });
 
     return state;
   };
@@ -171,6 +173,13 @@ export function SignUpEmployeeProvider({ children }: SignUpEmployeeProviderProps
           formData
         };
       }
+      case SignUpEmployeeActionType.SET_USER_TEMP: {
+        const userTemp = action?.payload?.data;
+        return {
+          ...state,
+          userTemp
+        };
+      }
       default:
         return state;
     }
@@ -200,12 +209,17 @@ export const useSignUpEmployee = () => {
     dispatch({ type: SignUpEmployeeActionType.PREVIOUS_STEP, payload: { data } });
   };
 
+  const setUserTemp = (data?: UserOnly) => {
+    dispatch({ type: SignUpEmployeeActionType.SET_USER_TEMP, payload: { data } });
+  };
+
   return {
     state,
     actions: {
       changeStep,
       nextStep,
-      previousStep
+      previousStep,
+      setUserTemp
     }
   };
 };

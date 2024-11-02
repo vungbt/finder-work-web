@@ -1,3 +1,4 @@
+import { toastSuccess } from '@/configs/toast';
 import useCountries from '@/hooks/redux/countries/useCountries';
 import {
   BackButton,
@@ -8,14 +9,16 @@ import {
   SelectForm,
   Steps
 } from '@/libraries/common';
+import { useApiClient } from '@/libraries/providers/graphql';
 import { RegexHelper } from '@/utils/helpers/regex';
+import { Link } from '@/utils/navigation';
 import { Field, Form, Formik } from 'formik';
 import { motion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
+import { useState } from 'react';
 import * as Yup from 'yup';
 import { IEmployeeRegister, useSignUpEmployee } from '../providers';
-import { Link } from '@/utils/navigation';
-import { toastSuccess } from '@/configs/toast';
+import { UserOnly } from '@/configs/graphql/generated';
 
 export default function SignUpEmployeeStepOne() {
   const t = useTranslations();
@@ -23,7 +26,9 @@ export default function SignUpEmployeeStepOne() {
     actions,
     state: { stepIndex, formData }
   } = useSignUpEmployee();
+  const { apiClient } = useApiClient();
   const { options, defaultOption } = useCountries();
+  const [loading, setLoading] = useState(false);
 
   const validationSchema = Yup.object({
     email: Yup.string()
@@ -74,12 +79,22 @@ export default function SignUpEmployeeStepOne() {
     agreePolicy: formData?.agreePolicy ?? []
   };
 
+  // submit register new account
   const onHandleSubmit = async (values: IEmployeeRegister) => {
-    // TODO: CALL API HERE
-    toastSuccess('Please enter code in the next step to finish register account');
-    setTimeout(() => {
-      actions.nextStep(values);
-    }, 1000);
+    try {
+      if (loading) return;
+      setLoading(true);
+      const res = await apiClient.authEmployeeRegister({ ...values });
+      setLoading(false);
+      const result = res?.auth_employee_register;
+      if (result.id) {
+        toastSuccess(t('noti.registerSuccess'));
+        actions.nextStep(values);
+        actions.setUserTemp(result as UserOnly);
+      }
+    } catch (error) {
+      setLoading(false);
+    }
   };
 
   return (

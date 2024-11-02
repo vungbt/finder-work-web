@@ -1,5 +1,6 @@
 import { UserRole } from '@/configs/graphql/generated';
 import { EReason, ESettingType } from '@/types';
+import { StatusCodes as HttpStatusCode } from 'http-status-codes';
 
 export const COUNTRY_CODE_DEFAULT = 'VI';
 export const PAGINATION = {
@@ -51,3 +52,5 @@ export const PostReportReasons = [
 ];
 
 export const RouterAction = ['add', 'edit'];
+
+export const StatusCodes = HttpStatusCode;

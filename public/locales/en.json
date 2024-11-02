@@ -37,6 +37,7 @@
   "copy": "Copy",
   "content": "Content",
   "skill": "Skill",
+  "finderWork": "FinderWork",
   "header": {
     "title": "Header",
     "addNewSkill": "Add new skill",
@@ -158,7 +159,10 @@
     "active": "Active",
     "create": "Create",
     "update": "Update",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "areYouManager": "Are you manager?",
+    "adminLogin": "Admin login",
+    "management": "Management"
   },
   "reason": {
     "brokenLink": "Broken link",
@@ -242,6 +246,7 @@
     "changeStatusError": "Change user status error,please try again",
     "createSkillSuccess": "Create skill successfully",
     "createSkillFail": "Fail to create skill, please try again",
-    "updateSkillSuccess": "Update skill successfully "
+    "updateSkillSuccess": "Update skill successfully",
+    "registerSuccess": "Registration successful! A verification code has been sent to your email"
   }
 }
