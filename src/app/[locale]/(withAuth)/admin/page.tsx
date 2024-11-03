@@ -1,7 +1,7 @@
 'use client';
+import { onSignOut } from '@/@handles/auth';
 import { Button, Table, TableColumn } from '@/libraries/common';
 import keyBy from 'lodash/keyBy';
-import { signOut } from 'next-auth/react';
 import { useState } from 'react';
 
 export default function PortalAdmin() {
@@ -64,7 +64,8 @@ export default function PortalAdmin() {
 
   return (
     <div>
-      <Button label="Sign out" onClick={() => signOut()} />
+      Portal Admin
+      <Button label="Sign out" onClick={onSignOut} />
       <Table
         tableId="testTable"
         columns={renderColumns()}

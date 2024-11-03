@@ -1,9 +1,13 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 import { AdminGeneralDetailUtils } from '@/@handles/setting';
 import { UserRole } from '@/configs/graphql/generated';
 import { SettingKeys, SettingTypes, UserRoleOptions } from '@/constants/common';
+import { RouterOptions } from '@/constants/router-path';
 import useSessionClient from '@/hooks/redux/session/useSession';
-import { Button, SelectForm, JSONEditor } from '@/libraries/common';
+import { Button, CodeSnippet, JSONEditor, SelectForm } from '@/libraries/common';
+import { CodeSnippetPreview } from '@/libraries/common/code-snippet/preview';
+import { iconOptions } from '@/libraries/icons';
 import { Field, Form, Formik } from 'formik';
 import { useTranslations } from 'next-intl';
 import { useMemo } from 'react';
@@ -73,6 +77,45 @@ export default function GeneralDetailPage() {
     value: ''
   };
 
+  const exampleData = JSON.stringify(
+    {
+      menu: [
+        {
+          label: 'Favorites',
+          items: [
+            {
+              label: 'Overview',
+              href: '/admin',
+              isFavorite: true
+            }
+          ]
+        },
+        {
+          label: 'Pages',
+          items: [
+            {
+              label: 'Setting',
+              href: '/admin/setting',
+              icon: 'setting',
+              child: [
+                {
+                  label: 'Theme',
+                  href: '/admin/setting/theme'
+                },
+                {
+                  label: 'General',
+                  href: '/admin/setting/general'
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    null,
+    2
+  );
+
   return (
     <>
       <Formik
@@ -127,6 +170,8 @@ export default function GeneralDetailPage() {
                 component={JSONEditor}
                 isLoading={loading || loadingDetail}
               />
+
+              {/*  submit */}
               <div className="w-full flex items-center justify-end">
                 <Button
                   styleType="info"
@@ -140,6 +185,59 @@ export default function GeneralDetailPage() {
           );
         }}
       </Formik>
+
+      {/* Example */}
+      <div className="mt-2">
+        <p className="mb-3 border border-b-dracula border-solid font-medium">
+          {t('common.exampleForValue')}:
+        </p>
+
+        <div className="flex items-center gap-6 mb-6">
+          <Formik initialValues={{ iconPreview: null, hrefPreview: null }} onSubmit={() => {}}>
+            {({ values: previewValues }) => {
+              const iconPreviewValue = (previewValues?.iconPreview as any)?.value;
+              const iconHrefPreview = (previewValues?.hrefPreview as any)?.value;
+              return (
+                <Form className="w-full flex flex-col gap-3">
+                  <div className="flex gap-6 items-center">
+                    <Field
+                      label={t('common.icon')}
+                      name="iconPreview"
+                      options={iconOptions}
+                      component={SelectForm}
+                      placeholder={t('common.icon')}
+                    />
+
+                    <Field
+                      label={t('common.redirectPath')}
+                      name="hrefPreview"
+                      options={RouterOptions}
+                      component={SelectForm}
+                      placeholder={t('common.redirectPath')}
+                    />
+                  </div>
+
+                  {/* preview */}
+                  <div className="grid grid-cols-2 gap-6 items-center w-full">
+                    {iconPreviewValue && (
+                      <CodeSnippetPreview
+                        className="col-span-1 w-full"
+                        content={iconPreviewValue}
+                      />
+                    )}
+                    {iconHrefPreview && (
+                      <CodeSnippetPreview className="col-span-1 w-full" content={iconHrefPreview} />
+                    )}
+                  </div>
+                </Form>
+              );
+            }}
+          </Formik>
+        </div>
+
+        <div></div>
+        <CodeSnippet codeString={exampleData} />
+      </div>
     </>
   );
 }

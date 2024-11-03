@@ -29,14 +29,9 @@ export const getPortalLayoutSetting = async (isInit?: boolean) => {
   const apiClient = await apiClientServer();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const session = (apiClient as any).session as Session;
-  if (!session || !session?.userRole || !session?.email)
-    return {
-      menus: [],
-      footers: [],
-      headers: []
-    };
+  if (!session?.userRole) return null;
   const res = await apiClient.allSettingPortal({
-    where: { key: { contains: session?.userRole } },
+    searchValue: session?.userRole,
     isInit
   });
   const result = res?.setting_portal?.data ?? [];
