@@ -21,3 +21,5 @@ export * from './function-bar';
 export * from './modal';
 export * from './divider';
 export * from './infinity-scroll';
+export * from './tooltip';
+export * from './code-snippet';

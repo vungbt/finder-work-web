@@ -50,6 +50,7 @@ const config: Config = {
       dark: 'var(--dark)',
       success: 'var(--success)',
       info: 'var(--info)',
+      dracula: 'var(--dracula)',
       danger: {
         DEFAULT: 'var(--danger)',
         100: 'var(--danger-100)',

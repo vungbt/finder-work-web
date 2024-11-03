@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { CSSProperties, FC } from 'react';
 import Add from './add';
 import ArrowLeft from './arrow-left';
@@ -66,6 +67,9 @@ import VoteUpBold from './vote-up-bold';
 import Warning2 from './warning-2';
 import Warning2Bold from './warning-2-bold';
 import MessageTextBold from './message-text-bold';
+import Copy from './copy';
+import Frame from './frame';
+import FrameBold from './frame-bold';
 
 export type IconProps = {
   className?: string;
@@ -76,74 +80,80 @@ export type IconProps = {
 
 export type Icon = FC<IconProps>;
 
-export type IconName =
-  | 'loading'
-  | 'arrow-left'
-  | 'arrow-right'
-  | 'logo'
-  | 'banner-employer'
-  | 'banner-employee'
-  | 'loading-v2'
-  | 'chevron-down'
-  | 'chevron-left'
-  | 'chevron-right'
-  | 'danger'
-  | 'eye-slash'
-  | 'eye'
-  | 'heart-bold'
-  | 'heart'
-  | 'messages'
-  | 'notification'
-  | 'search'
-  | 'setting-bold'
-  | 'setting'
-  | 'sms'
-  | 'home'
-  | 'home-bold'
-  | 'close-circle'
-  | 'close-circle-bold'
-  | 'chevron-up'
-  | 'close'
-  | 'check-icon'
-  | 'date-icon'
-  | 'google'
-  | 'facebook'
-  | 'success'
-  | 'briefcase'
-  | 'document-forward'
-  | 'document-normal'
-  | 'dollar-circle'
-  | 'flash'
-  | 'graph'
-  | 'profile-2user'
-  | 'receipt-search'
-  | 'history'
-  | 'sidebar-left'
-  | 'sidebar-right'
-  | 'star'
-  | 'image-icon'
-  | 'edit-icon'
-  | 'trash'
-  | 'add'
-  | 'sort'
-  | 'danger-solid'
-  | 'trash-solid'
-  | 'caret-up-solid'
-  | 'caret-down-solid'
-  | 'buildings'
-  | 'export-icon'
-  | 'import-icon'
-  | 'vote-up'
-  | 'vote-down'
-  | 'bookmark'
-  | 'link-2'
-  | 'message-text'
-  | 'bookmark-bold'
-  | 'vote-up-bold'
-  | 'vote-down-bold'
-  | 'warning-2'
-  | 'warning-2-bold'
-  | 'message-text-bold';
+const IconsDefine = {
+  loading: 'loading',
+  'arrow-left': 'arrow-left',
+  'arrow-right': 'arrow-right',
+  logo: 'logo',
+  'banner-employer': 'banner-employer',
+  'banner-employee': 'banner-employee',
+  'loading-v2': 'loading-v2',
+  'chevron-down': 'chevron-down',
+  'chevron-left': 'chevron-left',
+  'chevron-right': 'chevron-right',
+  danger: 'danger',
+  'eye-slash': 'eye-slash',
+  eye: 'eye',
+  'heart-bold': 'heart-bold',
+  heart: 'heart',
+  messages: 'messages',
+  notification: 'notification',
+  search: 'search',
+  'setting-bold': 'setting-bold',
+  setting: 'setting',
+  sms: 'sms',
+  home: 'home',
+  'home-bold': 'home-bold',
+  'close-circle': 'close-circle',
+  'close-circle-bold': 'close-circle-bold',
+  'chevron-up': 'chevron-up',
+  close: 'close',
+  'check-icon': 'check-icon',
+  'date-icon': 'date-icon',
+  google: 'google',
+  facebook: 'facebook',
+  success: 'success',
+  briefcase: 'briefcase',
+  'document-forward': 'document-forward',
+  'document-normal': 'document-normal',
+  'dollar-circle': 'dollar-circle',
+  flash: 'flash',
+  graph: 'graph',
+  'profile-2user': 'profile-2user',
+  'receipt-search': 'receipt-search',
+  history: 'history',
+  'sidebar-left': 'sidebar-left',
+  'sidebar-right': 'sidebar-right',
+  star: 'star',
+  'image-icon': 'image-icon',
+  'edit-icon': 'edit-icon',
+  trash: 'trash',
+  add: 'add',
+  sort: 'sort',
+  'danger-solid': 'danger-solid',
+  'trash-solid': 'trash-solid',
+  'caret-up-solid': 'caret-up-solid',
+  'caret-down-solid': 'caret-down-solid',
+  buildings: 'buildings',
+  'export-icon': 'export-icon',
+  'import-icon': 'import-icon',
+  'vote-up': 'vote-up',
+  'vote-down': 'vote-down',
+  bookmark: 'bookmark',
+  'link-2': 'link-2',
+  'message-text': 'message-text',
+  'bookmark-bold': 'bookmark-bold',
+  'vote-up-bold': 'vote-up-bold',
+  'vote-down-bold': 'vote-down-bold',
+  'warning-2': 'warning-2',
+  'warning-2-bold': 'warning-2-bold',
+  'message-text-bold': 'message-text-bold',
+  copy: 'copy',
+  frame: 'frame',
+  'frame-bold': 'frame-bold'
+} as const;
+
+export type IconName = keyof typeof IconsDefine;
 
 export type IconsType = Record<IconName, Icon>;
 
@@ -348,6 +358,15 @@ export const Icons: IconsType = {
   },
   'message-text-bold': (props: IconProps) => {
     return <MessageTextBold {...props} />;
+  },
+  copy: (props: IconProps) => {
+    return <Copy {...props} />;
+  },
+  frame: (props: IconProps) => {
+    return <Frame {...props} />;
+  },
+  'frame-bold': (props: IconProps) => {
+    return <FrameBold {...props} />;
   }
 };
 
@@ -358,3 +377,12 @@ export const RenderIcon = ({ name, ...reset }: IconProps & { name?: IconName }) 
   const Icon = Icons[name];
   return <Icon {...reset} />;
 };
+
+export const iconOptions = Object.keys(IconsDefine).map((key) => ({
+  label: (
+    <span className="flex items-center gap-2">
+      {key} <RenderIcon className="max-w-5" name={key as any} />
+    </span>
+  ),
+  value: key
+}));

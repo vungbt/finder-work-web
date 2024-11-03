@@ -5,6 +5,10 @@ import { JWT } from 'next-auth/jwt';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import GoogleProvider from 'next-auth/providers/google';
 
+enum EProvider {
+  Google = 'google',
+  Credentials = 'credentials'
+}
 export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
@@ -53,27 +57,50 @@ export const authOptions: NextAuthOptions = {
     })
   ],
   callbacks: {
-    async signIn({ profile, account, user }) {
-      if (account && profile && account.provider === 'google') {
-        const tokenId = account.id_token;
-        const result = await apiClientInstance.authLoginWithGoogle({ idToken: tokenId || '' });
-        const data = result.auth_login_with_google;
-        if (data) {
-          const userInfo: User = {
-            accessToken: data?.accessToken,
-            refreshToken: data.refreshToken,
-            expires: data?.expireTime,
-            id: data?.profile?.id ?? '',
-            profile: data?.profile as UserFragment
-          };
-          user.accessToken = userInfo?.accessToken;
-          user.refreshToken = userInfo?.refreshToken;
-          user.expires = userInfo?.expires;
-          user.id = userInfo?.id;
-          user.profile = userInfo?.profile;
-          return true;
+    async signIn({ account, user }) {
+      const accountProvider = account?.provider;
+      if (account) {
+        switch (accountProvider) {
+          case EProvider.Google: {
+            const tokenId = account.id_token;
+            const result = await apiClientInstance.authLoginWithGoogle({ idToken: tokenId || '' });
+            const data = result.auth_login_with_google;
+            if (data) {
+              const userInfo: User = {
+                accessToken: data?.accessToken,
+                refreshToken: data.refreshToken,
+                expires: data?.expireTime,
+                id: data?.profile?.id ?? '',
+                profile: data?.profile as UserFragment
+              };
+              user.accessToken = userInfo?.accessToken;
+              user.refreshToken = userInfo?.refreshToken;
+              user.expires = userInfo?.expires;
+              user.id = userInfo?.id;
+              user.profile = userInfo?.profile;
+              return true;
+            }
+            return false;
+          }
+          case EProvider.Credentials: {
+            if (user && account) {
+              const userInfo: User = {
+                accessToken: user?.accessToken,
+                refreshToken: user.refreshToken,
+                expires: user?.expires,
+                id: user?.profile?.id ?? '',
+                profile: user?.profile as UserFragment
+              };
+              user.accessToken = userInfo?.accessToken;
+              user.refreshToken = userInfo?.refreshToken;
+              user.expires = userInfo?.expires;
+              user.id = userInfo?.id;
+              user.profile = userInfo?.profile;
+              return true;
+            }
+            return false;
+          }
         }
-        return false;
       }
       return true;
     },

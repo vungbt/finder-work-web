@@ -27,8 +27,8 @@ export default function useProfile() {
 
   const getFullName = (profile: UserOnly | null) => {
     if (!profile) return '';
-    const firstName = profile.firstName;
-    const lastName = profile.lastName;
+    const firstName = profile?.firstName;
+    const lastName = profile?.lastName;
 
     return firstName.concat(' ', lastName);
   };
