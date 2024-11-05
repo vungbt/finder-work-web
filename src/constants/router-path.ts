@@ -26,9 +26,11 @@ export const RouterPath = {
   PORTAL_CAREERS: '/portal/careers',
   PORTAL_JOBS: '/portal/jobs',
   PORTAL_COMPANIES: '/portal/companies',
-  PORTAL_RESUMES: '/portal/resumes',
-  PORTAL_RESUMES_SKILLS: '/portal/resumes/skills',
-  PORTAL_RESUMES_PROJECTS: '/portal/resumes/projects',
+  PORTAL_WORK_PROFILE: '/portal/work-profile',
+  PORTAL_WORK_PROFILE_RESUMES: '/portal/work-profile/resumes',
+  PORTAL_WORK_PROFILE_EXPERIENCES: '/portal/work-profile/experiences',
+  PORTAL_WORK_PROFILE_SKILLS: '/portal/work-profile/skills',
+  PORTAL_WORK_PROFILE_PROJECTS: '/portal/work-profile/projects',
 
   // SYSTEM
   ERROR: '/error'

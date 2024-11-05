@@ -178,7 +178,13 @@
     "pages": "Pages",
     "coupons": "Coupons",
     "example": "Example",
-    "exampleForValue": "Example for value"
+    "exampleForValue": "Example for value",
+    "workProfileManagement": "Work profile management",
+    "projects": "Projects",
+    "resumes": "Resumes",
+    "skills": "Skills",
+    "profile": "Profile",
+    "experiences": "Experiences"
   },
   "reason": {
     "brokenLink": "Broken link",

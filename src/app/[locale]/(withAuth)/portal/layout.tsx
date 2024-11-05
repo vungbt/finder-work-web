@@ -16,7 +16,7 @@ export default async function PortalPageLayout(props: {
   const setting = await getPortalLayoutSetting();
   return (
     <PortalLayout
-      menus={setting.menus}
+      menus={setting?.menus}
       pageView={session?.userRole === UserRole.Employee ? props.employee : props.employer}
     />
   );
