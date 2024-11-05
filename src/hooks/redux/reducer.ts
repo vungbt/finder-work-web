@@ -5,7 +5,17 @@ import profile from './profile/reducer';
 import postCategories from './post-category/reducer';
 import jobCategories from './job-category/reducer';
 import tags from './tags/reducer';
+import tab from './tab/reducer';
 
-const baseReducer = { session, viewRole, countries, profile, postCategories, jobCategories, tags };
+const baseReducer = {
+  session,
+  viewRole,
+  countries,
+  profile,
+  postCategories,
+  jobCategories,
+  tags,
+  tab
+};
 
 export default baseReducer;

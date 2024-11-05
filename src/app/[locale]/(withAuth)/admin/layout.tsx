@@ -12,5 +12,5 @@ export default async function PortalAdminPageLayout({ children }: { children: Re
     redirect(RouterPath.Home);
 
   const setting = await getPortalLayoutSetting();
-  return <PortalAdminLayout menus={setting.menus}>{children}</PortalAdminLayout>;
+  return <PortalAdminLayout menus={setting?.menus ?? []}>{children}</PortalAdminLayout>;
 }
