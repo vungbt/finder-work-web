@@ -1,5 +1,13 @@
+import { SignInEmployerView } from '@/@views/auth/signup';
+import { Metadata } from 'next';
 import React from 'react';
 
+export const metadata: Metadata = {
+  title: 'Jobcadu - Employer Sign In',
+  description:
+    "Step into your career journey with Jobcadu's 4-step staircase, representing job search, career growth, education, and work-life fulfillment. Our ladder and 'J' curve symbolize our commitment to your continuous development and upward progression. Explore exceptional jobs, inspiring companies, and expertly curated career content."
+};
+
 export default function EmployerLoginPage() {
-  return <div>EmployerLoginPage</div>;
+  return <SignInEmployerView />;
 }

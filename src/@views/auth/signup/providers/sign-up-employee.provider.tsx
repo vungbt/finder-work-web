@@ -2,15 +2,8 @@
 'use client';
 import { UserOnly } from '@/configs/graphql/generated';
 import dynamic from 'next/dynamic';
-import {
-  Dispatch,
-  ReactElement,
-  ReactNode,
-  createContext,
-  createElement,
-  useContext,
-  useReducer
-} from 'react';
+import { Dispatch, ReactNode, createContext, createElement, useContext, useReducer } from 'react';
+import { IPhoneCode, IStepItem } from '.';
 const MainStep = dynamic(() => import('../components/sign-up-employee-main'), { ssr: false });
 const BasicInfoStep = dynamic(() => import('../components/sign-up-employee-step-one'), {
   ssr: false
@@ -28,11 +21,6 @@ export enum SignUpEmployeeActionType {
   SET_FORM_DATA = 'SET_FORM_DATA',
   CHANGE_STEP = 'CHANGE_STEP',
   SET_USER_TEMP = 'SET_USER_TEMP'
-}
-
-export interface IStepItem {
-  title: string;
-  component: ReactElement;
 }
 
 const STEPS: IStepItem[] = [
@@ -63,11 +51,6 @@ type Action =
       type: SignUpEmployeeActionType.SET_USER_TEMP;
       payload: { data?: UserOnly };
     };
-
-export interface IPhoneCode {
-  label: string;
-  value: string;
-}
 
 export interface IEmployeeRegister {
   email: string;

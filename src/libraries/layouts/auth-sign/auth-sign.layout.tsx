@@ -14,13 +14,13 @@ export function AuthSignLayout({ employee, employer }: MainLayoutProps) {
   const { viewRole } = useViewRole();
   const isEmployee = viewRole === UserRole.Employee;
   const pageView = isEmployee ? employee : employer;
-
   return (
     <HydrateWrapper>
-      <div className="flex min-h-screen">
+      <div className="flex min-h-screen max-h-screen overflow-hidden">
         {pageView}
         <LeftContentSignAuth
-          thumbUrl={isEmployee ? '/background/auth-employee.jpg' : '/background/auth-employer.jpg'}
+          isEmployee={isEmployee}
+          thumbUrl={isEmployee ? '/background/auth-employee.jpg' : '/background/auth-employer.webp'}
         />
       </div>
     </HydrateWrapper>
