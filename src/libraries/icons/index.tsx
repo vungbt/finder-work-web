@@ -70,6 +70,11 @@ import MessageTextBold from './message-text-bold';
 import Copy from './copy';
 import Frame from './frame';
 import FrameBold from './frame-bold';
+import AI from './ai';
+import Certificate from './certificate';
+import Growth from './growth';
+import Social from './social';
+import Rocket from './rocket';
 
 export type IconProps = {
   className?: string;
@@ -150,7 +155,12 @@ const IconsDefine = {
   'message-text-bold': 'message-text-bold',
   copy: 'copy',
   frame: 'frame',
-  'frame-bold': 'frame-bold'
+  'frame-bold': 'frame-bold',
+  ai: 'ai',
+  rocket: 'rocket',
+  certificate: 'certificate',
+  social: 'social',
+  growth: 'growth'
 } as const;
 
 export type IconName = keyof typeof IconsDefine;
@@ -367,6 +377,21 @@ export const Icons: IconsType = {
   },
   'frame-bold': (props: IconProps) => {
     return <FrameBold {...props} />;
+  },
+  ai: (props: IconProps) => {
+    return <AI {...props} />;
+  },
+  certificate: (props: IconProps) => {
+    return <Certificate {...props} />;
+  },
+  growth: (props: IconProps) => {
+    return <Growth {...props} />;
+  },
+  social: (props: IconProps) => {
+    return <Social {...props} />;
+  },
+  rocket: (props: IconProps) => {
+    return <Rocket {...props} />;
   }
 };
 

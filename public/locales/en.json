@@ -8,6 +8,23 @@
   "employers": "Employers",
   "employer": "Employer",
   "employee": "Employee",
+  "employersBenefits": "Employers' benefits",
+  "aiPoweredJobDescription": "AI powered job description",
+  "hotJobAds": "Hot jobs ads",
+  "topCompaniesBanner": "Top companies banner",
+  "incredibleValue": "Incredible value",
+  "socialMediaBoosts": "Social media boosts",
+  "personalInformation": "Personal information",
+  "companyInformation": "Company information",
+  "workPosition": {
+    "staff": "Staff",
+    "teamLeader": "Team leader",
+    "viceOfDepartment": "Vice of department",
+    "headOfDepartment": "Head of department",
+    "viceDirector": "Vice director",
+    "director": "Director",
+    "generalDirector": "General director"
+  },
   "for": "For {label}",
   "admin": "Admin",
   "superAdmin": "Super admin",
@@ -224,10 +241,12 @@
     "title": "Title",
     "link": "Link",
     "message": "Message",
-    "contentInput": "Type new skill"
+    "contentInput": "Type new skill",
+    "workingPosition": "Working position"
   },
   "placeholder": {
     "enter": "Enter {label}",
+    "select": "Select {label}",
     "shareYourThoughts": "Share your thoughts..."
   },
   "validation": {

@@ -1,4 +1,4 @@
-import { UserRole } from '@/configs/graphql/generated';
+import { UserRole, WorkPosition } from '@/configs/graphql/generated';
 import { EReason, ESettingType } from '@/types';
 import { StatusCodes as HttpStatusCode } from 'http-status-codes';
 
@@ -49,6 +49,16 @@ export const PostReportReasons = [
   { label: 'reason.lowQualityContent', value: EReason.LOW_QUALITY_CONTENT },
   { label: 'reason.falseOrInaccurateInformation', value: EReason.FALSE_OR_INACCURATE_INFORMATION },
   { label: 'common.other', value: EReason.OTHER }
+];
+
+export const WorkingPositionOptions = [
+  { label: 'workPosition.staff', value: WorkPosition.Staff },
+  { label: 'workPosition.teamLeader', value: WorkPosition.TeamLeader },
+  { label: 'workPosition.viceOfDepartment', value: WorkPosition.ViceOfDepartment },
+  { label: 'workPosition.headOfDepartment', value: WorkPosition.HeadOfEpartment },
+  { label: 'workPosition.viceDirector', value: WorkPosition.ViceDirector },
+  { label: 'workPosition.director', value: WorkPosition.Director },
+  { label: 'workPosition.generalDirector', value: WorkPosition.GeneralDirector }
 ];
 
 export const RouterAction = ['add', 'edit'];
