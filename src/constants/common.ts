@@ -55,7 +55,7 @@ export const WorkingPositionOptions = [
   { label: 'workPosition.staff', value: WorkPosition.Staff },
   { label: 'workPosition.teamLeader', value: WorkPosition.TeamLeader },
   { label: 'workPosition.viceOfDepartment', value: WorkPosition.ViceOfDepartment },
-  { label: 'workPosition.headOfDepartment', value: WorkPosition.HeadOfEpartment },
+  { label: 'workPosition.headOfDepartment', value: WorkPosition.HeadOfDepartment },
   { label: 'workPosition.viceDirector', value: WorkPosition.ViceDirector },
   { label: 'workPosition.director', value: WorkPosition.Director },
   { label: 'workPosition.generalDirector', value: WorkPosition.GeneralDirector }
