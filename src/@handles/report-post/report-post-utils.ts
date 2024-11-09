@@ -42,7 +42,7 @@ export function AdminReportPostUtils(): ReportPostUtilsResult {
   useEffect(() => {
     fetchingReportPost({ searchValue, pagination });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchValue, pagination, sortActives, dataUpdate]);
+  }, [searchValue, pagination, sortActives]);
 
   const fetchingReportPost = async (variables: AllReportPostQueryVariables) => {
     try {
@@ -87,7 +87,7 @@ export function AdminReportPostUtils(): ReportPostUtilsResult {
         }
       });
       setLoadingChange(false);
-
+      setPagination({ page: pagination.page, limit: 30 });
       const result = res.update_report_post;
 
       setDataUpdate(result as ReportPost);

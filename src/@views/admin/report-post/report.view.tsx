@@ -57,7 +57,7 @@ export function AdminReportPostView() {
           message={
             dataUpdate?.status === ReportPostStatus.Resolve
               ? t('noti.changeStatusToUnsolvedConfirm')
-              : t('noti.changeStatusSolvedConfirm')
+              : t('noti.changeStatusToSolvedConfirm')
           }
           isOpen={!!dataUpdate}
           isLoading={loadingChange}

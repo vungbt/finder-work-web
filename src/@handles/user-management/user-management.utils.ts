@@ -42,7 +42,7 @@ export function AdminUserManagementUtils(): UserManagementUtilsResult {
   useEffect(() => {
     fetchingUser({ searchValue, pagination });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchValue, pagination, dataUpdate, sortActives]);
+  }, [searchValue, pagination, sortActives]);
 
   const fetchingUser = async (variables: AllUserQueryVariables) => {
     try {
@@ -74,7 +74,7 @@ export function AdminUserManagementUtils(): UserManagementUtilsResult {
       const newStatus =
         dataUpdate?.status === UserStatus.Active ? UserStatus.Inactive : UserStatus.Active;
 
-      const res = await apiClient.updateUser({
+      await apiClient.updateUser({
         where: {
           id: dataUpdate?.id
         },
@@ -86,9 +86,7 @@ export function AdminUserManagementUtils(): UserManagementUtilsResult {
       });
       setLoadingChange(false);
 
-      const result = res.update_user;
-
-      setDataUpdate(result as User);
+      setPagination({ page: pagination.page, limit: 30 });
     } catch (error) {
       getErrorMss(error, t('noti.changeStatusError'));
     } finally {
