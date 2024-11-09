@@ -201,7 +201,9 @@
     "resumes": "Resumes",
     "skills": "Skills",
     "profile": "Profile",
-    "experiences": "Experiences"
+    "experiences": "Experiences",
+    "resolve": "Resolve",
+    "unsolved": "Unsolved"
   },
   "reason": {
     "brokenLink": "Broken link",
@@ -288,7 +290,9 @@
     "changeStatusError": "Change user status error,please try again",
     "createSkillSuccess": "Create skill successfully",
     "createSkillFail": "Fail to create skill, please try again",
-    "updateSkillSuccess": "Update skill successfully",
-    "registerSuccess": "Registration successful! A verification code has been sent to your email"
+    "registerSuccess": "Registration successful! A verification code has been sent to your email",
+    "updateSkillSuccess": "Update skill successfully ",
+    "changeStatusToUnsolvedConfirm": "Are you sure to change report  status to unsolved?",
+    "changeStatusToSolvedConfirm": "Are you sure to change report  status to solve?"
   }
 }

@@ -1,4 +1,4 @@
-import { UserStatus } from '@/configs/graphql/generated';
+import { ReportPostStatus, UserStatus } from '@/configs/graphql/generated';
 import { Skill } from '@/configs/graphql/generated';
 import { RenderIcon } from '@/libraries/icons';
 import { useTranslations } from 'next-intl';
@@ -9,7 +9,7 @@ type ActionsTableProps = {
   onGoToDetail?: () => void;
   onGoToDetailSkill?: (item?: Skill) => void;
   onChangeStatus?: () => void;
-  status?: UserStatus;
+  status?: UserStatus | ReportPostStatus;
   item?: Skill;
 };
 
@@ -41,11 +41,19 @@ export function ActionsTable({
       )}
       {onChangeStatus && (
         <Button
-          styleType={status === UserStatus.Inactive ? 'success' : 'danger'}
+          styleType={
+            status === UserStatus.Inactive || status === ReportPostStatus.Resolve
+              ? 'success'
+              : 'danger'
+          }
           label={
-            status == UserStatus.Inactive
-              ? t('common.active').toLowerCase()
-              : t('common.inactive').toLowerCase()
+            status === ReportPostStatus.Resolve
+              ? t('common.resolve').toLowerCase()
+              : status === ReportPostStatus.Unsolved
+                ? t('common.unsolved').toLowerCase()
+                : status === UserStatus.Inactive
+                  ? t('common.active').toLowerCase()
+                  : t('common.inactive').toLowerCase()
           }
           size="small"
           onClick={onChangeStatus}
