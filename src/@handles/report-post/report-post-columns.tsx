@@ -4,7 +4,7 @@ import { ActionsTable, TableColumn } from '@/libraries/common';
 import { SortCell } from '@/libraries/common/table/sort-cell';
 import { formatDate } from '@/utils/helpers/formatter';
 import { useTranslations } from 'next-intl';
-import { useRouter } from '@/utils/navigation';
+import { Link, useRouter } from '@/utils/navigation';
 import Image from 'next/image';
 import { FallbackImage } from '@/constants/common';
 import { getFullName } from '@/utils/helpers/common';
@@ -51,7 +51,7 @@ export const AdminReportPostColumns = ({
     {
       title: t('reason'),
       width: '20%',
-      render: (row: ReportPost): JSX.Element => <div>{t(`reason.${row.reason}`)}</div>
+      render: (row: ReportPost): JSX.Element => <p>{t(`reason.${row.reason}`)}</p>
     },
     {
       title: t('message'),
@@ -60,9 +60,18 @@ export const AdminReportPostColumns = ({
     },
     {
       title: t('post'),
-      width: '20%',
-      render: (row: ReportPost): JSX.Element => <div>{row.post.slug}</div>
+      width: '30%',
+      render: (row: ReportPost): JSX.Element => (
+        <div className="cursor-pointer">
+          <p
+            onClick={() => onGoToDetail(row)}
+            className="underline transition-all ease-linear hover:text-info">
+            {`#${row.post.slug}`}
+          </p>
+        </div>
+      )
     },
+
     {
       title: (
         <SortCell
@@ -79,11 +88,6 @@ export const AdminReportPostColumns = ({
       render: (row: ReportPost) => (
         <ActionsTable onChangeStatus={() => onChangeStatus(row)} status={row.status} />
       )
-    },
-
-    {
-      title: t('actions'),
-      render: (row: ReportPost) => <ActionsTable onGoToDetail={() => onGoToDetail(row)} />
     }
   ];
 };

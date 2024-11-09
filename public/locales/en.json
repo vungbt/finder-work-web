@@ -55,6 +55,8 @@
   "content": "Content",
   "skill": "Skill",
   "finderWork": "FinderWork",
+  "message": "Message",
+  "post": "Post",
   "header": {
     "title": "Header",
     "addNewSkill": "Add new skill",
@@ -209,7 +211,8 @@
     "brokenLink": "Broken link",
     "clickbait": "Clickbait",
     "lowQualityContent": "Low-quality content",
-    "falseOrInaccurateInformation": "False or inaccurate information"
+    "falseOrInaccurateInformation": "False or inaccurate information",
+    "other": "Other"
   },
   "subTitle": {
     "forgotPassword": "Enter your email address and we will send you a link to reset your password",
