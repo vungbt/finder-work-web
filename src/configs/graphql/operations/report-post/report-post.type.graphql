@@ -32,6 +32,23 @@ query allReportPost(
       createdAt
       updatedAt
       deletedAt
+      status
+      post {
+        slug
+      }
+      user {
+        id
+        avatarUrl
+        firstName
+        lastName
+        email
+        color
+        addressDetail
+        phoneNumber
+        role
+        createdAt
+        updatedAt
+      }
     }
     metadata {
       ...Metadata
@@ -49,5 +66,16 @@ mutation deleteReportPost($where: ReportPostWhereUniqueInput!) {
     createdAt
     updatedAt
     deletedAt
+  }
+}
+
+mutation updateReportPost($data: ReportPostUpdateInput!, $where: ReportPostWhereUniqueInput!) {
+  update_report_post(data: $data, where: $where) {
+    id
+    postId
+    userId
+    updatedAt
+    deletedAt
+    status
   }
 }

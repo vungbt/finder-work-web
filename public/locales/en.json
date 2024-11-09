@@ -55,6 +55,8 @@
   "content": "Content",
   "skill": "Skill",
   "finderWork": "FinderWork",
+  "message": "Message",
+  "post": "Post",
   "header": {
     "title": "Header",
     "addNewSkill": "Add new skill",
@@ -201,13 +203,16 @@
     "resumes": "Resumes",
     "skills": "Skills",
     "profile": "Profile",
-    "experiences": "Experiences"
+    "experiences": "Experiences",
+    "resolve": "Resolve",
+    "unsolved": "Unsolved"
   },
   "reason": {
     "brokenLink": "Broken link",
     "clickbait": "Clickbait",
     "lowQualityContent": "Low-quality content",
-    "falseOrInaccurateInformation": "False or inaccurate information"
+    "falseOrInaccurateInformation": "False or inaccurate information",
+    "other": "Other"
   },
   "subTitle": {
     "forgotPassword": "Enter your email address and we will send you a link to reset your password",
@@ -288,7 +293,9 @@
     "changeStatusError": "Change user status error,please try again",
     "createSkillSuccess": "Create skill successfully",
     "createSkillFail": "Fail to create skill, please try again",
-    "updateSkillSuccess": "Update skill successfully",
-    "registerSuccess": "Registration successful! A verification code has been sent to your email"
+    "registerSuccess": "Registration successful! A verification code has been sent to your email",
+    "updateSkillSuccess": "Update skill successfully ",
+    "changeStatusToUnsolvedConfirm": "Are you sure to change report  status to unsolved?",
+    "changeStatusToSolvedConfirm": "Are you sure to change report  status to solve?"
   }
 }

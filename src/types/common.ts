@@ -80,9 +80,9 @@ export enum ActionStatus {
 }
 
 export enum EReason {
-  BROKEN_LINK = 'BrokenLink',
-  CLICKBAIT = 'Clickbait',
-  LOW_QUALITY_CONTENT = 'LowQualityContent',
-  FALSE_OR_INACCURATE_INFORMATION = 'FalseOrInaccurateInformation',
-  OTHER = 'Other'
+  BROKEN_LINK = 'brokenLink',
+  CLICKBAIT = 'clickbait',
+  LOW_QUALITY_CONTENT = 'lowQualityContent',
+  FALSE_OR_INACCURATE_INFORMATION = 'falseOrInaccurateInformation',
+  OTHER = 'other'
 }

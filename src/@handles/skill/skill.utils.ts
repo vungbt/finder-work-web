@@ -61,7 +61,7 @@ export function AdminSkillManagementUtils(): SkillManagementUtilsResult {
   useEffect(() => {
     fetchingSKill({ searchValue, pagination });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchValue, pagination, itemDelete, sortActives]);
+  }, [searchValue, pagination, sortActives]);
 
   const fetchingSKill = async (variables: AllUserQueryVariables) => {
     try {
@@ -95,7 +95,7 @@ export function AdminSkillManagementUtils(): SkillManagementUtilsResult {
       setLoadingDelete(false);
       if (res.delete_skill) {
         setItemDelete(undefined);
-        setPagination({ page: 1, limit: 30 });
+        setPagination({ page: pagination.page, limit: 30 });
         return toastSuccess(t('noti.deleteSuccess'));
       }
     } catch (error) {
