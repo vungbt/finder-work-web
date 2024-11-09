@@ -1,13 +1,13 @@
 import { ReportPost, SortOrder } from '@/configs/graphql/generated';
+import { FallbackImage } from '@/constants/common';
 import { RouterPath } from '@/constants/router-path';
 import { ActionsTable, TableColumn } from '@/libraries/common';
 import { SortCell } from '@/libraries/common/table/sort-cell';
-import { formatDate } from '@/utils/helpers/formatter';
-import { useTranslations } from 'next-intl';
-import { Link, useRouter } from '@/utils/navigation';
-import Image from 'next/image';
-import { FallbackImage } from '@/constants/common';
 import { getFullName } from '@/utils/helpers/common';
+import { formatDate } from '@/utils/helpers/formatter';
+import { useRouter } from '@/utils/navigation';
+import { useTranslations } from 'next-intl';
+import Image from 'next/image';
 
 export const AdminReportPostColumns = ({
   sortActives,
