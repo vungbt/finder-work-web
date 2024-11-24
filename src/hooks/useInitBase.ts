@@ -1,3 +1,6 @@
+import useInitAddress from './redux/address/useInitAddress';
+import useInitCompanyCommon from './redux/company/common/useInitCompanyCommon';
+import useInitCompanies from './redux/company/list/useInitCompanies';
 import useInitCountries from './redux/countries/useInitCountries';
 import useInitJobCategories from './redux/job-category/useInitJobCategories';
 import useInitPostCategories from './redux/post-category/useInitPostCategories';
@@ -10,4 +13,7 @@ export default function useInitBase() {
   useInitCountries();
   useInitPostCategories();
   useInitJobCategories();
+  useInitCompanyCommon();
+  useInitAddress();
+  useInitCompanies();
 }

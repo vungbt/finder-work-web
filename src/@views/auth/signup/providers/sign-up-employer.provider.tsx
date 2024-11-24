@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
-import { CompanyType, UserOnly } from '@/configs/graphql/generated';
-import { OptionItem } from '@/types';
+import { UserOnly } from '@/configs/graphql/generated';
+import { IOptItem, OptionItem } from '@/types';
 import dynamic from 'next/dynamic';
 import { Dispatch, ReactNode, createContext, createElement, useContext, useReducer } from 'react';
 import { IPhoneCode, IStepItem } from '.';
@@ -69,10 +69,12 @@ export interface IEmployerRegister {
   agreePolicy?: any;
   // Step 3
   workingPosition?: OptionItem | null;
-  companyId?: string;
-  jobCategoryIds?: string[];
-  companyTye?: CompanyType;
-  addressId?: string;
+  company?: IOptItem | null;
+  industries?: IOptItem[];
+  size?: IOptItem | null;
+  type?: IOptItem | null;
+  address?: IOptItem | null;
+  addressDetail?: string | null;
 }
 
 type SignUpEmployerState = {
@@ -95,9 +97,12 @@ const initContext: SignUpEmployerState = {
     phoneNumber: '',
     password: '',
     confirmPassword: '',
-    companyId: '',
-    jobCategoryIds: [],
-    addressId: ''
+    company: null,
+    size: null,
+    type: null,
+    industries: [],
+    address: null,
+    addressDetail: ''
   },
   steps: STEPS,
   stepIndex: 0,

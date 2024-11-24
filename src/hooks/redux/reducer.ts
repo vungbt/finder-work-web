@@ -6,6 +6,9 @@ import postCategories from './post-category/reducer';
 import jobCategories from './job-category/reducer';
 import tags from './tags/reducer';
 import tab from './tab/reducer';
+import companyCommon from './company/common/reducer';
+import companyList from './company/list/reducer';
+import address from './address/reducer';
 
 const baseReducer = {
   session,
@@ -15,7 +18,10 @@ const baseReducer = {
   postCategories,
   jobCategories,
   tags,
-  tab
+  tab,
+  address,
+  companyCommon,
+  companyList
 };
 
 export default baseReducer;

@@ -65,7 +65,8 @@ export const AdminReportPostColumns = ({
         <div className="cursor-pointer">
           <p
             onClick={() => onGoToDetail(row)}
-            className="underline transition-all ease-linear hover:text-info">
+            className="underline transition-all ease-linear hover:text-info"
+          >
             {`#${row.post.slug}`}
           </p>
         </div>

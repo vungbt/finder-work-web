@@ -57,6 +57,7 @@
   "finderWork": "FinderWork",
   "message": "Message",
   "post": "Post",
+  "company": "Company",
   "header": {
     "title": "Header",
     "addNewSkill": "Add new skill",
@@ -163,6 +164,11 @@
     "newPost": "New post",
     "shareALink": "Share a link",
     "jobRoleIndustry": "Job role / Industry",
+    "industries": "Industries",
+    "companyType": "Company type",
+    "companySize": "Company size",
+    "headquarter": "Headquarter location",
+    "headquarterDetail": "Headquarter detailed location",
     "theTop5Categories": "The top 5 categories",
     "featuredCategories": "Featured categories",
     "others": "Others",
@@ -252,6 +258,7 @@
   "placeholder": {
     "enter": "Enter {label}",
     "select": "Select {label}",
+    "selectOrCreate": "Select or create new {label}",
     "shareYourThoughts": "Share your thoughts..."
   },
   "validation": {

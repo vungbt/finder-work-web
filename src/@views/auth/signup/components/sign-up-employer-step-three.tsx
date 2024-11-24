@@ -1,14 +1,18 @@
-import useCountries from '@/hooks/redux/countries/useCountries';
+import useAddress from '@/hooks/redux/address/useAddress';
+import useCompanyCommon from '@/hooks/redux/company/common/useCompanyCommon';
+import useCompanies from '@/hooks/redux/company/list/useCompanies';
+import useJobCategories from '@/hooks/redux/job-category/useJobCategories';
 import {
   BackButton,
   Button,
   CheckboxGroup,
-  InputForm,
-  InputPasswordForm,
+  SelectAsync,
+  SelectAsyncCreatable,
   SelectForm,
-  Steps
+  Steps,
+  TextareaForm
 } from '@/libraries/common';
-import { RegexHelper } from '@/utils/helpers/regex';
+import { validationCustoms } from '@/utils/helpers/validation';
 import { Link } from '@/utils/navigation';
 import { Field, Form, Formik } from 'formik';
 import { motion } from 'framer-motion';
@@ -16,6 +20,16 @@ import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import * as Yup from 'yup';
 import { IEmployerRegister, useSignUpEmployer } from '../providers';
+import {
+  AuthEmployerRegisterMutationVariables,
+  City,
+  Company,
+  UserOnly,
+  WorkPosition
+} from '@/configs/graphql/generated';
+import { RouterPath } from '@/constants/router-path';
+import { useApiClient } from '@/libraries/providers/graphql';
+import { toastSuccess } from '@/configs/toast';
 
 export default function SignUpEmployerStepThree() {
   const t = useTranslations();
@@ -23,33 +37,39 @@ export default function SignUpEmployerStepThree() {
     actions,
     state: { stepIndex, formData }
   } = useSignUpEmployer();
-  const { options, defaultOption } = useCountries();
   const [loading, setLoading] = useState(false);
-
+  const { options: jobCategories, loading: loadingJobCategories } = useJobCategories();
+  const { optCompanySizes, optCompanyTypes, loading: loadingCompanyCommon } = useCompanyCommon();
+  const {
+    options: addressOptions,
+    loading: addressLoading,
+    getAddress,
+    convertToOptions
+  } = useAddress();
+  const { apiClient } = useApiClient();
+  const { options: companies, loading: companyLoading, getCompanies } = useCompanies();
   const validationSchema = Yup.object({
-    firstName: Yup.string().required(
+    company: validationCustoms.select(t, 'company'),
+    industries: validationCustoms.selectMultiple(t, t('common.industries'), { min: 1, max: 3 }),
+    type: validationCustoms.select(t, 'type'),
+    size: validationCustoms.select(t, 'size'),
+    address: validationCustoms.select(t, 'address'),
+    addressDetail: Yup.string().required(
       t('validation.required', { label: t('form.firstName').toLowerCase() })
     ),
-    lastName: Yup.string().required(
-      t('validation.required', { label: t('form.lastName').toLowerCase() })
-    ),
-    phoneCode: Yup.object().shape({
-      value: Yup.string().required(t('validation.optionRequired')),
-      label: Yup.string().required(t('validation.optionRequired'))
-    }),
-    phoneNumber: Yup.string()
-      .required(t('validation.required', { label: t('form.phoneNumber').toLowerCase() }))
-      .matches(RegexHelper.REGEX_PHONE, {
-        message: t('validation.valid', { label: t('form.phoneNumber').toLowerCase() })
-      })
+    agreePolicy: Yup.array()
+      .of(Yup.string().required(t('validation.required', { label: t('form.policy') })))
+      .min(1, t('validation.required', { label: t('form.policy') }))
   });
 
   const initialValues = {
-    firstName: formData.firstName ?? '',
-    lastName: formData.lastName ?? '',
-    phoneCode: formData.phoneCode ?? defaultOption,
-    phoneNumber: formData.phoneNumber ?? '',
-    workingPosition: formData.workingPosition ?? undefined
+    company: formData.company,
+    industries: formData.industries ?? [],
+    type: formData.type ?? null,
+    size: formData.size ?? null,
+    address: formData.address ?? null,
+    addressDetail: formData.addressDetail ?? '',
+    agreePolicy: formData?.agreePolicy ?? []
   };
 
   // submit register new account
@@ -57,10 +77,58 @@ export default function SignUpEmployerStepThree() {
     try {
       if (loading) return;
       setLoading(true);
+      const company = values.company;
+      const industries = values.industries ?? [];
+      const addressValue = values.address;
+      const params: AuthEmployerRegisterMutationVariables = {
+        companyName: (company?.label as string) ?? '',
+        companyId: !company?.__isNew__ ? company?.value : undefined,
+        companySizeId: values.size?.value ?? '',
+        companyTypeId: values.type?.value ?? '',
+        industryIds: industries.map((item) => item.value),
+        cityId: Number(addressValue?.value),
+        addressDetail: values.addressDetail ?? '',
+        firstName: formData?.firstName ?? '',
+        lastName: formData?.lastName ?? '',
+        workingPosition: formData.workingPosition?.value as WorkPosition,
+        phoneNumber: formData.phoneNumber ?? '',
+        email: formData.email ?? '',
+        password: formData.password ?? ''
+      };
+      const res = await apiClient.authEmployerRegister(params);
+      setLoading(false);
       actions.nextStep(values);
+      const result = res?.auth_employer_register;
+      if (result.id) {
+        toastSuccess(t('noti.registerSuccess'));
+        actions.setUserTemp(result as UserOnly);
+      }
     } catch (error) {
       setLoading(false);
     }
+  };
+
+  const filterCompanies = async (searchValue?: string) => {
+    if (!searchValue || searchValue.length <= 0) return;
+    const res = await getCompanies({
+      searchValue: searchValue,
+      pagination: { limit: 20, page: 1 }
+    });
+    const options = ((res?.all_company.data ?? []) as Company[]).map((item) => ({
+      label: item.name,
+      value: item.id
+    }));
+    return options;
+  };
+
+  const filterAddress = async (searchValue?: string) => {
+    if (!searchValue || searchValue.length <= 0) return;
+    const res = await getAddress({
+      searchValue: searchValue,
+      pagination: { limit: 30, page: 1 }
+    });
+    const options = convertToOptions((res?.all_address.data ?? []) as City[]);
+    return options;
   };
 
   return (
@@ -94,43 +162,82 @@ export default function SignUpEmployerStepThree() {
           return (
             <Form>
               <div className="flex flex-col gap-6">
-                {/** phone number */}
-                <div className="flex items-center flex-wrap gap-2">
-                  <div className="w-fit min-w-40">
-                    <Field
-                      label={`${t('form.phoneCode')}:`}
-                      isRequired
-                      name="phoneCode"
-                      component={SelectForm}
-                      options={options}
-                      placeholder={t('form.phoneCode')}
-                    />
-                  </div>
-                  <div className="flex-1">
-                    <Field
-                      label={`${t('form.phoneNumber')}:`}
-                      isRequired
-                      name="phoneNumber"
-                      component={InputForm}
-                      placeholder={t('form.phoneNumber')}
-                    />
-                  </div>
-                </div>
-
+                {/* company */}
                 <Field
-                  label={`${t('form.password')}:`}
+                  label={`${t('company')}:`}
                   isRequired
-                  name="password"
-                  component={InputPasswordForm}
-                  placeholder={t('form.password')}
+                  name="company"
+                  component={SelectAsyncCreatable}
+                  defaultOptions={companies}
+                  loading={companyLoading}
+                  filterOptions={filterCompanies}
+                  placeholder={t('placeholder.selectOrCreate', {
+                    label: t('company').toLowerCase()
+                  })}
+                />
+                {/* industry ( job category ) */}
+                <Field
+                  label={`${t('common.industries')}:`}
+                  isRequired
+                  name="industries"
+                  component={SelectForm}
+                  loading={loadingJobCategories}
+                  options={jobCategories}
+                  isMulti={true}
+                  placeholder={t('placeholder.select', {
+                    label: t('common.industries').toLowerCase()
+                  })}
                 />
 
+                {/* company type */}
                 <Field
-                  label={`${t('form.confirmPassword')}:`}
+                  label={`${t('common.companyType')}:`}
                   isRequired
-                  name="confirmPassword"
-                  component={InputPasswordForm}
-                  placeholder={t('form.confirmPassword')}
+                  name="type"
+                  component={SelectForm}
+                  options={optCompanyTypes}
+                  loading={loadingCompanyCommon}
+                  placeholder={t('placeholder.select', {
+                    label: t('common.companyType').toLowerCase()
+                  })}
+                />
+
+                {/* company size */}
+                <Field
+                  label={`${t('common.companySize')}:`}
+                  isRequired
+                  name="size"
+                  component={SelectForm}
+                  options={optCompanySizes}
+                  loading={loadingCompanyCommon}
+                  placeholder={t('placeholder.select', {
+                    label: t('common.companySize').toLowerCase()
+                  })}
+                />
+
+                {/* address */}
+                <Field
+                  label={`${t('common.headquarter')}:`}
+                  isRequired
+                  name="address"
+                  component={SelectAsync}
+                  loading={addressLoading}
+                  filterOptions={filterAddress}
+                  defaultOptions={addressOptions}
+                  placeholder={t('placeholder.select', {
+                    label: t('common.headquarter').toLowerCase()
+                  })}
+                />
+
+                {/* address detail */}
+                <Field
+                  label={`${t('common.headquarterDetail')}:`}
+                  isRequired
+                  name="addressDetail"
+                  component={TextareaForm}
+                  placeholder={t('placeholder.enter', {
+                    label: t('common.headquarterDetail').toLowerCase()
+                  })}
                 />
               </div>
 
@@ -145,7 +252,7 @@ export default function SignUpEmployerStepThree() {
                         <div className="flex items-center text-sm md:text-base text-dark gap-[5px] cursor-pointer">
                           {t('common.agreeTo')}{' '}
                           <Link
-                            href="/"
+                            href={RouterPath.TERM_OF_USE}
                             target="_blank"
                             className="underline transition-all ease-linear hover:text-info"
                           >
@@ -153,7 +260,7 @@ export default function SignUpEmployerStepThree() {
                           </Link>
                           <span>{t('common.and')}</span>
                           <Link
-                            href="/"
+                            href={RouterPath.PRIVACY_POLICY}
                             target="_blank"
                             className="capitalize underline transition-all ease-linear hover:text-info"
                           >
