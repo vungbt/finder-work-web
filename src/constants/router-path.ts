@@ -32,6 +32,10 @@ export const RouterPath = {
   PORTAL_WORK_PROFILE_SKILLS: '/portal/work-profile/skills',
   PORTAL_WORK_PROFILE_PROJECTS: '/portal/work-profile/projects',
 
+  // Employer
+  PORTAL_COMPANY_PROFILE: '/portal/company/profile',
+  PORTAL_COMPANY_JOBS: '/portal/company/jobs',
+
   // Common
   TERM_OF_USE: '/term-of-use',
   PRIVACY_POLICY: '/privacy-policy',
