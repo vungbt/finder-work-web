@@ -127,6 +127,7 @@ export default function EmployeePage() {
 
   const filterOptions = (searchValue?: string) => {
     console.log('searchValue====>', searchValue);
+    return [{ value: 'apple', label: 'Apple' }];
   };
 
   const initFetching = async () => {

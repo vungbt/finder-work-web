@@ -13,7 +13,7 @@ export default function Growth({ className, transform, ...reset }: Readonly<Icon
       transform={transform}
       {...reset}
     >
-      <g clip-path="url(#clip0_185_3847)">
+      <g clipPath="url(#clip0_185_3847)">
         <path
           d="M9.00797 6.70896L12.438 5.19296V12.865H9.00797V6.70896ZM9.00797 6.70896L6.86397 7.84596L4.71997 4.81396V12.863H9.00797V6.70896Z"
           stroke="currentColor"

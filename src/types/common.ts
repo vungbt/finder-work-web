@@ -30,6 +30,7 @@ export interface IUser {
 export interface IOptItem {
   value: string;
   label: string | ReactNode;
+  __isNew__?: boolean;
 }
 
 export interface IGoogleUserInfo {

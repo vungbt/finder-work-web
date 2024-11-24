@@ -60,8 +60,11 @@ mutation authEmployerRegister(
   $companyName: String!
   $industryIds: [String!]!
   $companyTypeId: String!
+  $companySizeId: String!
   $cityId: Float!
   $addressDetail: String!
+  $companyId: String
+  $workingPosition: String!
 ) {
   auth_employer_register(
     email: $email
@@ -75,6 +78,9 @@ mutation authEmployerRegister(
     companyTypeId: $companyTypeId
     cityId: $cityId
     addressDetail: $addressDetail
+    companyId: $companyId
+    companySizeId: $companySizeId
+    workingPosition: $workingPosition
   ) {
     ...UserOnly
   }

@@ -8,3 +8,33 @@ query allCountry {
     emoji
   }
 }
+
+query allAddress(
+  $where: CityWhereInput
+  $orderBy: [CityOrderByWithRelationInput!]
+  $searchValue: String
+  $pagination: PaginationInput
+) {
+  all_address(
+    where: $where
+    orderBy: $orderBy
+    searchValue: $searchValue
+    pagination: $pagination
+  ) {
+    metadata {
+      total
+      page
+      limit
+    }
+    data {
+      id
+      name
+      stateId
+      countryId
+      stateCode
+      stateName
+      countryCode
+      countryName
+    }
+  }
+}
