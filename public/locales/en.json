@@ -205,7 +205,8 @@
     "profile": "Profile",
     "experiences": "Experiences",
     "resolve": "Resolve",
-    "unsolved": "Unsolved"
+    "unsolved": "Unsolved",
+    "createResume": "Create resume"
   },
   "reason": {
     "brokenLink": "Broken link",
@@ -247,7 +248,28 @@
     "link": "Link",
     "message": "Message",
     "contentInput": "Type new skill",
-    "workingPosition": "Working position"
+    "workingPosition": "Working position",
+    "jobTitle": "Job title",
+    "companyName": "Company name",
+    "location": "Location",
+    "startDate": "Start date",
+    "endDate": "End date",
+    "fullName": "Full name",
+    "currentWork": "I'm current working here",
+    "address": "Address",
+    "addressDetail": "Address details",
+    "summary": "Summary",
+    "school": "School",
+    "education": "School / Institution / College / University",
+    "currentLearning": "I'm currently learning here",
+    "gpa": "GPA",
+    "awards": "Awards",
+    "relevantCoursework": "Relevant coursework",
+    "skills": "Skills",
+    "projects": "Projects",
+    "projectName": "Project name",
+    "major": "Major",
+    "degree": "Degree"
   },
   "placeholder": {
     "enter": "Enter {label}",
