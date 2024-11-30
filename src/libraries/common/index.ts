@@ -23,3 +23,4 @@ export * from './divider';
 export * from './infinity-scroll';
 export * from './tooltip';
 export * from './code-snippet';
+export * from './collapse';
