@@ -54,6 +54,7 @@ export default function CompanyProfile() {
     avatar: null
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onSubmit = (values: any) => {
     console.log('values====>', values);
   };
@@ -74,8 +75,7 @@ export default function CompanyProfile() {
         // innerRef={formikRef}
         initialValues={initialValues}
         validationSchema={validationSchema}
-        onSubmit={onSubmit}
-      >
+        onSubmit={onSubmit}>
         {({ setFieldValue, values, errors, touched, setErrors }) => {
           return (
             <Form className="flex flex-col gap-6">
