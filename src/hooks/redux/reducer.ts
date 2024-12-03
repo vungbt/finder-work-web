@@ -4,6 +4,7 @@ import countries from './countries/reducer';
 import profile from './profile/reducer';
 import postCategories from './post-category/reducer';
 import jobCategories from './job-category/reducer';
+import jobTitles from './/job-tile/reducer';
 import tags from './tags/reducer';
 import tab from './tab/reducer';
 import companyCommon from './company/common/reducer';
@@ -21,7 +22,8 @@ const baseReducer = {
   tab,
   address,
   companyCommon,
-  companyList
+  companyList,
+  jobTitles
 };
 
 export default baseReducer;

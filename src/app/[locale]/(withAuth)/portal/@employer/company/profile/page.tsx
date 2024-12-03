@@ -13,10 +13,10 @@ import {
   Upload,
   UploadMultiple
 } from '@/libraries/common';
-import { validationCustoms } from '@/utils/helpers/validation';
+import { useApiClient } from '@/libraries/providers/graphql';
+import { upload } from '@/utils/upload';
 import { Field, Form, Formik } from 'formik';
 import { useTranslations } from 'next-intl';
-import * as Yup from 'yup';
 
 export default function CompanyProfile() {
   const t = useTranslations();
@@ -29,34 +29,75 @@ export default function CompanyProfile() {
   } = useAddress();
   const { options: jobCategories, loading: loadingJobCategories } = useJobCategories();
 
-  const validationSchema = Yup.object({
-    avatar: validationCustoms.upload(t, t('common.avatar')),
-    name: Yup.string().required(),
-    industries: validationCustoms.selectMultiple(t, t('common.industries'), { min: 1, max: 3 }),
-    type: validationCustoms.select(t, 'type'),
-    size: validationCustoms.select(t, 'size'),
-    address: validationCustoms.select(t, 'address'),
-    addressDetail: Yup.string().required(
-      t('validation.required', { label: t('form.firstName').toLowerCase() })
-    ),
-    content: Yup.string().required(),
-    thumbnails: validationCustoms.uploadMultiple(t, t('form.thumbnails'), { max: 5, min: 1 })
-  });
+  // const validationSchema = Yup.object({
+  //   avatar: validationCustoms.upload(t, t('common.avatar')),
+  //   name: Yup.string().required(),
+  //   industries: validationCustoms.selectMultiple(t, t('common.industries'), { min: 1, max: 3 }),
+  //   type: validationCustoms.select(t, 'type'),
+  //   size: validationCustoms.select(t, 'size'),
+  //   address: validationCustoms.select(t, 'address'),
+  //   addressDetail: Yup.string().required(
+  //     t('validation.required', { label: t('form.firstName').toLowerCase() })
+  //   ),
+  //   description: Yup.string().required(),
+  //   photos: validationCustoms.uploadMultiple(t, t('form.thumbnails'), { max: 5, min: 1 })
+  // });
   const initialValues = {
     name: '',
-    industries: [],
+    slug: '',
+    addressDetail: '',
+    description: '',
+    createdAt: '',
+    updatedAt: '',
+    deletedAt: '',
+    avatar: null,
     type: null,
     size: null,
+    photos: [],
     address: null,
-    addressDetail: '',
-    content: '',
-    thumbnails: [],
-    avatar: null
+    industries: []
   };
-
+  const { apiClient } = useApiClient();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const onSubmit = (values: any) => {
-    console.log('values====>', values);
+  const onSubmit = async (values: any) => {
+    console.log('Company values:', values);
+
+    const avatar = values.avatar.file ?? null;
+    console.log('Avatar:', avatar);
+    const formData = upload.imgFormData(avatar);
+    const res = await upload.uploadFile(avatar.name, formData);
+    const avatarPath = res.data.public_id;
+    const photos = values.photos ?? [];
+    let photosIds: string[] = [];
+    if (photos && photos.length > 0) {
+      const files = photos.map((item) => item.file);
+      photosIds = (await upload.uploadFiles(files)).map((item) => item.public_id);
+    }
+    const data: any = {
+      name: values.name,
+      addressDetail: values.addressDetail,
+      description: values.description,
+      avatarPath,
+      type: {
+        connect: { id: values.type.value }
+      },
+      size: {
+        connect: { id: values.size.value }
+      },
+      photosIds,
+      address: {
+        connect: { id: Number(values.address.value) }
+      },
+      jobCategoriesIds: values.industries.map((industry) => industry.value)
+    };
+    console.log('Company data:', data);
+
+    try {
+      const response = await apiClient.createCompany({ input: data });
+      console.log('Company created:', response.create_company);
+    } catch (err) {
+      console.error('Error creating company:', err);
+    }
   };
 
   const filterAddress = async (searchValue?: string) => {
@@ -74,8 +115,9 @@ export default function CompanyProfile() {
       <Formik
         // innerRef={formikRef}
         initialValues={initialValues}
-        validationSchema={validationSchema}
-        onSubmit={onSubmit}>
+        // validationSchema={validationSchema}
+        onSubmit={onSubmit}
+      >
         {({ setFieldValue, values, errors, touched, setErrors }) => {
           return (
             <Form className="flex flex-col gap-6">
@@ -168,25 +210,25 @@ export default function CompanyProfile() {
               />
               {/* Description */}
               <Field
-                label={t('form.content')}
+                label={t('form.description')}
                 isRequired={true}
-                name="content"
+                name="description"
                 placeholder={t('placeholder.shareYourThoughts')}
                 component={EditorForm}
               />
 
               {/* Thumbnails */}
               <UploadMultiple
-                label={t('form.thumbnails')}
-                name="thumbnails"
-                isTouched={touched.thumbnails !== undefined}
-                values={values?.thumbnails}
+                label={t('form.photos')}
+                name="photos"
+                isTouched={touched.photos !== undefined}
+                values={values?.photos}
                 placeholder={t('common.dropOrDragPhotos')}
                 subPlaceholder={t('common.supported', { type: 'png, jpeg, jpg, webp, gif' })}
                 onChange={(value) => {
-                  setFieldValue('thumbnails', value);
+                  setFieldValue('photos', value);
                 }}
-                error={errors?.thumbnails as string}
+                error={errors?.photos as string}
                 setError={(mess) => setErrors(mess)}
               />
 

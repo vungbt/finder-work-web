@@ -1,0 +1,33 @@
+mutation createCompany($input: CreateCompanyInput!) {
+  create_company(data: $input) {
+    name
+    slug
+    addressDetail
+    description
+    createdAt
+    updatedAt
+    deletedAt
+    avatar {
+      ...Image
+    }
+    type {
+      id
+    }
+    size {
+      id
+    }
+    photos {
+      ...Image
+    }
+    address {
+      id
+    }
+    industries {
+      id
+    }
+    social {
+      id
+      url
+    }
+  }
+}
