@@ -15,7 +15,6 @@ import React, { useMemo } from 'react';
 import * as Yup from 'yup';
 import { CreateResume, ICreateResumeDataForm, IWorkExperience } from '../providers';
 import { Collapse } from '../../../../libraries/common/collapse/collapse';
-import { CitiesUtils } from '@/@handles/common/cities/cities-utils';
 
 type WorkExperienceSectionProps = {
   experience: IWorkExperience;
@@ -25,7 +24,6 @@ type WorkExperienceSectionProps = {
 
 const WorkExperienceSection: React.FC<WorkExperienceSectionProps> = ({ index, remove }) => {
   const t = useTranslations();
-  const { data } = CitiesUtils();
   return (
     <Collapse remove={remove} index={index} header={t('company')}>
       <div className="mb-6 border-b pb-4">
@@ -48,10 +46,6 @@ const WorkExperienceSection: React.FC<WorkExperienceSectionProps> = ({ index, re
           label={t('form.location')}
           placeholder={t('form.location')}
           component={SelectForm}
-          options={data.map((item) => ({
-            value: item.id,
-            label: item.name
-          }))}
         />
 
         <div className="flex flex-1 gap-6">

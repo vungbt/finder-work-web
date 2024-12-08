@@ -59,6 +59,7 @@ export default function CreateResumeStepOne() {
     summary: formData.personalDetail.summary ?? '',
     jobTitle: formData.personalDetail.jobTitle ?? ''
   };
+  console.log(1, formData.personalDetail);
   // submit register new account
   const onHandleSubmit = async (values: IPersonalDetail) => {
     console.log(values);

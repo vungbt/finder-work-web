@@ -1,5 +1,10 @@
-import React from 'react';
+import { JobProvider } from '@/@views/user/company-profile/providers';
+import { JobView } from '@/@views/user/company-profile/job-company-view';
 
 export default function CompanyJobs() {
-  return <div>CompanyJobs</div>;
+  return (
+    <JobProvider>
+      <JobView />
+    </JobProvider>
+  );
 }

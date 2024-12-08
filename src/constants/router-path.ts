@@ -35,13 +35,18 @@ export const RouterPath = {
   // Employer
   PORTAL_COMPANY_PROFILE: '/portal/company/profile',
   PORTAL_COMPANY_JOBS: '/portal/company/jobs',
+  COMPANY_PROFILE_DETAIL: '/portal/company/profile/add',
+  COMPANY_PROFILES: '/portal/company/profile',
 
   // Common
   TERM_OF_USE: '/term-of-use',
   PRIVACY_POLICY: '/privacy-policy',
 
   // SYSTEM
-  ERROR: '/error'
+  ERROR: '/error',
+
+  // Job
+  JOB_DETAIL: '/job/detail'
 };
 
 export const RouterOptions = Object.entries(RouterPath).map(([key, value]) => ({

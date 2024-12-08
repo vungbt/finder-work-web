@@ -1,0 +1,25 @@
+query allJobTitle(
+  $where: JobTitleWhereInput
+  $pagination: PaginationInput
+  $searchValue: String
+  $orderBy: [JobTitleOrderByWithRelationInput!]
+) {
+  all_job_title(
+    where: $where
+    pagination: $pagination
+    searchValue: $searchValue
+    orderBy: $orderBy
+  ) {
+    data {
+      id
+      name
+      createdAt
+      updatedAt
+    }
+    metadata {
+      total
+      limit
+      page
+    }
+  }
+}
