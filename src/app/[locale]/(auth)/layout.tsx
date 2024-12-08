@@ -5,11 +5,7 @@ import { redirect } from '@/utils/navigation';
 import { getSessionSS } from '@/utils/session';
 import { ReactNode } from 'react';
 
-export default async function AuthPageLayout(props: {
-  employee: ReactNode;
-  employer: ReactNode;
-  admin: ReactNode;
-}) {
+export default async function AuthPageLayout(props: { employee: ReactNode; employer: ReactNode }) {
   const session = await getSessionSS();
   if (session && session?.token)
     return redirect(
