@@ -29,6 +29,7 @@ type DatePickerProps = Omit<ReactDatePickerProps, 'onChange' | 'placeholderText'
   onClear?: () => void;
 };
 
+const DatePickerBase = ReactDatePicker as any
 export const DatePicker = forwardRef(function DatePicker(props: DatePickerProps, ref: Ref<any>) {
   const {
     className,
@@ -101,7 +102,7 @@ export const DatePicker = forwardRef(function DatePicker(props: DatePickerProps,
         {iconLeft && (
           <IconViewSize className="icon-left" name={iconLeft} isLoading={isLoading} size={size} />
         )}
-        <ReactDatePicker
+        <DatePickerBase
           ref={ref}
           className="w-full flex-1 bg-transparent outline-none"
           onChange={onHandleChange}

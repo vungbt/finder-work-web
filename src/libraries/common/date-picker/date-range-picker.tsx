@@ -29,6 +29,7 @@ type DateRangePickerProps = Omit<ReactDatePickerProps, 'onChange' | 'placeholder
   onClear?: () => void;
 };
 
+const DatePickerBase = ReactDatePicker as any
 export const DateRangePicker = forwardRef(function DateRangePicker(
   props: DateRangePickerProps,
   ref: Ref<any>
@@ -105,7 +106,7 @@ export const DateRangePicker = forwardRef(function DateRangePicker(
         {iconLeft && (
           <IconViewSize className="icon-left" name={iconLeft} isLoading={isLoading} size={size} />
         )}
-        <ReactDatePicker
+        <DatePickerBase
           ref={ref}
           className="w-full flex-1 bg-transparent outline-none"
           onChange={onHandleChange}

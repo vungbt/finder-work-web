@@ -2,7 +2,7 @@
 import { RenderIcon } from '@/libraries/icons';
 import { copyToClipboard } from '@/utils/helpers/common';
 import { useTranslations } from 'next-intl';
-import { Light as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { Light as SyntaxHighlighterBase } from 'react-syntax-highlighter';
 import { dracula } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 
 const languagesArray = [
@@ -197,6 +197,7 @@ type CodeSnippetProps = {
   language?: Language;
   codeString?: any;
 };
+const SyntaxHighlighter = SyntaxHighlighterBase as any;
 export const CodeSnippet = ({ codeString, language = 'json' }: CodeSnippetProps) => {
   const t = useTranslations();
   return (
