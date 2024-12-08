@@ -36,3 +36,112 @@ query allCompany(
     }
   }
 }
+
+query myCompany(
+  $where: CompanyWhereInput
+  $orderBy: [CompanyOrderByWithRelationInput!]
+  $searchValue: String
+  $pagination: PaginationInput
+) {
+  my_company(where: $where, orderBy: $orderBy, searchValue: $searchValue, pagination: $pagination) {
+    metadata {
+      total
+      page
+      limit
+    }
+    data {
+      id
+      name
+      slug
+      description
+      addressDetail
+      avatar {
+        url
+      }
+      type {
+        id
+        key
+      }
+      size {
+        id
+        key
+      }
+    }
+  }
+}
+
+query oneCompany($where: CompanyWhereInput) {
+  one_company(where: $where) {
+    id
+    name
+    slug
+    description
+    addressDetail
+    avatar {
+      ...Image
+    }
+    address {
+      id
+      name
+      stateName
+      countryName
+    }
+    photos {
+      ...Image
+    }
+    type {
+      id
+      key
+    }
+    size {
+      id
+      key
+    }
+    industries {
+      id
+      name
+    }
+    social {
+      id
+      url
+    }
+  }
+}
+
+mutation deleteCompanyProfile($where: CompanyWhereUniqueInput!) {
+  delete_company(where: $where) {
+    id
+    name
+    slug
+    description
+    addressDetail
+    avatar {
+      ...Image
+    }
+    address {
+      id
+      name
+      stateName
+      countryName
+    }
+    photos {
+      ...Image
+    }
+    type {
+      id
+      key
+    }
+    size {
+      id
+      key
+    }
+    industries {
+      id
+      name
+    }
+    social {
+      id
+      url
+    }
+  }
+}

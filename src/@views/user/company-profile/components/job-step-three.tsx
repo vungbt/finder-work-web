@@ -1,29 +1,60 @@
-import { BackButton, Button, DatePicker, InputForm, Steps } from '@/libraries/common';
-import { Field, FieldArray, Form, Formik } from 'formik';
+'use client';
+import { CompanyUtils } from '@/@handles/company/company.ultis';
+import { Company } from '@/configs/graphql/generated';
+import useCompanies from '@/hooks/redux/company/list/useCompanies';
+import { BackButton, Button, SelectAsync, Steps } from '@/libraries/common';
+import { IOptItem } from '@/types';
+import { Field, Form, Formik, FormikProps } from 'formik';
 import { motion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
-import { useMemo } from 'react';
-import * as Yup from 'yup';
-import { CreateResume, ICreateResumeDataForm, IEducation } from '../providers';
-import { Collapse } from '../../../../libraries/common/collapse/collapse';
-import CompanyProfile from '@/app/[locale]/(withAuth)/portal/@employer/company/profile/page';
-
-type WorkExperienceSectionProps = {
-  education: IEducation;
-  index: number;
-  remove: (index: number) => void;
-};
+import CompanyForm from '../../company/component/company-form';
+import { useJob } from '../providers';
+import { useRef } from 'react';
+import { CompanyFormValues } from '@/types/company';
 
 export default function CreateResumeStepOne() {
   const t = useTranslations();
 
   const {
     actions,
-    state: { stepIndex, formData }
-  } = CreateResume();
+    state: { formData, stepIndex }
+  } = useJob();
+
+  const formikRef = useRef<FormikProps<CompanyFormValues>>(null);
+
+  const { options: companies, loading: companyLoading, myCompanies } = useCompanies();
+
+  const { getDetailCompany, CompanyDetail, setCompanyDetail } = CompanyUtils();
+  const handleCompanyChange = async (option?: IOptItem) => {
+    if (!option) {
+      return setCompanyDetail(undefined);
+    }
+    const companyDetail = getDetailCompany({ where: { id: { equals: option.value } } });
+    return companyDetail;
+  };
+  const initialValues = {
+    company: { value: CompanyDetail?.id, label: CompanyDetail?.name }
+  };
 
   const onHandleSubmit = async () => {
-    actions.nextStep(formData);
+    actions.nextStep({
+      ...formData,
+      company: CompanyDetail
+        ? { value: CompanyDetail.id, label: CompanyDetail.name }
+        : { value: '', label: '' }
+    });
+  };
+  const filterCompanies = async (searchValue?: string) => {
+    if (!searchValue || searchValue.length <= 0) return;
+    const res = await myCompanies({
+      searchValue: searchValue,
+      pagination: { limit: 20, page: 1 }
+    });
+    const options = ((res?.my_company.data ?? []) as Company[]).map((item) => ({
+      label: item.name,
+      value: item.id
+    }));
+    return options;
   };
 
   return (
@@ -47,11 +78,42 @@ export default function CreateResumeStepOne() {
       />
 
       <div>
-        <CompanyProfile />
+        <Formik initialValues={initialValues} onSubmit={onHandleSubmit}>
+          {({ setFieldValue }) => {
+            return (
+              <div className="w-full">
+                <Form>
+                  <Field
+                    label={`${t('company')}:`}
+                    isRequired
+                    name="company"
+                    component={SelectAsync}
+                    defaultOptions={companies}
+                    loading={companyLoading}
+                    filterOptions={filterCompanies}
+                    placeholder={t('placeholder.selectOrCreate', {
+                      label: t('company').toLowerCase()
+                    })}
+                    onChange={async (option: IOptItem) => {
+                      const companyDetail = await handleCompanyChange(option);
+                      setFieldValue('company', companyDetail);
+                    }}
+                  />
+                </Form>
+              </div>
+            );
+          }}
+        </Formik>
+        <CompanyForm
+          formikRef={formikRef}
+          data={CompanyDetail}
+          key={CompanyDetail?.id}
+          isDisabled={true}
+        />
       </div>
       <div className="flex flex-1 justify-between my-10">
         <BackButton onClick={() => actions.previousStep(formData)} />
-        <Button onClick={onHandleSubmit} styleType="info" label={t('common.next')} />
+        <Button onClick={onHandleSubmit} styleType="info" label={t('common.next')} type="submit" />
       </div>
     </motion.div>
   );

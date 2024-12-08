@@ -1,11 +1,11 @@
 'use client';
 import { motion } from 'framer-motion';
-import { CreateResume } from './providers';
+import { useJob } from './providers';
 
 export function JobView() {
   const {
     state: { steps, stepIndex }
-  } = CreateResume();
+  } = useJob();
 
   return (
     <motion.div

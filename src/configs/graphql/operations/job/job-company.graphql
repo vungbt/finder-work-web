@@ -31,3 +31,91 @@ mutation createCompany($input: CreateCompanyInput!) {
     }
   }
 }
+
+mutation createJob($data: CreateJobInput!) {
+  create_job(data: $data) {
+    slug
+    description
+    type
+    salary
+    company {
+      id
+    }
+    skills {
+      id
+    }
+    level
+    address {
+      id
+    }
+    jobCategory {
+      id
+    }
+    salaryMetadata
+  }
+}
+
+query myJob(
+  $where: JobWhereInput
+  $orderBy: [JobOrderByWithRelationInput!]
+  $searchValue: String
+  $pagination: PaginationInput
+) {
+  my_job(where: $where, orderBy: $orderBy, searchValue: $searchValue, pagination: $pagination) {
+    metadata {
+      total
+      page
+      limit
+    }
+    data {
+      id
+      jobTitle {
+        name
+      }
+      slug
+      description
+      numberOfRecruits
+      applicationDeadline
+      type
+      salary
+      company {
+        id
+        name
+      }
+      type
+      skills {
+        id
+      }
+      level
+      address {
+        id
+      }
+      jobCategory {
+        id
+        name
+      }
+      salaryMetadata
+      address {
+        id
+        name
+        stateName
+        countryName
+      }
+    }
+  }
+}
+
+mutation deleteJob($where: JobWhereUniqueInput!) {
+  delete_job(where: $where) {
+    id
+    jobTitle {
+      name
+    }
+    slug
+    description
+    numberOfRecruits
+    applicationDeadline
+    type
+    salary
+  }
+}

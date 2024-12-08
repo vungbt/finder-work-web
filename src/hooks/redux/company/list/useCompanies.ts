@@ -29,6 +29,24 @@ export default function useCompanies() {
       setLoading(false);
     }
   };
+  const myCompanies = async (params?: AllCompanyQueryVariables) => {
+    try {
+      setLoading(true);
+      const res = await apiClient.myCompany(params);
+      if (res.my_company) {
+        dispatch(
+          setCompanies({
+            items: (res?.my_company?.data ?? []) as Company[],
+            metadata: res.my_company.metadata as Metadata
+          })
+        );
+      }
+      setLoading(false);
+      return res;
+    } catch {
+      setLoading(false);
+    }
+  };
 
   return {
     companies: companies.companies,
@@ -37,6 +55,7 @@ export default function useCompanies() {
     loading,
     setCompanies: (items: Company[], metadata?: Metadata) =>
       dispatch(setCompanies({ items, metadata })),
-    getCompanies
+    getCompanies,
+    myCompanies
   };
 }

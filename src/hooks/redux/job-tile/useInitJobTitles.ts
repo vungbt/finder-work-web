@@ -1,6 +1,4 @@
-import { JobTitle } from '@/configs/graphql/generated';
-import { GroupedOptionItem, OptionItem } from '@/types';
-import { useTranslations } from 'next-intl';
+import { OptionItem } from '@/types';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { setJobTitlesOptions } from './reducer';
@@ -8,7 +6,6 @@ import useJobTitles from './useJobTitles';
 
 export default function useInitJobTitle() {
   const dispatch = useDispatch();
-  const t = useTranslations();
   const { getJobTitles, jobTitles } = useJobTitles();
 
   useEffect(() => {
@@ -25,7 +22,4 @@ export default function useInitJobTitle() {
     const options: OptionItem[] = [];
     dispatch(setJobTitlesOptions(options));
   };
-
-  const mappingToOtp = (items: JobTitle[]) =>
-    items.map((item) => ({ label: item.name, value: item.id }));
 }

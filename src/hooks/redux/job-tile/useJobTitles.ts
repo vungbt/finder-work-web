@@ -1,9 +1,4 @@
-import {
-  AllJobTitleQuery,
-  AllJobTitleQueryVariables,
-  JobTitle,
-  Metadata
-} from '@/configs/graphql/generated';
+import { AllJobTitleQueryVariables, JobTitle, Metadata } from '@/configs/graphql/generated';
 import { useApiClient } from '@/libraries/providers/graphql';
 import { RootState } from '@/utils/redux-storage';
 import { useState } from 'react';

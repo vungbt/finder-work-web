@@ -1,48 +1,80 @@
-import { JobLevel, JobSalary, JobType, Tag, TagType } from '@/configs/graphql/generated';
-import useTags from '@/hooks/redux/tags/useTags';
+import {
+  Job,
+  JobLevel,
+  JobSalary,
+  JobType,
+  Metadata,
+  MyJobQueryVariables,
+  PaginationInput,
+  SortOrder
+} from '@/configs/graphql/generated';
+import { toastSuccess } from '@/configs/toast';
+import useProfile from '@/hooks/redux/profile/useProfile';
+import { useApiClient } from '@/libraries/providers/graphql';
 import { IOptItem } from '@/types';
-import { useEffect } from 'react';
+import { getErrorMss } from '@/utils/helpers/formatter';
+import { useTranslations } from 'next-intl';
+import { useEffect, useState } from 'react';
 
 type JobUtilsResult = {
   jobType: IOptItem[];
   jobLevel: IOptItem[];
   salaryRange: IOptItem[];
   currencyUnit: IOptItem[];
-  jobTagOptions: IOptItem[];
-  filterTags: (searchValue?: string) => void;
+  loadingDelete: boolean;
+  data: Job[];
+  pagination: PaginationInput;
+  setSearchValue: (value: string) => void;
+  setPagination: (value: PaginationInput) => void;
+  onSort: (values: Record<string, SortOrder>[]) => void;
+  sortActives: Record<string, SortOrder>[];
+  onDelete: (item: Job) => void;
+  onConfirmDelete: () => void;
+  itemDelete?: Job;
+  onCloseModalConfirmDelete: () => void;
+  metadata?: Metadata;
+  loading: boolean;
+
+  mapJobTypeToLabel(value: string): string;
+  mapSalaryRangeToLabel(value: string): string;
+  mapJobLevelToLabel(value: string): string;
 };
 
 export const JobResultUtils = (): JobUtilsResult => {
-  const { jobTagOptions, getTags } = useTags();
+  const { apiClient } = useApiClient();
+  const [loading, setLoading] = useState<boolean>(false);
+  const [data, setData] = useState<Job[]>([]);
+  const [metadata, setMetadata] = useState<Metadata>();
+  const profile = useProfile();
+  const [pagination, setPagination] = useState<PaginationInput>({ page: 1, limit: 10 });
+  const [searchValue, setSearchValue] = useState<string>('');
+  const [sortActives, setSortActives] = useState<Record<string, SortOrder>[]>([]);
+  const [loadingDelete, setLoadingDelete] = useState<boolean>(false);
+  const [itemDelete, setItemDelete] = useState<Job>();
+  const t = useTranslations();
 
-  useEffect(() => {
-    getTags(
-      {
-        where: { type: { equals: TagType.Job } }
-      },
-      TagType.Job
-    );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const onSort = (values: Record<string, SortOrder>[]) => {
+    setSortActives(values);
+  };
   const jobType: IOptItem[] = [
     {
-      value: JobType.FullTime,
+      value: JobType.FullTime as string,
       label: 'Full-time'
     },
     {
-      value: JobType.PartTime,
+      value: JobType.PartTime as string,
       label: 'Part-time'
     },
     {
-      value: JobType.Contract,
+      value: JobType.Contract as string,
       label: 'Contract'
     },
     {
-      value: JobType.Internship,
+      value: JobType.Internship as string,
       label: 'Internship'
     },
     {
-      value: JobType.Seasonal,
+      value: JobType.Seasonal as string,
       label: 'Seasonal'
     }
   ];
@@ -85,7 +117,7 @@ export const JobResultUtils = (): JobUtilsResult => {
   const salaryRange: IOptItem[] = [
     {
       value: JobSalary.Begin,
-      label: 'Begin ____'
+      label: 'Begin '
     },
     {
       value: JobSalary.Discuss,
@@ -93,11 +125,11 @@ export const JobResultUtils = (): JobUtilsResult => {
     },
     {
       value: JobSalary.Peak,
-      label: 'Peak ____'
+      label: 'Peak'
     },
     {
       value: JobSalary.Range,
-      label: 'Range ____ - ____'
+      label: 'Range'
     }
   ];
   const currencyUnit: IOptItem[] = [
@@ -114,18 +146,67 @@ export const JobResultUtils = (): JobUtilsResult => {
       label: 'EUR'
     }
   ];
+  const mapJobTypeToLabel = (value: string): string => {
+    const jobTypeItem = jobType.find((item) => item.value === value);
 
-  const filterTags = async (searchValue?: string) => {
-    if (!searchValue || searchValue.length <= 0) return;
-    const res = await getTags({
-      where: { type: { equals: TagType.Post } },
-      searchValue: searchValue
-    });
-    const options = ((res.all_tag.data ?? []) as Tag[]).map((item) => ({
-      label: item.name,
-      value: item.id
-    }));
-    return options;
+    return (jobTypeItem?.label as string) ?? '';
+  };
+
+  const mapJobLevelToLabel = (value: string): string => {
+    const jobLevelItem = jobLevel.find((item) => item.value === value);
+    return (jobLevelItem?.label as string) ?? '';
+  };
+
+  const mapSalaryRangeToLabel = (value: string): string => {
+    const salaryRangeItem = salaryRange.find((item) => item.value === value);
+    return (salaryRangeItem?.label as string) ?? '';
+  };
+  useEffect(() => {
+    fetchingJob({ searchValue, pagination });
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchValue, pagination, sortActives]);
+
+  const fetchingJob = async (variables: MyJobQueryVariables) => {
+    try {
+      setLoading(true);
+      const param = {
+        ...variables,
+        userId: profile.profile.id
+      };
+      const res = await apiClient.myJob(param);
+      setLoading(false);
+      const result = res.my_job;
+      if (result && result.data) {
+        setData(result.data as Job[]);
+        setMetadata(result?.metadata as Metadata);
+      }
+    } catch (error) {
+      setLoading(false);
+      getErrorMss(error, t('noti.createError'));
+    }
+  };
+
+  const onDelete = (item: Job) => setItemDelete(item);
+
+  const onCloseModalConfirmDelete = () => setItemDelete(undefined);
+
+  const onConfirmDelete = async () => {
+    try {
+      if (loadingDelete || !itemDelete) return;
+      setLoadingDelete(true);
+      const res = await apiClient.deleteJob({
+        where: { id: itemDelete.id }
+      });
+      setLoadingDelete(false);
+      if (res.delete_job) {
+        setItemDelete(undefined);
+        setPagination({ page: pagination.page, limit: 30 });
+        return toastSuccess(t('noti.deleteSuccess'));
+      }
+    } catch (error) {
+      setLoading(false);
+    }
   };
 
   return {
@@ -133,7 +214,21 @@ export const JobResultUtils = (): JobUtilsResult => {
     jobLevel,
     salaryRange,
     currencyUnit,
-    jobTagOptions,
-    filterTags
+    data,
+    setSearchValue,
+    setPagination,
+    onSort,
+    sortActives,
+    onDelete,
+    onConfirmDelete,
+    itemDelete,
+    onCloseModalConfirmDelete,
+    metadata,
+    pagination,
+    loadingDelete,
+    loading,
+    mapJobTypeToLabel,
+    mapSalaryRangeToLabel,
+    mapJobLevelToLabel
   };
 };

@@ -90,7 +90,7 @@ export default function CreateResumeStepOne() {
       <div>
         <Formik<IPersonalDetail>
           initialValues={initialValues}
-          // validationSchema={validationSchema}
+          validationSchema={validationSchema}
           onSubmit={onHandleSubmit}
         >
           {() => {

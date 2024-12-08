@@ -1,5 +1,5 @@
 import { JobTitle, Metadata } from '@/configs/graphql/generated';
-import { GroupedOptionItem, OptionItem } from '@/types';
+import { OptionItem } from '@/types';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 type JobTitleState = {

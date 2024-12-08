@@ -1,10 +1,10 @@
+import { JobProvider } from '@/@views/user/company-profile/providers';
 import { JobView } from '@/@views/user/company-profile/job-company-view';
-import { JobCompanyProvider } from '@/@views/user/company-profile/providers';
 
 export default function CompanyJobs() {
   return (
-    <JobCompanyProvider>
+    <JobProvider>
       <JobView />
-    </JobCompanyProvider>
+    </JobProvider>
   );
 }

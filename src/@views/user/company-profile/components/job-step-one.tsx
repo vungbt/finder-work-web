@@ -1,4 +1,7 @@
-import useCountries from '@/hooks/redux/countries/useCountries';
+import { JobResultUtils } from '@/@handles/job/job-utils';
+import { City, JobSalary, JobTitle } from '@/configs/graphql/generated';
+import useAddress from '@/hooks/redux/address/useAddress';
+import useJobTitles from '@/hooks/redux/job-tile/useJobTitles';
 import {
   BackButton,
   Button,
@@ -7,31 +10,24 @@ import {
   SelectAsync,
   SelectAsyncCreatable,
   SelectForm,
-  Steps,
-  TextareaForm
+  Steps
 } from '@/libraries/common';
+
+import { useMemo } from 'react';
+import * as Yup from 'yup';
 import { Field, Form, Formik } from 'formik';
 import { motion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
-import { useEffect, useMemo, useRef } from 'react';
-import * as Yup from 'yup';
-import { CreateResume, IPersonalDetail } from '../providers/job-company.provider';
-import useAddress from '@/hooks/redux/address/useAddress';
-import { City, JobSalary, JobTitle } from '@/configs/graphql/generated';
-import useJobCategories from '@/hooks/redux/job-category/useJobCategories';
-import useJobTitles from '@/hooks/redux/job-tile/useJobTitles';
-import { JobResultUtils } from '@/@handles/job/job-utils';
-import { log } from 'console';
+import { useRef } from 'react';
+import { IJobInformation, useJob } from '../providers';
+import { AdminCareerActionUtils } from '@/@handles/career';
 
 export default function CreateResumeStepOne() {
   const t = useTranslations();
   const {
     actions,
-    state: { stepIndex, formData }
-  } = CreateResume();
-
-  const { defaultOption, countries } = useCountries();
-  console.log(countries);
+    state: { formData, stepIndex }
+  } = useJob();
 
   const {
     options: addressOptions,
@@ -39,18 +35,46 @@ export default function CreateResumeStepOne() {
     getAddress,
     convertToOptions
   } = useAddress();
+  const { jobCategories } = AdminCareerActionUtils({ isEdit: false });
 
-  const { options: jobCategories, loading: loadingJobCategories } = useJobCategories();
   const { options: jobTitlesOptions, loading: loadingJobTitles, getJobTitles } = useJobTitles();
   const { jobType, jobLevel, salaryRange, currencyUnit } = JobResultUtils();
 
-  // submit register new account
-  const onHandleSubmit = async (values: IPersonalDetail) => {
-    console.log(values);
-    actions.nextStep(formData);
-    actions.setProfileTemp(values);
-  };
+  const validationSchema = useMemo(() => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const schema: any = {
+      jobTitleOpt: Yup.object().required(
+        t('validation.required', { label: t('common.jobTitle').toLowerCase() })
+      ),
+      jobCategory: Yup.object().required(
+        t('validation.required', { label: t('common.jobCategory').toLowerCase() })
+      ),
 
+      type: Yup.object().required(
+        t('validation.required', { label: t('common.jobType').toLowerCase() })
+      ),
+      applicationDeadline: Yup.string().required(
+        t('validation.required', { label: t('common.deadline').toLowerCase() })
+      ),
+      level: Yup.object().required(
+        t('validation.required', { label: t('common.jobLevel').toLowerCase() })
+      ),
+      salary: Yup.object().required(
+        t('validation.required', { label: t('common.salary').toLowerCase() })
+      ),
+      address: Yup.object().required(
+        t('validation.required', { label: t('common.address').toLowerCase() })
+      ),
+      addressDetail: Yup.string().required(
+        t('validation.required', { label: t('common.addressDetail').toLowerCase() })
+      )
+    };
+    return Yup.object(schema);
+  }, [t]);
+
+  const onHandleSubmit = async (values: IJobInformation) => {
+    actions.nextStep({ ...formData, jobInformation: values });
+  };
   const filterAddress = async (searchValue?: string) => {
     if (!searchValue || searchValue.length <= 0) return;
     const res = await getAddress({
@@ -60,14 +84,20 @@ export default function CreateResumeStepOne() {
     const options = convertToOptions((res?.all_address.data ?? []) as City[]);
     return options;
   };
-  const initialValues = {
-    jobTitle: '',
-    jobType: '',
-    jobExperience: '',
-    salary: '',
-    categories: [],
-    address: ''
+  const initialValues: IJobInformation = {
+    jobTitleOpt: formData.jobInformation?.jobTitleOpt ?? undefined,
+    type: formData.jobInformation?.type ?? undefined,
+    applicationDeadline: formData.jobInformation?.applicationDeadline ?? '',
+    level: formData.jobInformation?.level ?? undefined,
+    salary: formData.jobInformation?.salary ?? undefined,
+    currencyUnit: formData.jobInformation?.currencyUnit ?? undefined,
+    fromStartRange: formData.jobInformation?.fromStartRange ?? '',
+    toEndRange: formData.jobInformation?.toEndRange ?? '',
+    address: formData.jobInformation?.address ?? undefined,
+    jobCategory: formData.jobInformation?.jobCategory ?? undefined,
+    addressDetail: formData.jobInformation?.addressDetail ?? ''
   };
+
   const filterJobTitle = async (searchValue?: string) => {
     if (!searchValue || searchValue.length <= 0) return;
     const res = await getJobTitles({
@@ -82,13 +112,6 @@ export default function CreateResumeStepOne() {
   };
 
   const formikRef = useRef(null);
-  if (formikRef.current) {
-    console.log(13, formikRef.current);
-  }
-  useEffect(() => {
-    console.log(formikRef.current);
-  }, [formikRef]);
-
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.9 }}
@@ -100,7 +123,6 @@ export default function CreateResumeStepOne() {
       }}
       className="w-3/4 ms-6"
     >
-      {/** step active */}
       <Steps
         steps={5}
         excludeSteps={[1]}
@@ -109,12 +131,11 @@ export default function CreateResumeStepOne() {
         onChangeStep={(stepActive) => actions.changeStep(stepActive)}
       />
       {/** form content */}
-      <div>General information</div>
       <div>
-        <Formik<any>
+        <Formik<IJobInformation>
           initialValues={initialValues}
           innerRef={formikRef}
-          // validationSchema={validationSchema}
+          validationSchema={validationSchema}
           onSubmit={onHandleSubmit}
         >
           {({ values, setFieldValue }) => {
@@ -122,9 +143,9 @@ export default function CreateResumeStepOne() {
               <div className="w-full">
                 <Form>
                   <Field
-                    label={`${t('common.jobTitle')}:`}
+                    label={t('common.jobTitle')}
                     isRequired
-                    name="jobTitle"
+                    name="jobTitleOpt"
                     component={SelectAsyncCreatable}
                     loading={loadingJobTitles}
                     filterOptions={filterJobTitle}
@@ -137,25 +158,45 @@ export default function CreateResumeStepOne() {
                     <Field
                       label={t('common.jobType')}
                       isRequired={true}
-                      name="jobType"
+                      name="type"
                       component={SelectForm}
                       options={jobType}
                       isMulti={false}
+                      placeholder={t('placeholder.select', {
+                        label: t('common.jobType').toLowerCase()
+                      })}
                     />
                     <Field
                       label={t('common.deadline')}
                       isRequired={true}
-                      name="deadline"
+                      name="applicationDeadline"
                       component={DatePicker}
+                      placeholder={t('placeholder.select', {
+                        label: t('common.deadline').toLowerCase()
+                      })}
                     />
                   </div>
                   <Field
                     label={t('common.level')}
                     isRequired={true}
-                    name="jobExperience"
+                    name="level"
                     component={SelectForm}
                     options={jobLevel}
                     isMulti={false}
+                    placeholder={t('placeholder.select', {
+                      label: t('common.level').toLowerCase()
+                    })}
+                  />
+                  <Field
+                    label={t('common.jobCategory')}
+                    isRequired={true}
+                    name="jobCategory"
+                    component={SelectForm}
+                    options={jobCategories}
+                    isMulti={false}
+                    placeholder={t('placeholder.select', {
+                      label: t('common.jobCategory').toLowerCase()
+                    })}
                   />
                   <div className="flex flex-1 gap-6">
                     <Field
@@ -165,13 +206,15 @@ export default function CreateResumeStepOne() {
                       component={SelectForm}
                       options={salaryRange}
                       isMulti={false}
-                      onChange={(value: any) => {
+                      onChange={(value: string) => {
                         setFieldValue('salary', value);
-                        console.log(value);
                       }}
+                      placeholder={t('placeholder.select', {
+                        label: t('common.salary').toLowerCase()
+                      })}
                     />
 
-                    {values.salary.value !== JobSalary.Discuss && (
+                    {values.salary?.value !== JobSalary.Discuss && (
                       <Field
                         label={`${t('common.currencyUnit')}:`}
                         isRequired
@@ -179,47 +222,52 @@ export default function CreateResumeStepOne() {
                         component={SelectForm}
                         options={currencyUnit}
                         placeholder={t('placeholder.select', {
-                          label: t('common.categories').toLowerCase()
+                          label: t('common.currencyUnit').toLowerCase()
                         })}
                       />
                     )}
                   </div>
 
-                  {values.salary.value === JobSalary.Begin && (
+                  {values.salary?.value === JobSalary.Begin && (
                     <Field
-                      label={`${t('common.amount')}:`}
+                      label={`${t('common.fromStartRange')}:`}
                       isRequired
                       name="fromStartRange"
                       component={InputForm}
                       placeholder={t('placeholder.select', {
-                        label: t('common.categories').toLowerCase()
+                        label: t('common.fromStartRange').toLowerCase()
                       })}
                     />
                   )}
 
-                  {values.salary.value === JobSalary.Range && (
+                  {values.salary?.value === JobSalary.Peak && (
+                    <Field
+                      label={`${t('common.toEndRange')}:`}
+                      isRequired
+                      name="toEndRange"
+                      component={InputForm}
+                      placeholder={t('common.toEndRange')}
+                    />
+                  )}
+
+                  {values.salary?.value === JobSalary.Range && (
                     <div className="flex flex-1 gap-6">
                       <Field
-                        label={`${t('common.currencyUnit')}:`}
+                        label={`${t('common.fromStartRange')}:`}
                         isRequired
                         name="fromStartRange"
                         component={InputForm}
-                        placeholder={t('placeholder.select', {
-                          label: t('common.categories').toLowerCase()
-                        })}
+                        placeholder={t('common.fromStartRange')}
                       />
                       <Field
-                        label={`${t('common.fromEndRange')}:`}
+                        label={`${t('common.toEndRange')}:`}
                         isRequired
-                        name="to"
+                        name="toEndRange"
                         component={InputForm}
-                        placeholder={t('placeholder.select', {
-                          label: t('common.categories').toLowerCase()
-                        })}
+                        placeholder={t('common.toEndRange')}
                       />
                     </div>
                   )}
-
                   <Field
                     label={`${t('common.address')}:`}
                     isRequired
@@ -229,8 +277,15 @@ export default function CreateResumeStepOne() {
                     filterOptions={filterAddress}
                     defaultOptions={addressOptions}
                     placeholder={t('placeholder.select', {
-                      label: t('common.headquarter').toLowerCase()
+                      label: t('common.address').toLowerCase()
                     })}
+                  />
+                  <Field
+                    label={`${t('common.addressDetail')}:`}
+                    isRequired
+                    name="addressDetail"
+                    component={InputForm}
+                    placeholder={t('common.addressDetail')}
                   />
                   <div className="flex flex-1 justify-between my-10">
                     <BackButton onClick={() => actions.previousStep(formData)} />

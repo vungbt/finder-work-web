@@ -1,25 +1,37 @@
 'use client';
-import { BackButton, Button, EditorForm, SelectAsyncCreatable, Steps } from '@/libraries/common';
-import { Field, FieldArray, Form, Formik } from 'formik';
+import { AdminSkillManagementUtils } from '@/@handles/skill/skill.utils';
+import { Skill, Tag, TagType } from '@/configs/graphql/generated';
+import {
+  BackButton,
+  Button,
+  EditorForm,
+  InputForm,
+  SelectAsyncCreatable,
+  Steps
+} from '@/libraries/common';
+import { IOptItem } from '@/types';
+import { Field, Form, Formik } from 'formik';
 import { motion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
+import { IDescriptionSkill, useJob } from '../providers';
 import { useMemo } from 'react';
 import * as Yup from 'yup';
-import { CreateResume, ICreateResumeDataForm, IWorkExperience } from '../providers';
-import { AdminSkillManagementUtils } from '@/@handles/skill/skill.utils';
-import { Skill } from '@/configs/graphql/generated';
-import { IOptItem } from '@/types';
+import useTags from '@/hooks/redux/tags/useTags';
 
 export default function CreateResumeStepOne() {
   const t = useTranslations();
   const {
     actions,
-    state: { stepIndex, formData }
-  } = CreateResume();
+    state: { formData, stepIndex }
+  } = useJob();
+  const { jobTagOptions, getTags, loading: loadingTagOption } = useTags();
 
-  const onHandleSubmit = async (values: ICreateResumeDataForm) => {
-    actions.nextStep(values);
-    actions.setWorkExperiences(values);
+  const onHandleSubmit = async (values: IDescriptionSkill) => {
+    try {
+      actions.nextStep({ ...formData, descriptionSkill: values });
+    } catch (error) {
+      console.log('error====>', error);
+    }
   };
   const {
     data: SkillData,
@@ -27,26 +39,48 @@ export default function CreateResumeStepOne() {
     loading: loadingSkill
   } = AdminSkillManagementUtils();
 
+  const validationSchema = useMemo(() => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const schema: any = {
+      skill: Yup.array()
+        .of(
+          Yup.object().shape({
+            value: Yup.string().required(
+              t('validation.required', { label: t('skill').toLowerCase() })
+            ),
+            label: Yup.string().required(
+              t('validation.required', { label: t('skill').toLowerCase() })
+            )
+          })
+        )
+        .min(1, t('validation.required', { label: t('skill').toLowerCase() })),
+      description: Yup.string().required(
+        t('validation.required', { label: t('form.description').toLowerCase() })
+      ),
+      tags: Yup.array()
+        .of(
+          Yup.object().shape({
+            value: Yup.string().required(
+              t('validation.required', { label: t('tags').toLowerCase() })
+            ),
+            label: Yup.string().required(
+              t('validation.required', { label: t('tags').toLowerCase() })
+            )
+          })
+        )
+        .min(1, t('validation.required', { label: t('tags').toLowerCase() }))
+    };
+    return Yup.object(schema);
+  }, [t]);
   const SkillOpt: IOptItem[] = SkillData?.map((item) => ({
     label: item.content,
     value: item.id
   }));
-  const initialValues: ICreateResumeDataForm & { workExperiences: IWorkExperience[] } = {
-    ...formData,
-    workExperiences:
-      formData?.workExperiences?.length > 0
-        ? formData.workExperiences
-        : [
-            {
-              jobTitle: '',
-              companyName: '',
-              location: null,
-              startDate: '',
-              endDate: '',
-              description: '',
-              summary: ''
-            }
-          ]
+  const initialValues: IDescriptionSkill = {
+    description: formData.descriptionSkill?.description ?? '',
+    skill: formData.descriptionSkill?.skill ?? [],
+    tags: formData.descriptionSkill?.tags ?? [],
+    numberOfRecruits: formData.descriptionSkill?.numberOfRecruits ?? 1
   };
 
   const filterJobTitle = async (searchValue?: string) => {
@@ -58,6 +92,20 @@ export default function CreateResumeStepOne() {
     }));
     return options;
   };
+
+  const filterTags = async (searchValue?: string) => {
+    if (!searchValue || searchValue.length <= 0) return;
+    const res = await getTags({
+      where: { type: { equals: TagType.Job } },
+      searchValue: searchValue
+    });
+    const options = ((res.all_tag.data ?? []) as Tag[]).map((item) => ({
+      label: item.name,
+      value: item.id
+    }));
+    return options;
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.9 }}
@@ -79,21 +127,43 @@ export default function CreateResumeStepOne() {
       />
       <div>Description</div>
       <div className="h-full">
-        <Formik<any> initialValues={initialValues} onSubmit={onHandleSubmit}>
-          {({ values, handleSubmit }) => (
+        <Formik<IDescriptionSkill>
+          initialValues={initialValues}
+          onSubmit={onHandleSubmit}
+          validationSchema={validationSchema}
+        >
+          {({ handleSubmit }) => (
             <Form onSubmit={handleSubmit}>
               <div>
+                <Field
+                  label={`${t('common.numberOfRecruits')}:`}
+                  isRequired
+                  name="numberOfRecruits"
+                  component={InputForm}
+                  placeholder={t('form.contentInput')}
+                />
                 <Field
                   name={'description'}
                   label={t('form.description')}
                   component={EditorForm}
-                  as="textarea"
-                  className="h-52"
+                  isRequired
                   placeholder={t('form.description')}
                 />
-
                 <Field
-                  label={`${t('common.skill')}:`}
+                  label={t('common.tags')}
+                  isRequired
+                  name="tags"
+                  component={SelectAsyncCreatable}
+                  loading={loadingTagOption}
+                  filterOptions={filterTags}
+                  isMulti={true}
+                  defaultOptions={jobTagOptions}
+                  placeholder={t('placeholder.select', {
+                    label: t('common.tags').toLowerCase()
+                  })}
+                />
+                <Field
+                  label={`${t('skill')}:`}
                   isRequired
                   name="skill"
                   component={SelectAsyncCreatable}

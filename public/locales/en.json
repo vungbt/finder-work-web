@@ -212,7 +212,24 @@
     "experiences": "Experiences",
     "resolve": "Resolve",
     "unsolved": "Unsolved",
-    "createResume": "Create resume"
+    "createResume": "Create resume",
+    "avatar": "Avatar",
+    "size": "Size",
+    "jobType": "Job type",
+    "jobLevel": "Job level",
+    "deadline": "Deadline",
+    "level:": "Level",
+    "salary": "Salary",
+    "currencyUnit": "Currency unit",
+    "address": "Address",
+    "addressDetail": "Address detail",
+    "fromStartRange": "From start range",
+    "toEndRange": "To end range",
+    "createJob": "New job",
+    "level": "Level",
+    "numberOfRecruits": "Number of recruits",
+    "photos": "Photos",
+    "tags": "Tags"
   },
   "reason": {
     "brokenLink": "Broken link",
@@ -325,6 +342,7 @@
     "registerSuccess": "Registration successful! A verification code has been sent to your email",
     "updateSkillSuccess": "Update skill successfully ",
     "changeStatusToUnsolvedConfirm": "Are you sure to change report  status to unsolved?",
-    "changeStatusToSolvedConfirm": "Are you sure to change report  status to solve?"
+    "changeStatusToSolvedConfirm": "Are you sure to change report  status to solve?",
+    "companyNotCreate": "Please create company profile before create job"
   }
 }
