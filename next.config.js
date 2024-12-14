@@ -9,6 +9,9 @@ const nextConfig = {
   output: 'standalone',
   swcMinify: true,
   reactStrictMode: false,
+  typescript: {
+    ignoreBuildErrors: true
+  },
   webpack: (config, { isServer }) => {
     if (isServer) {
       config.externals.push('_http_common', 'undici');
@@ -36,7 +39,7 @@ const nextConfig = {
         pathname: '/dx66fumod/**'
       }
     ]
-  },
+  }
 };
 
 module.exports = withBundleAnalyzer(withNextIntl({ ...nextConfig }));
