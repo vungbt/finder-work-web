@@ -731,13 +731,43 @@
       @apply border-none p-4;
 
       .ql-editor {
-        @apply min-h-96 p-0 font-primary text-sm;
+        @apply p-0 font-primary text-sm;
       }
 
       .ql-blank {
         &::before {
           @apply not-italic font-primary text-sm text-text-tertiary;
         }
+      }
+    }
+  }
+}
+
+.custom-quill-small {
+  .quill {
+    .ql-container {
+      .ql-editor {
+        @apply min-h-52;
+      }
+    }
+  }
+}
+
+.custom-quill-middle {
+  .quill {
+    .ql-container {
+      .ql-editor {
+        @apply min-h-72;
+      }
+    }
+  }
+}
+
+.custom-quill-large {
+  .quill {
+    .ql-container {
+      .ql-editor {
+        @apply min-h-96;
       }
     }
   }

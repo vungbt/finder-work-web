@@ -1,5 +1,5 @@
 {
-  "webName": "Jobcadu",
+  "webName": "Finder Work",
   "home": {
     "title": "Home Page"
   },
@@ -24,6 +24,40 @@
     "viceDirector": "Vice director",
     "director": "Director",
     "generalDirector": "General director"
+  },
+  "educationType": {
+    "school": "School",
+    "institution": "Institution",
+    "college": "College",
+    "university": "University",
+    "other": "Other"
+  },
+  "degree": {
+    "highSchoolDiploma": "High School Diploma or Equivalent",
+    "technicalTraining": "Technical Training",
+    "vocational": "Vocational",
+    "associate": "Associate's Degree",
+    "bachelor": "Bachelor's Degree",
+    "master": "Master's Degree",
+    "doctoral": "Doctoral Degree",
+    "other": "Other"
+  },
+  "proficiencyLevel": {
+    "beginner": "Beginner",
+    "intermediate": "Intermediate",
+    "fluent": "Fluent",
+    "professional": "Professional",
+    "native": "Native"
+  },
+  "socialType": {
+    "behance": "Behance",
+    "dribbble": "Dribbble",
+    "facebook": "Facebook",
+    "github": "Github",
+    "gitlab": "Gitlab",
+    "glosbe": "Glosbe",
+    "instagram": "Instagram",
+    "linkedIn": "Linkedin"
   },
   "for": "For {label}",
   "admin": "Admin",
@@ -171,6 +205,7 @@
     "headquarterDetail": "Headquarter detailed location",
     "theTop5Categories": "The top 5 categories",
     "featuredCategories": "Featured categories",
+    "featuredTitles": "Featured titles",
     "others": "Others",
     "dropOrDragPhotos": "Drop or Drag photos",
     "supported": "Supported {type}",
@@ -229,7 +264,9 @@
     "level": "Level",
     "numberOfRecruits": "Number of recruits",
     "photos": "Photos",
-    "tags": "Tags"
+    "tags": "Tags",
+    "upload": "Upload",
+    "uploadResume": "Upload resume"
   },
   "reason": {
     "brokenLink": "Broken link",
@@ -292,7 +329,8 @@
     "projects": "Projects",
     "projectName": "Project name",
     "major": "Major",
-    "degree": "Degree"
+    "degree": "Degree",
+    "newResume": "Upload your resume"
   },
   "placeholder": {
     "enter": "Enter {label}",

@@ -10,6 +10,8 @@ type UploadProps = Omit<
   React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>,
   'size' | 'onChange' | 'value'
 > & {
+  typeAccept?: string;
+  fileName?: string;
   label?: string;
   isLoading?: boolean;
   isRequired?: boolean;
@@ -34,6 +36,8 @@ export const Upload = forwardRef(function UploadInput(
     className,
     classNameWrap,
     layout,
+    typeAccept,
+    fileName,
     // isLoading,
     isRequired,
     disabled,
@@ -60,7 +64,9 @@ export const Upload = forwardRef(function UploadInput(
     const fileSize = file.size;
     const fileId = `${new Date().toISOString()}-${file?.name}`;
 
-    const acceptsList = accept.split(',').map((item) => item.trim());
+    const acceptsList =
+      typeAccept?.split(',').map((item) => item.trim()) ??
+      accept.split(',').map((item) => item.trim());
     if (!acceptsList.includes(fileType))
       return showError(t('validation.fileNotInAccepts', { types: accept }));
     if (size < fileSize) return showError(t('validation.fileLarge', { max: size }));
@@ -74,6 +80,7 @@ export const Upload = forwardRef(function UploadInput(
       resetInputFile();
     }
   };
+  console.log(12333, value);
 
   const showError = (mess: string) => {
     const messError: any = {};
@@ -93,6 +100,8 @@ export const Upload = forwardRef(function UploadInput(
       inputFile.value = '';
     }
   };
+
+  console.log(13131313, fileName);
 
   return (
     <FormGroup
@@ -126,7 +135,7 @@ export const Upload = forwardRef(function UploadInput(
           id={name}
           type="file"
           hidden
-          accept={accept}
+          accept={typeAccept ?? accept}
           onChange={onHandleChangeFile}
           disabled={disabled}
           className={clsx(
@@ -149,10 +158,11 @@ export const Upload = forwardRef(function UploadInput(
               'col-span-4': layout === 'horizontal'
             })}
           />
+          <p className="text-sm text-text-secondary">{fileName}</p>
+
           <div className="col-span-8 w-full text-sm text-danger">{error}</div>
         </div>
       )}
-
       {value && Object.keys(value).length > 0 && (
         <UploadPreview items={value} onRemove={onHandleRemove} />
       )}

@@ -25,7 +25,12 @@ export const Collapse: React.FC<WorkExperienceSectionProps> = ({
           ) : (
             <IconButton type="button" iconName="chevron-down" />
           )}
-          <IconButton type="button" iconName="trash-solid" onClick={() => remove(index)} />
+          <IconButton
+            className="!w-5 !h-5 text-danger-200"
+            type="button"
+            iconName="trash-solid"
+            onClick={() => remove(index)}
+          />
         </div>
       )}
       initialValue={true}

@@ -36,6 +36,7 @@ type EditorProps = {
   videoAccept?: string;
   imageMaxSize?: number;
   videoMaxSize?: number;
+  size: 'small' | 'middle' | 'large';
   onChange: (content: string) => void;
   onChangeFile?: (type: 'image' | 'video', file: File) => void;
   setError?: (mess: any) => void;
@@ -57,6 +58,7 @@ export const EditorForm = forwardRef(function QuillEditor(
     layout,
     isRequired,
     disabled = false,
+    size = 'small',
     setError,
     imageAccept = FILE_IMAGE.accepts.join(', '),
     imageMaxSize = FILE_IMAGE.size,
@@ -251,9 +253,9 @@ export const EditorForm = forwardRef(function QuillEditor(
         className={clsx(
           'custom-quill box-border flex w-full items-center border border-solid transition-all ease-linear hover:border-info rounded-3xl relative',
           {
-            // 'min-h-10 gap-3 rounded-3xl px-4 text-base': size === 'large',
-            // 'min-h-8 gap-2 rounded-2xl px-4 text-sm': size === 'middle',
-            // 'min-h-6 gap-1 rounded-xl px-2 text-sm': size === 'small',
+            'custom-quill-large': size === 'large',
+            'custom-quill-middle': size === 'middle',
+            'custom-quill-small': size === 'small',
 
             '!border-danger custom-quill-error': isHaveError,
             'border-gray-100': !isHaveError

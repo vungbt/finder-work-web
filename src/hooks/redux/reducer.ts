@@ -4,12 +4,14 @@ import countries from './countries/reducer';
 import profile from './profile/reducer';
 import postCategories from './post-category/reducer';
 import jobCategories from './job-category/reducer';
-import jobTitles from './/job-tile/reducer';
 import tags from './tags/reducer';
 import tab from './tab/reducer';
 import companyCommon from './company/common/reducer';
 import companyList from './company/list/reducer';
 import address from './address/reducer';
+import jobTitles from './job-title/reducer';
+import skills from './skill/reducer';
+import languageSkills from './language-skill/reducer';
 
 const baseReducer = {
   session,
@@ -23,7 +25,9 @@ const baseReducer = {
   address,
   companyCommon,
   companyList,
-  jobTitles
+  jobTitles,
+  skills,
+  languageSkills
 };
 
 export default baseReducer;

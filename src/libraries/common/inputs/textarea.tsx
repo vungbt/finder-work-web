@@ -46,7 +46,7 @@ export const TextareaForm = forwardRef(function Textarea(
     isRequired,
     disabled,
     label,
-    characters = 300,
+    characters,
     words,
     excludeWhitespace = false,
     onChange,

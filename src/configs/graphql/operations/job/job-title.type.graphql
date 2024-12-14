@@ -13,6 +13,7 @@ query allJobTitle(
     data {
       id
       name
+      isFeature
       createdAt
       updatedAt
     }
