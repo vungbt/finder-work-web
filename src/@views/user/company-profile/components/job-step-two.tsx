@@ -172,7 +172,7 @@ export default function CreateResumeStepOne() {
                   defaultOptions={SkillOpt}
                   isMulti={true}
                   placeholder={t('placeholder.select', {
-                    label: t('common.jobTitle').toLowerCase()
+                    label: t('common.skill').toLowerCase()
                   })}
                 />
               </div>

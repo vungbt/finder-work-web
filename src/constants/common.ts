@@ -1,4 +1,11 @@
-import { UserRole, WorkPosition } from '@/configs/graphql/generated';
+import {
+  Degree,
+  EducationType,
+  ProficiencyLevel,
+  SocialType,
+  UserRole,
+  WorkPosition
+} from '@/configs/graphql/generated';
 import { EReason, ESettingType } from '@/types';
 import { StatusCodes as HttpStatusCode } from 'http-status-codes';
 
@@ -11,6 +18,11 @@ export const PAGINATION = {
 export const FILE_IMAGE = {
   accepts: ['image/png', 'image/jpeg', 'image/jpg', 'image/webp', 'image/gif'],
   size: 5 * 1000000 // 5MB,
+};
+
+export const FILE_DOCUMENT = {
+  accepts: ['application/pdf'],
+  size: 10 * 1000000 // 10MB,
 };
 
 export const FILE_VIDEO = {
@@ -59,6 +71,44 @@ export const WorkingPositionOptions = [
   { label: 'workPosition.viceDirector', value: WorkPosition.ViceDirector },
   { label: 'workPosition.director', value: WorkPosition.Director },
   { label: 'workPosition.generalDirector', value: WorkPosition.GeneralDirector }
+];
+
+export const EducationTypeOptions = [
+  { label: 'educationType.school', value: EducationType.School },
+  { label: 'educationType.institution', value: EducationType.Institution },
+  { label: 'educationType.college', value: EducationType.College },
+  { label: 'educationType.university', value: EducationType.University },
+  { label: 'educationType.other', value: EducationType.Other }
+];
+
+export const DegreeOptions = [
+  { label: 'degree.highSchoolDiploma', value: Degree.HighSchoolDiploma },
+  { label: 'degree.technicalTraining', value: Degree.TechnicalTraining },
+  { label: 'degree.vocational', value: Degree.Vocational },
+  { label: 'degree.associate', value: Degree.Associate },
+  { label: 'degree.bachelor', value: Degree.Bachelor },
+  { label: 'degree.master', value: Degree.Master },
+  { label: 'degree.doctoral', value: Degree.Doctoral },
+  { label: 'degree.other', value: Degree.Other }
+];
+
+export const ProficiencyLevelOptions = [
+  { label: 'proficiencyLevel.beginner', value: ProficiencyLevel.Beginner },
+  { label: 'proficiencyLevel.intermediate', value: ProficiencyLevel.Intermediate },
+  { label: 'proficiencyLevel.fluent', value: ProficiencyLevel.Fluent },
+  { label: 'proficiencyLevel.professional', value: ProficiencyLevel.Professional },
+  { label: 'proficiencyLevel.native', value: ProficiencyLevel.Native }
+];
+
+export const SocialTypeOptions = [
+  { label: 'socialType.behance', value: SocialType.Behance },
+  { label: 'socialType.dribbble', value: SocialType.Dribbble },
+  { label: 'socialType.facebook', value: SocialType.Facebook },
+  { label: 'socialType.github', value: SocialType.Github },
+  { label: 'socialType.gitlab', value: SocialType.Gitlab },
+  { label: 'socialType.glosbe', value: SocialType.Glosbe },
+  { label: 'socialType.instagram', value: SocialType.Instagram },
+  { label: 'socialType.linkedIn', value: SocialType.LinkedIn }
 ];
 
 export const RouterAction = ['add', 'edit'];

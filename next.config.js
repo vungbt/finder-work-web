@@ -13,6 +13,7 @@ const nextConfig = {
     if (isServer) {
       config.externals.push('_http_common', 'undici');
     }
+    config.resolve.alias.canvas = false;
     return config;
   },
   generateBuildId: () => nextBuildId({ dir: __dirname }),
@@ -35,7 +36,7 @@ const nextConfig = {
         pathname: '/dx66fumod/**'
       }
     ]
-  }
+  },
 };
 
 module.exports = withBundleAnalyzer(withNextIntl({ ...nextConfig }));

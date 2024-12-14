@@ -1,11 +1,10 @@
-import { CreateResumeView } from '@/@views/user/resume';
-import { CreateResumeProvider } from '@/@views/user/resume/providers';
-import React from 'react';
+import { CreateResumeView } from '@/@views/user/resume/layout';
+import { ResumeProvider } from '@/@views/user/resume/providers/resume-providers';
 
 export default function ResumesPage() {
   return (
-    <CreateResumeProvider>
+    <ResumeProvider>
       <CreateResumeView />
-    </CreateResumeProvider>
+    </ResumeProvider>
   );
 }

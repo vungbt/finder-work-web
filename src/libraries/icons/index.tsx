@@ -75,6 +75,7 @@ import Certificate from './certificate';
 import Growth from './growth';
 import Social from './social';
 import Rocket from './rocket';
+import Download from './download';
 
 export type IconProps = {
   className?: string;
@@ -160,7 +161,8 @@ const IconsDefine = {
   rocket: 'rocket',
   certificate: 'certificate',
   social: 'social',
-  growth: 'growth'
+  growth: 'growth',
+  'download-document': 'download-document'
 } as const;
 
 export type IconName = keyof typeof IconsDefine;
@@ -368,6 +370,9 @@ export const Icons: IconsType = {
   },
   'message-text-bold': (props: IconProps) => {
     return <MessageTextBold {...props} />;
+  },
+  'download-document': (props: IconProps) => {
+    return <Download {...props} />;
   },
   copy: (props: IconProps) => {
     return <Copy {...props} />;

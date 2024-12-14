@@ -176,6 +176,7 @@ export function CareersActionView({ isEdit }: CareersViewProps) {
                   name="content"
                   placeholder={t('placeholder.shareYourThoughts')}
                   component={EditorForm}
+                  size="large"
                 />
 
                 {/* Thumbnails */}

@@ -50,7 +50,7 @@ export const getAvatar = (user?: User | UserOnly) => {
 };
 
 export const getFullName = (user?: User | UserOnly) => {
-  if (!user) return 'Jobcadu';
+  if (!user) return 'Finder Work';
   const fullName = `${user.firstName} ${user.lastName}`;
   return fullName;
 };

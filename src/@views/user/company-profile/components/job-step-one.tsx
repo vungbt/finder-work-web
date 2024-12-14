@@ -1,7 +1,7 @@
 import { JobResultUtils } from '@/@handles/job/job-utils';
 import { City, JobSalary, JobTitle } from '@/configs/graphql/generated';
 import useAddress from '@/hooks/redux/address/useAddress';
-import useJobTitles from '@/hooks/redux/job-tile/useJobTitles';
+
 import {
   BackButton,
   Button,
@@ -21,6 +21,7 @@ import { useTranslations } from 'next-intl';
 import { useRef } from 'react';
 import { IJobInformation, useJob } from '../providers';
 import { AdminCareerActionUtils } from '@/@handles/career';
+import useJobTitles from '@/hooks/redux/job-title/useJobTitles';
 
 export default function CreateResumeStepOne() {
   const t = useTranslations();

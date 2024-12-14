@@ -1,0 +1,27 @@
+query allLanguageSkill(
+  $where: LanguageSkillWhereInput
+  $pagination: PaginationInput
+  $searchValue: String
+  $orderBy: [LanguageSkillOrderByWithRelationInput!]
+) {
+  all_language_skill(
+    where: $where
+    pagination: $pagination
+    searchValue: $searchValue
+    orderBy: $orderBy
+  ) {
+    data {
+      id
+      name
+      locale
+      proficiencyLevel
+      createdAt
+      updatedAt
+    }
+    metadata {
+      total
+      limit
+      page
+    }
+  }
+}
