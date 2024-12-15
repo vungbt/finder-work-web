@@ -44,7 +44,14 @@ export const InputForm = forwardRef(function Input(props: InputProps, ref: Ref<H
   const isHaveError = !form || !name ? false : form.errors[name] && form.touched[name];
 
   return (
-    <FormGroup size={size} layout={layout} label={label} name={name} isRequired={isRequired}>
+    <FormGroup
+      isShowError={!!isHaveError}
+      size={size}
+      layout={layout}
+      label={label}
+      name={name}
+      isRequired={isRequired}
+    >
       <label
         htmlFor={name}
         className={clsx(

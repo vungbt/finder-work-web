@@ -159,7 +159,13 @@ export const SelectForm = forwardRef(function SelectForm(props: SelectFormProps,
   };
 
   return (
-    <FormGroup layout={layout} label={label} name={name} isRequired={isRequired}>
+    <FormGroup
+      isShowError={!!isHaveError}
+      layout={layout}
+      label={label}
+      name={name}
+      isRequired={isRequired}
+    >
       <Select
         ref={ref}
         id={name}

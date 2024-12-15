@@ -45,7 +45,13 @@ export const InputPasswordForm = forwardRef(function Input(
   const [isViewPass, setIsViewPass] = useState<boolean>(false);
 
   return (
-    <FormGroup layout={layout} label={label} name={name} isRequired={isRequired}>
+    <FormGroup
+      isShowError={!!isHaveError}
+      layout={layout}
+      label={label}
+      name={name}
+      isRequired={isRequired}
+    >
       <label
         htmlFor={name}
         className={clsx(

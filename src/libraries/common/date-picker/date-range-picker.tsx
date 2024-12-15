@@ -87,7 +87,13 @@ export const DateRangePicker = forwardRef(function DateRangePicker(
   };
 
   return (
-    <FormGroup layout={layout} label={label} name={name} isRequired={isRequired}>
+    <FormGroup
+      isShowError={!!isHaveError}
+      layout={layout}
+      label={label}
+      name={name}
+      isRequired={isRequired}
+    >
       <label
         htmlFor={name}
         className={clsx(

@@ -175,7 +175,8 @@ export default function EmployeePage() {
     <div>
       <Banner
         type="employee"
-        title={t('banner.stepIntoSuccess')}
+        title={t('banner.landYourDream')}
+        subTitle={t('banner.builderYour')}
         tags={['UI/UX Designer', 'Netflix', 'IT', '', 'Sale', 'Marketing']}
       />
 

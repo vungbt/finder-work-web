@@ -44,7 +44,13 @@ export const JSONEditor: React.FC<JSONEditorProps> = ({
   };
 
   return (
-    <FormGroup layout={layout} label={label} name={name} isRequired={isRequired}>
+    <FormGroup
+      isShowError={!!isHaveError}
+      layout={layout}
+      label={label}
+      name={name}
+      isRequired={isRequired}
+    >
       <JSONEditorReact
         isHaveError={isHaveError as any}
         isLoading={isLoading}

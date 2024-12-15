@@ -33,7 +33,9 @@ const config: Config = {
       }
     },
     fontFamily: {
-      primary: 'var(--font-primary)'
+      primary: 'var(--font-primary)',
+      secondary: 'var(--font-secondary)',
+      tertiary: 'var(--font-tertiary)'
     },
     colors: {
       // default

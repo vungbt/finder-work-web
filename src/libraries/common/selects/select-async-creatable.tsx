@@ -175,7 +175,13 @@ export const SelectAsyncCreatable = forwardRef(function SelectAsyncCreatable(
   }, delay);
 
   return (
-    <FormGroup layout={layout} label={label} name={name} isRequired={isRequired}>
+    <FormGroup
+      isShowError={!!isHaveError}
+      layout={layout}
+      label={label}
+      name={name}
+      isRequired={isRequired}
+    >
       <AsyncCreatable
         ref={ref}
         id={name}

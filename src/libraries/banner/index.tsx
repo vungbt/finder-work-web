@@ -1,7 +1,6 @@
 import clsx from 'clsx';
 import { ReactNode } from 'react';
-import { Button } from '../common';
-import { useTranslations } from 'next-intl';
+import SearchBanner from './search-banner';
 
 type BannerProps = {
   type?: 'employee' | 'employer';
@@ -13,8 +12,8 @@ type BannerProps = {
 };
 export default function Banner({
   type = 'employee',
-  title
-  // subTitle,
+  title,
+  subTitle
   // summary,
   // actions,
   // tags
@@ -27,31 +26,22 @@ export default function Banner({
       })}
     >
       <h1
-        className={clsx('mx-auto mt-8 max-w-80 text-center text-3xl font-bold text-white', {
-          // "": type === 'employee',
-          // "text-3xl": type === 'employer',
-        })}
+        className={clsx(
+          'mx-auto mt-8 text-center text-5xl font-bold text-white leading-[5rem] font-tertiary',
+          {
+            // "": type === 'employee',
+            // "text-3xl": type === 'employer',
+          }
+        )}
       >
         {title}
       </h1>
+      <p className="text-5xl text-center font-bold  leading-[5rem] text-white font-tertiary">
+        {subTitle}
+      </p>
 
       {/** only show with employee */}
       {type === 'employee' && <SearchBanner />}
     </div>
   );
 }
-
-const SearchBanner = ({ className }: { className?: string }) => {
-  const t = useTranslations();
-  return (
-    <div
-      className={clsx(
-        'mx-auto mt-12 flex min-h-16 max-w-[90%] items-center gap-6 rounded-4xl bg-dark p-3.5',
-        className
-      )}
-    >
-      <div></div>
-      <Button styleType="neon" label={t('common.search')} />
-    </div>
-  );
-};
