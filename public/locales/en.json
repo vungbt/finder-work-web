@@ -384,6 +384,7 @@
     "changeStatusToSolvedConfirm": "Are you sure to change report  status to solve?",
     "companyNotCreate": "Please create company profile before create job",
     "applySuccess": "Apply successful",
-    "confirmApplyJob": "Are you sure to apply this job with this resume?"
+    "confirmApplyJob": "Are you sure to apply this job with this resume?",
+    "applyFail": "Have error when apply job, please try again"
   }
 }

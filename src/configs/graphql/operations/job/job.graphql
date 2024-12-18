@@ -50,8 +50,8 @@ query oneJob($where: JobWhereInput) {
   }
 }
 
-mutation createJobResume($where: JobWhereUniqueInput!, $data: JobUpdateInput!) {
-  resume_job(data: $data, where: $where) {
-    id
+mutation createJobResume($data: ApplicationCreateInput!) {
+  create_application(data: $data) {
+    status
   }
 }
