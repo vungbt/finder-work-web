@@ -95,8 +95,9 @@ export function ResumeUtils(): ResumeUtilsResult {
       const res = await apiClient.createJobResume({
         data: {
           candidate: { connect: { id: profile.profile.id } },
-          jobId: jobApply.id as string,
+          job: { connect: { id: jobApply.id } },
           resume: { connect: { id: resumeApply.id } }
+          // userId: profile.profile.id
         }
       });
       if (res && res.create_application) {
