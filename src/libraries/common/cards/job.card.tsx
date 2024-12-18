@@ -20,7 +20,7 @@ export function JobCard({ item, className, goToDetails, mapSalary, mapJob }: Job
     <article className={clsx('card min-h-56 rounded-2xl shadow-md bg-gray-200 w-full', className)}>
       <div className="justify-between h-56 w-full p-4 flex flex-col gap-3 relative z-[1] rounded-2xl shadow-md bg-gray-200">
         <div className="flex flex-col gap-3 flex-1">
-          <div className="flex justify-betw een">
+          <div className="flex justify-between">
             <div className="flex items-center gap-6">
               <Link href="/" className="w-fit h-fit block">
                 <Image

@@ -93,18 +93,21 @@ export function ResumeUtils(): ResumeUtilsResult {
         return;
       }
       const res = await apiClient.createJobResume({
-        where: { id: jobApply.id },
-        data: { resumes: { connect: [{ id: resumeApply.id }] } }
+        data: {
+          candidate: { connect: { id: profile.profile.id } },
+          jobId: jobApply.id as string,
+          resume: { connect: { id: resumeApply.id } }
+        }
       });
-      if (res && res.resume_job) {
+      if (res && res.create_application) {
         setLoadingApply(false);
         toastSuccess(t('noti.applySuccess'));
         setIsOpenApplyModal(false);
         setResumeApply(undefined);
       }
-    } catch (e) {
+    } catch (error) {
+      toastError(t('noti.applyFail'));
       setLoadingApply(false);
-      toastError(e as string);
     }
   };
   const onCloseConfirmApply = () => {
