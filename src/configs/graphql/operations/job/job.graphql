@@ -1,0 +1,57 @@
+query allJob(
+  $where: JobWhereInput
+  $orderBy: [JobOrderByWithRelationInput!]
+  $searchValue: String
+  $pagination: PaginationInput
+) {
+  all_job(where: $where, orderBy: $orderBy, searchValue: $searchValue, pagination: $pagination) {
+    metadata {
+      total
+      page
+      limit
+    }
+    data {
+      id
+      isBoot
+      jobTitle {
+        name
+      }
+      type
+      salary
+      company {
+        id
+        name
+        avatar {
+          url
+        }
+      }
+      type
+      skills {
+        id
+      }
+      level
+      address {
+        id
+      }
+
+      address {
+        id
+        name
+        stateName
+        countryName
+      }
+    }
+  }
+}
+
+query oneJob($where: JobWhereInput) {
+  one_job(where: $where) {
+    ...JobFragment
+  }
+}
+
+mutation createJobResume($where: JobWhereUniqueInput!, $data: JobUpdateInput!) {
+  resume_job(data: $data, where: $where) {
+    id
+  }
+}

@@ -30,7 +30,6 @@ export default function ResumeMain() {
   } = JobResultUtils();
 
   const { data: myCompany } = CompanyUtils();
-  console.log('myCompany', myCompany);
 
   const nextAction = () => {
     if (myCompany.length === 0) {
