@@ -97,7 +97,6 @@ export function ResumeUtils(): ResumeUtilsResult {
           candidate: { connect: { id: profile.profile.id } },
           job: { connect: { id: jobApply.id } },
           resume: { connect: { id: resumeApply.id } }
-          // userId: profile.profile.id
         }
       });
       if (res && res.create_application) {
