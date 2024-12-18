@@ -266,7 +266,8 @@
     "photos": "Photos",
     "tags": "Tags",
     "upload": "Upload",
-    "uploadResume": "Upload resume"
+    "uploadResume": "Upload resume",
+    "chooseYourResume": "Please, choose your resume"
   },
   "reason": {
     "brokenLink": "Broken link",
@@ -381,6 +382,8 @@
     "updateSkillSuccess": "Update skill successfully ",
     "changeStatusToUnsolvedConfirm": "Are you sure to change report  status to unsolved?",
     "changeStatusToSolvedConfirm": "Are you sure to change report  status to solve?",
-    "companyNotCreate": "Please create company profile before create job"
+    "companyNotCreate": "Please create company profile before create job",
+    "applySuccess": "Apply successful",
+    "confirmApplyJob": "Are you sure to apply this job with this resume?"
   }
 }

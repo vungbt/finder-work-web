@@ -1,9 +1,9 @@
-import React, { ReactNode, useMemo } from 'react';
-import { ModalWrap, ModalWrapProps } from './modal-wrap';
-import { Button } from '../buttons';
 import { IconName, RenderIcon } from '@/libraries/icons';
-import { useTranslations } from 'next-intl';
 import clsx from 'clsx';
+import { useTranslations } from 'next-intl';
+import { ReactNode, useMemo } from 'react';
+import { Button } from '../buttons';
+import { ModalWrap, ModalWrapProps } from './modal-wrap';
 
 type ModalConfirmProps = Omit<ModalWrapProps, 'children'> & {
   onCancel?: () => void;
@@ -22,6 +22,7 @@ type ModalConfirmProps = Omit<ModalWrapProps, 'children'> & {
 
   actions?: ReactNode;
   iconMain?: IconName;
+  submitType?: 'danger' | 'success' | 'default' | 'neon' | 'info';
 };
 export function ModalConfirm({
   onCancel,
@@ -38,7 +39,8 @@ export function ModalConfirm({
   message,
   iconMain = 'danger-solid',
   isOpen,
-  warning
+  warning,
+  submitType
 }: ModalConfirmProps) {
   const t = useTranslations();
 
@@ -58,7 +60,7 @@ export function ModalConfirm({
           label={submitLabel ?? t('yesSure')}
           iconLeft={submitIcon ?? 'trash-solid'}
           className={clsx(classNameSubmit)}
-          styleType="danger"
+          styleType={submitType ?? 'danger'}
           size="middle"
           isLoading={isLoading}
         />
@@ -75,7 +77,8 @@ export function ModalConfirm({
     classNameCancel,
     classNameSubmit,
     onSubmit,
-    onCancel
+    onCancel,
+    submitType
   ]);
 
   return (

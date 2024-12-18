@@ -29,7 +29,7 @@ type DateRangePickerProps = Omit<ReactDatePickerProps, 'onChange' | 'placeholder
   onClear?: () => void;
 };
 
-const DatePickerBase = ReactDatePicker as any
+const DatePickerBase = ReactDatePicker as any;
 export const DateRangePicker = forwardRef(function DateRangePicker(
   props: DateRangePickerProps,
   ref: Ref<any>

@@ -60,8 +60,15 @@ query myJob(
   $orderBy: [JobOrderByWithRelationInput!]
   $searchValue: String
   $pagination: PaginationInput
+  $userId: String!
 ) {
-  my_job(where: $where, orderBy: $orderBy, searchValue: $searchValue, pagination: $pagination) {
+  my_job(
+    where: $where
+    orderBy: $orderBy
+    searchValue: $searchValue
+    pagination: $pagination
+    userId: $userId
+  ) {
     metadata {
       total
       page

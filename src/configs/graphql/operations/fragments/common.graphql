@@ -98,3 +98,51 @@ fragment SkillFragment on Skill {
   deletedAt
   updatedAt
 }
+
+fragment JobFragment on Job {
+  id
+  jobTitle {
+    name
+  }
+  type
+  salary
+  addressDetail
+  description
+  numberOfRecruits
+  applicationDeadline
+  maxSalary
+  minSalary
+  isBoot
+  company {
+    id
+    name
+    avatar {
+      url
+    }
+    type {
+      key
+    }
+    size {
+      key
+    }
+  }
+  skills {
+    id
+    content
+  }
+  level
+  address {
+    id
+    name
+    stateName
+    countryName
+  }
+  jobCategory {
+    id
+    name
+  }
+  salaryMetadata
+  createdAt
+  updatedAt
+  deletedAt
+}
