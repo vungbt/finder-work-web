@@ -25,3 +25,30 @@ query allLanguageSkill(
     }
   }
 }
+
+query allLanguage(
+  $where: LanguageWhereInput
+  $pagination: PaginationInput
+  $searchValue: String
+  $orderBy: [LanguageOrderByWithRelationInput!]
+) {
+  all_language(
+    where: $where
+    pagination: $pagination
+    searchValue: $searchValue
+    orderBy: $orderBy
+  ) {
+    data {
+      id
+      name
+      locale
+      createdAt
+      updatedAt
+    }
+    metadata {
+      total
+      limit
+      page
+    }
+  }
+}

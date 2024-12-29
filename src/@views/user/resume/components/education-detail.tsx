@@ -72,7 +72,6 @@ export default function EducationDetail() {
   // submit register new account
   const onHandleSubmit = async (values: { educations: IResumeEducation[] }) => {
     try {
-      console.log('values====>', values);
       actions.nextStep({ ...formData, educations: values.educations ?? [] });
     } catch (error) {
       console.log('error====>', error);

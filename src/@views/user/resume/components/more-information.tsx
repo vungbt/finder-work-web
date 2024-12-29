@@ -74,7 +74,6 @@ export default function MoreInformation() {
   // submit register new account
   const onHandleSubmit = async (values: IResumeMoreInformation) => {
     try {
-      console.log('values===>', values);
       actions.nextStep({ ...formData, moreInformation: values });
     } catch (error) {
       console.log('error====>', error);

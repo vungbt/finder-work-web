@@ -16,6 +16,7 @@
   "socialMediaBoosts": "Social media boosts",
   "personalInformation": "Personal information",
   "companyInformation": "Company information",
+  "autoGenerateJD": "Automated JD Generation & Personalize Job Ads",
   "workPosition": {
     "staff": "Staff",
     "teamLeader": "Team leader",
@@ -267,7 +268,10 @@
     "tags": "Tags",
     "upload": "Upload",
     "uploadResume": "Upload resume",
-    "chooseYourResume": "Please, choose your resume"
+    "chooseYourResume": "Please, choose your resume",
+    "aiGenerate": "AI generate",
+    "useThisDescription": "Use this description",
+    "enterJDForm": "Enter JD form"
   },
   "reason": {
     "brokenLink": "Broken link",
@@ -385,6 +389,7 @@
     "companyNotCreate": "Please create company profile before create job",
     "applySuccess": "Apply successful",
     "confirmApplyJob": "Are you sure to apply this job with this resume?",
-    "applyFail": "Have error when apply job, please try again"
+    "applyFail": "Have error when apply job, please try again",
+    "resumeAiRequired": "Please select job title and language"
   }
 }

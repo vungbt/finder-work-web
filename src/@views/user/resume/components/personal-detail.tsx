@@ -1,10 +1,13 @@
 'use client';
+import { OpenAIUtils } from '@/@handles/open-ai/open-ai-utils';
 import { City, ResumeType } from '@/configs/graphql/generated';
 import useAddress from '@/hooks/redux/address/useAddress';
 import useJobTitles from '@/hooks/redux/job-title/useJobTitles';
+import useLanguage from '@/hooks/redux/language/useLanguage';
 import {
   BackButton,
   Button,
+  EditorForm,
   InputForm,
   RadioGroup,
   SelectAsync,
@@ -20,8 +23,8 @@ import { motion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import { useMemo } from 'react';
 import * as Yup from 'yup';
-import { useResume } from '../providers/resume-providers';
-import { IResumePersonalDetail } from '../providers/resume-providers';
+import { IResumePersonalDetail, useResume } from '../providers/resume-providers';
+import { ModalAiResume } from '@/libraries/common/modal/modal-ai-resume';
 
 export default function PersonalDetail() {
   const t = useTranslations();
@@ -37,7 +40,19 @@ export default function PersonalDetail() {
     convertToOptions
   } = useAddress();
 
+  const {
+    resumeKeyWords,
+    keywordGenerate,
+    loadingResumeKeyword,
+    onCloseResumeKeyword,
+    resumeDescriptionGenerate,
+    resumeDescription,
+    approveDescription,
+    formikRef,
+    formikRefPersonalDetails
+  } = OpenAIUtils();
   const { options: jobTitlesOptions, loading: loadingJobTitles, getJobTitles } = useJobTitles();
+  const { options: languageOptions, loading: languageLoading, getLanguages } = useLanguage();
 
   const validationSchema = Yup.object({
     name: Yup.string().required(),
@@ -71,16 +86,15 @@ export default function PersonalDetail() {
     addressDetail: personalDetail?.addressDetail ?? '',
     descriptionType: personalDetail?.descriptionType || ResumeType.Summary,
     description: personalDetail?.description ?? '',
-    jobTitle: personalDetail?.jobTitle
+    jobTitle: personalDetail?.jobTitle,
+    language: personalDetail?.language
   };
-
   // submit register new account
   const onHandleSubmit = async (values: IResumePersonalDetail) => {
     try {
-      console.log('values===>', values);
       actions.nextStep({ ...formData, personal: values });
     } catch (error) {
-      console.log('error====>', error);
+      console.error('Error onHandleSubmit:', error);
     }
   };
 
@@ -91,6 +105,19 @@ export default function PersonalDetail() {
       pagination: { limit: 30, page: 1 }
     });
     const options = convertToOptions((res?.all_address.data ?? []) as City[]);
+    return options;
+  };
+
+  const filterLanguage = async (searchValue?: string) => {
+    if (!searchValue || searchValue.length <= 0) return;
+    const res = await getLanguages({
+      searchValue: searchValue,
+      pagination: { limit: 20, page: 1 }
+    });
+    const options = (res?.all_language.data ?? []).map((item) => ({
+      label: `${item.name} - ${item.locale}`,
+      value: item.id
+    }));
     return options;
   };
 
@@ -133,6 +160,7 @@ export default function PersonalDetail() {
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
+        innerRef={formikRefPersonalDetails}
         onSubmit={onHandleSubmit}
       >
         {({ setErrors, errors, setFieldValue, values }) => {
@@ -147,6 +175,19 @@ export default function PersonalDetail() {
                       name="name"
                       component={InputForm}
                       placeholder={t('placeholder.enter', { label: 'name' })}
+                    />
+
+                    <Field
+                      label="Language "
+                      isRequired
+                      name="language"
+                      component={SelectAsync}
+                      loading={languageLoading}
+                      filterOptions={filterLanguage}
+                      defaultOptions={languageOptions}
+                      placeholder={t('placeholder.select', {
+                        label: 'language'
+                      })}
                     />
                     <Upload
                       isRequired={true}
@@ -238,10 +279,13 @@ export default function PersonalDetail() {
                       label="Description"
                       isRequired
                       name="description"
-                      component={TextareaForm}
+                      component={EditorForm}
                       placeholder={t('placeholder.enter', {
                         label: 'description'
                       })}
+                      aiGenerate={true}
+                      isLoading={loadingResumeKeyword}
+                      onAiGenerate={() => keywordGenerate(values)}
                     />
                   </div>
                 </div>
@@ -253,6 +297,16 @@ export default function PersonalDetail() {
                 type="submit"
                 styleType="info"
                 label={t('common.next')}
+              />
+              <ModalAiResume
+                isOpen={resumeKeyWords.length > 0}
+                onClose={onCloseResumeKeyword}
+                resumeKeyWords={resumeKeyWords}
+                resumeDescriptionGenerate={resumeDescriptionGenerate}
+                personalDetails={values}
+                resumeDescription={resumeDescription}
+                formikRef={formikRef}
+                approveDescription={approveDescription}
               />
             </Form>
           );

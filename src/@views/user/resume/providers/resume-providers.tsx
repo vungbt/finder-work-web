@@ -89,6 +89,7 @@ export interface IResumePersonalDetail {
   descriptionType: ResumeType;
   description: string;
   jobTitle?: OptionItem;
+  language?: OptionItem;
 }
 
 export interface IResumeWorkExperience {
@@ -273,8 +274,6 @@ export const useResume = (): {
   };
 
   const nextStep = (data: IResumeType) => {
-    console.log('data===>', data);
-
     dispatch({ type: ResumeActionType.NEXT_STEP, payload: { data } });
   };
 

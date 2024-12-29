@@ -144,7 +144,6 @@ export default function FinalTouches() {
       personalInfo,
       workExperiences: (workExperiences ?? []).map((item) => {
         if (!item.address || !item.company || !item.jobTitle) {
-          console.log('item', item);
           console.error('Missing required fields in workExperience:', item);
           throw new Error('Missing required fields in workExperience');
         }
@@ -222,12 +221,11 @@ export default function FinalTouches() {
       if (loadingSave) return;
       setLoadingSave(true);
       const params = await mappingData();
-      const res = await apiClient.createResume({
+      await apiClient.createResume({
         ...params,
         resumeTemplateName: ResumeTemplate.ResumeOne,
         userId: profile.profile.id
       });
-      console.log('res====>', res);
       setLoadingSave(false);
     } catch (error) {
       setLoadingSave(false);

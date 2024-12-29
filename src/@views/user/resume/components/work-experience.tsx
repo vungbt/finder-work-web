@@ -48,7 +48,7 @@ export default function WorkExperience() {
         jobTitle: validationCustoms.select(t, 'job title'),
         company: validationCustoms.select(t, 'company'),
         address: validationCustoms.select(t, 'address'),
-        description: Yup.string().required(),
+        description: Yup.string().required(t('validation.required', { label: t('description') })),
         isCurrentlyWorkHere: Yup.array().of(
           Yup.string().required(t('validation.required', { label: t('form.policy') }))
         ),
