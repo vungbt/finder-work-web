@@ -17,6 +17,8 @@ import { IDescriptionSkill, useJob } from '../providers';
 import { useMemo } from 'react';
 import * as Yup from 'yup';
 import useTags from '@/hooks/redux/tags/useTags';
+import { OpenAIUtils } from '@/@handles/open-ai/open-ai-utils';
+import { ModalAiJobDescription } from '@/libraries/common/modal/modal-ai-job-description';
 
 export default function CreateResumeStepOne() {
   const t = useTranslations();
@@ -25,7 +27,15 @@ export default function CreateResumeStepOne() {
     state: { formData, stepIndex }
   } = useJob();
   const { jobTagOptions, getTags, loading: loadingTagOption } = useTags();
-
+  const {
+    isOpenJDModal,
+    openJDModal,
+    jobDescriptionGenerate,
+    formikRefJD,
+    onCloseJDModal,
+    formikReJobDetails,
+    loadingJD
+  } = OpenAIUtils();
   const onHandleSubmit = async (values: IDescriptionSkill) => {
     try {
       actions.nextStep({ ...formData, descriptionSkill: values });
@@ -130,24 +140,36 @@ export default function CreateResumeStepOne() {
         <Formik<IDescriptionSkill>
           initialValues={initialValues}
           onSubmit={onHandleSubmit}
+          innerRef={formikReJobDetails}
           validationSchema={validationSchema}
         >
           {({ handleSubmit }) => (
             <Form onSubmit={handleSubmit}>
               <div>
-                <Field
-                  label={`${t('common.numberOfRecruits')}:`}
-                  isRequired
-                  name="numberOfRecruits"
-                  component={InputForm}
-                  placeholder={t('form.contentInput')}
-                />
+                <div className="flex flex-col items-start justify-start my-5 bg-black h-44 w-full p-5 rounded-lg">
+                  <p className="font-bold text-2xl text-center mb-10 text-white">
+                    {t('autoGenerateJD')}
+                  </p>
+                  <Button
+                    type="button"
+                    styleType="neon"
+                    label={t('common.aiGenerate')}
+                    onClick={openJDModal}
+                  />
+                </div>
                 <Field
                   name={'description'}
                   label={t('form.description')}
                   component={EditorForm}
                   isRequired
                   placeholder={t('form.description')}
+                />
+                <Field
+                  label={`${t('common.numberOfRecruits')}:`}
+                  isRequired
+                  name="numberOfRecruits"
+                  component={InputForm}
+                  placeholder={t('form.contentInput')}
                 />
                 <Field
                   label={t('common.tags')}
@@ -172,7 +194,7 @@ export default function CreateResumeStepOne() {
                   defaultOptions={SkillOpt}
                   isMulti={true}
                   placeholder={t('placeholder.select', {
-                    label: t('common.skill').toLowerCase()
+                    label: t('skill').toLowerCase()
                   })}
                 />
               </div>
@@ -184,6 +206,14 @@ export default function CreateResumeStepOne() {
           )}
         </Formik>
       </div>
+      <ModalAiJobDescription
+        isOpen={isOpenJDModal}
+        onClose={onCloseJDModal}
+        jobDescriptionGenerate={jobDescriptionGenerate}
+        formikRef={formikRefJD}
+        formData={formData.jobInformation}
+        loading={loadingJD}
+      />
     </motion.div>
   );
 }

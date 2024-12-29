@@ -12,6 +12,7 @@ import address from './address/reducer';
 import jobTitles from './job-title/reducer';
 import skills from './skill/reducer';
 import languageSkills from './language-skill/reducer';
+import language from './language/reducer';
 
 const baseReducer = {
   session,
@@ -27,7 +28,8 @@ const baseReducer = {
   companyList,
   jobTitles,
   skills,
-  languageSkills
+  languageSkills,
+  language
 };
 
 export default baseReducer;

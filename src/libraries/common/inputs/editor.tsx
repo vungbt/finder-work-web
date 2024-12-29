@@ -11,6 +11,7 @@ import dynamic from 'next/dynamic';
 import { forwardRef, Ref, useMemo, useRef, useState } from 'react';
 import { ReactQuillType } from '../../../configs/quill';
 import { FormGroup } from '../form';
+import { Button } from '../buttons';
 
 const ReactQuill = dynamic(
   async () => {
@@ -40,17 +41,19 @@ type EditorProps = {
   onChange: (content: string) => void;
   onChangeFile?: (type: 'image' | 'video', file: File) => void;
   setError?: (mess: any) => void;
+  onAiGenerate?: () => void;
 
   expandOnFocus?: boolean;
   placeholder?: string;
   showLimit?: number;
+  aiGenerate?: boolean;
+  isLoading?: boolean;
 };
 
 export const EditorForm = forwardRef(function QuillEditor(
   props: EditorProps,
   ref: Ref<ReactQuillType>
 ) {
-  const t = useTranslations();
   const {
     field,
     form,
@@ -66,6 +69,9 @@ export const EditorForm = forwardRef(function QuillEditor(
     videoMaxSize = FILE_VIDEO.size,
     onChange,
     onChangeFile,
+    aiGenerate,
+    onAiGenerate,
+    isLoading,
     ...reset
   } = props;
   const name = field?.name;
@@ -73,7 +79,7 @@ export const EditorForm = forwardRef(function QuillEditor(
   const isHaveError = !form || !name ? false : form.errors[name] && form.touched[name];
   const [loadingUpload, setLoadingUpload] = useState<boolean>(false);
   const editorRef = useRef<ReactQuillType | null>(null);
-
+  const t = useTranslations();
   const quillRef = (quillEditor: ReactQuillType | null, currentRef: any, refCustom?: any) => {
     if (quillEditor) {
       if (currentRef) {
@@ -263,16 +269,30 @@ export const EditorForm = forwardRef(function QuillEditor(
           }
         )}
       >
-        <ReactQuill
-          readOnly={disabled}
-          forwardedRef={(quill: ReactQuillType | null) => quillRef(quill, editorRef, ref)}
-          modules={modules}
-          formats={formats}
-          value={field?.value}
-          onChange={onChangeContent}
-          onBlur={() => onHandleBlur()}
-          {...reset}
-        />
+        <div className="flex flex-col">
+          <ReactQuill
+            readOnly={disabled}
+            forwardedRef={(quill: ReactQuillType | null) => quillRef(quill, editorRef, ref)}
+            modules={modules}
+            formats={formats}
+            value={field?.value}
+            onChange={onChangeContent}
+            onBlur={() => onHandleBlur()}
+            {...reset}
+          />
+          {aiGenerate ? (
+            <div className="flex m-4 ">
+              <Button
+                className="w-fit min-w-48 !justify-center"
+                styleType="neon"
+                type="button"
+                label={t('common.aiGenerate')}
+                onClick={onAiGenerate}
+                isLoading={isLoading}
+              />
+            </div>
+          ) : null}
+        </div>
         {loadingUpload && <LoadingOverlay />}
       </label>
     </FormGroup>

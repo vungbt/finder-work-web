@@ -80,7 +80,6 @@ export const Upload = forwardRef(function UploadInput(
       resetInputFile();
     }
   };
-  console.log(12333, value);
 
   const showError = (mess: string) => {
     const messError: any = {};
@@ -100,8 +99,6 @@ export const Upload = forwardRef(function UploadInput(
       inputFile.value = '';
     }
   };
-
-  console.log(13131313, fileName);
 
   return (
     <FormGroup

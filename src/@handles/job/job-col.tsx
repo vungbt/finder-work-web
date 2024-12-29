@@ -58,7 +58,7 @@ export const JobColumns = ({
       render: (row: Job): JSX.Element => <p>{formatDate(row.applicationDeadline)}</p>
     },
     {
-      title: t('common.company'),
+      title: t('common.deadline'),
       width: '20%',
       render: (row: Job): JSX.Element => <p>{formatDate(row.applicationDeadline)}</p>
     },

@@ -1,0 +1,17 @@
+mutation resumeKeywordPrompt($args: GenerateResumeParams!) {
+  openai_resume_keyword(args: $args) {
+    data
+  }
+}
+
+mutation ResumeDescriptionPrompt($args: GenerateResumeParams!) {
+  openai_resume_description(args: $args) {
+    data
+  }
+}
+
+mutation JobDescriptionPrompt($args: GenerateJDParams!) {
+  openai_job_description(args: $args) {
+    data
+  }
+}

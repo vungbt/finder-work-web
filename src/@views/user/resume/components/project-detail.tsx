@@ -97,7 +97,6 @@ export default function ProjectDetail() {
   // submit register new account
   const onHandleSubmit = async (values: { projects: IResumeProjectDetail[] }) => {
     try {
-      console.log('values====>', values);
       actions.nextStep({ ...formData, projects: values.projects ?? [] });
     } catch (error) {
       console.log('error====>', error);
