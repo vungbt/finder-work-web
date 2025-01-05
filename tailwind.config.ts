@@ -75,7 +75,8 @@ const config: Config = {
       gray: {
         DEFAULT: 'var(--color-gray-0)',
         100: 'var(--color-gray-100)',
-        200: 'var(--color-gray-200)'
+        200: 'var(--color-gray-200)',
+        300: 'var(--color-gray-300)'
       },
 
       'blue-cheese': {

@@ -274,7 +274,8 @@
     "aiGenerate": "AI generate",
     "useThisDescription": "Use this description",
     "enterJDForm": "Enter JD form",
-    "keyword": "Keyword"
+    "keyword": "Keyword",
+    "bestJobs": "Best jobs"
   },
   "reason": {
     "brokenLink": "Broken link",
