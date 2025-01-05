@@ -175,7 +175,13 @@ export const SelectAsync = forwardRef(function SelectAsync(
   }, delay);
 
   return (
-    <FormGroup layout={layout} label={label} name={name} isRequired={isRequired}>
+    <FormGroup
+      isShowError={!!isHaveError}
+      layout={layout}
+      label={label}
+      name={name}
+      isRequired={isRequired}
+    >
       <Select
         ref={ref}
         id={name}

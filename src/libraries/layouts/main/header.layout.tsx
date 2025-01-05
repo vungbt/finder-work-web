@@ -7,6 +7,8 @@ import { DrawerMenu, NavigationMain } from './navigation';
 import useScreen from '@/hooks/themes/useScreen';
 import { useMemo } from 'react';
 import { UserRole } from '@/configs/graphql/generated';
+import useScrollToHeight from '@/hooks/useScrollToHeight';
+import clsx from 'clsx';
 
 export type NavigationItem = { title: string; url: string; isLine?: boolean; showInLg?: boolean };
 type HeaderMainLayoutProps = {
@@ -27,11 +29,17 @@ export function HeaderMainLayout({ navigation, labelButton }: HeaderMainLayoutPr
     if (sizes.md && !sizes.xl) return newNavigationItem.filter((nav) => !nav.showInLg);
     return newNavigationItem;
   }, [sizes, navigation]);
+  const isScrolled = useScrollToHeight();
 
   return (
     <div
       suppressHydrationWarning
-      className="fixed left-0 right-0 top-0 z-10 flex items-center justify-between px-8 py-4 md:px-12 md:py-6"
+      className={clsx(
+        'fixed left-0 right-0 top-0 z-10 flex items-center justify-between px-8 py-4 md:px-12 md:py-6 transition-all ease-linear',
+        {
+          'bg-dark': isScrolled
+        }
+      )}
     >
       <Link href={RouterPath.Home} className="z-[51]">
         <Logo type={sizes.sm ? 'default' : 'square'} />

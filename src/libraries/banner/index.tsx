@@ -1,7 +1,6 @@
 import clsx from 'clsx';
 import { ReactNode } from 'react';
-import { Button } from '../common';
-import { useTranslations } from 'next-intl';
+import SearchBanner from './search-banner';
 
 type BannerProps = {
   type?: 'employee' | 'employer';
@@ -13,45 +12,41 @@ type BannerProps = {
 };
 export default function Banner({
   type = 'employee',
-  title
-  // subTitle,
+  title,
+  subTitle
   // summary,
   // actions,
   // tags
 }: BannerProps) {
   return (
     <div
-      className={clsx('top-[-92px] min-h-[572px] pt-[92px]', {
+      className={clsx('top-[-92px] min-h-[572px] pt-[92px] pb-8', {
         'bg-neon-x': type === 'employee',
         'bg-neon-y': type === 'employer'
       })}
     >
       <h1
-        className={clsx('mx-auto mt-8 max-w-80 text-center text-3xl font-bold text-white', {
-          // "": type === 'employee',
-          // "text-3xl": type === 'employer',
-        })}
+        className={clsx(
+          'mx-auto mt-8 text-center text-6xl font-bold text-white leading-[5rem] font-tertiary',
+          {
+            // "": type === 'employee',
+            // "text-3xl": type === 'employer',
+          }
+        )}
       >
         {title}
       </h1>
+      <p className="text-6xl text-center font-bold  leading-[5rem] text-white font-tertiary">
+        {subTitle}
+      </p>
 
       {/** only show with employee */}
-      {type === 'employee' && <SearchBanner />}
+      <div className="container">{type === 'employee' && <SearchBanner />}</div>
+
+      <div className="container h-[290px] grid grid-cols-12 gap-3 mt-5">
+        <div className="w-auto rounded-2xl bg-white col-span-4">Menu</div>
+        <div className="rounded-2xl bg-white col-span-8">Content</div>
+      </div>
     </div>
   );
 }
-
-const SearchBanner = ({ className }: { className?: string }) => {
-  const t = useTranslations();
-  return (
-    <div
-      className={clsx(
-        'mx-auto mt-12 flex min-h-16 max-w-[90%] items-center gap-6 rounded-4xl bg-dark p-3.5',
-        className
-      )}
-    >
-      <div></div>
-      <Button styleType="neon" label={t('common.search')} />
-    </div>
-  );
-};

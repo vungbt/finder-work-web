@@ -163,7 +163,13 @@ export const SelectCreatable = forwardRef(function SelectCreatable(
   };
 
   return (
-    <FormGroup layout={layout} label={label} name={name} isRequired={isRequired}>
+    <FormGroup
+      isShowError={!!isHaveError}
+      layout={layout}
+      label={label}
+      name={name}
+      isRequired={isRequired}
+    >
       <Creatable
         ref={ref}
         id={name}

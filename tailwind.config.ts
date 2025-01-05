@@ -33,7 +33,9 @@ const config: Config = {
       }
     },
     fontFamily: {
-      primary: 'var(--font-primary)'
+      primary: 'var(--font-primary)',
+      secondary: 'var(--font-secondary)',
+      tertiary: 'var(--font-tertiary)'
     },
     colors: {
       // default
@@ -73,7 +75,8 @@ const config: Config = {
       gray: {
         DEFAULT: 'var(--color-gray-0)',
         100: 'var(--color-gray-100)',
-        200: 'var(--color-gray-200)'
+        200: 'var(--color-gray-200)',
+        300: 'var(--color-gray-300)'
       },
 
       'blue-cheese': {

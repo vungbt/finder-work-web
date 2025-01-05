@@ -123,7 +123,9 @@
   "banner": {
     "recruitTheBestTalent": "Recruit The Best Talent With AI Power",
     "stepIntoSuccess": "Step into Success: Your Ideal Job Awaits",
-    "slogan": "Professional job post with just a few keywords"
+    "slogan": "Professional job post with just a few keywords",
+    "landYourDream": "Land Your Dream Job Today.",
+    "builderYour": "Build Your Career Now."
   },
   "noChange": {
     "topCompaniesHiring": "Top Companies Hiring",
@@ -271,7 +273,9 @@
     "chooseYourResume": "Please, choose your resume",
     "aiGenerate": "AI generate",
     "useThisDescription": "Use this description",
-    "enterJDForm": "Enter JD form"
+    "enterJDForm": "Enter JD form",
+    "keyword": "Keyword",
+    "bestJobs": "Best jobs"
   },
   "reason": {
     "brokenLink": "Broken link",

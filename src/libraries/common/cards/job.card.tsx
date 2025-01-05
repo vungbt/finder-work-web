@@ -10,11 +10,9 @@ type JobCardProps = {
   item: Job;
   className?: string;
   goToDetails: (item: Job) => void;
-  mapJob: (job: string) => string;
-  mapSalary: (salary: string) => string;
 };
 
-export function JobCard({ item, className, goToDetails, mapSalary, mapJob }: JobCardProps) {
+export function JobCard({ item, className, goToDetails }: JobCardProps) {
   const t = useTranslations();
   return (
     <article className={clsx('card min-h-56 rounded-2xl shadow-md bg-gray-200 w-full', className)}>
@@ -31,7 +29,7 @@ export function JobCard({ item, className, goToDetails, mapSalary, mapJob }: Job
                   className="rounded-full"
                 />
               </Link>
-              <h2 className="font-medium text-sm">{item.company?.name}</h2>
+              <h2 className="font-medium text-base">{item.company?.name}</h2>
             </div>
             <button className="p-[3px] rounded-lg" onClick={() => goToDetails && goToDetails(item)}>
               <RenderIcon name={'eye'} />
@@ -41,9 +39,9 @@ export function JobCard({ item, className, goToDetails, mapSalary, mapJob }: Job
           <div className="flex flex-col items-start gap-3">
             <h3>{item.jobCategory?.name}</h3>
             <div>
-              {item.address?.name} - {mapSalary(item.salary)}
+              {item.address?.name} - <span className="capitalize">{item.salary}</span>
             </div>
-            <div>{mapJob(item.type)}</div>
+            <span className="capitalize">{item.type}</span>
           </div>
         </div>
       </div>
