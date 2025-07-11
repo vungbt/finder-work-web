@@ -1,36 +1,60 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Locket Clone
+
+A Flutter application that mimics the core functionality of the Locket app.
 
 ## Getting Started
 
-First, run the development server:
+This project is a starting point for a Flutter application following clean architecture principles.
 
+### Prerequisites
+
+- Flutter SDK (>=3.0.0)
+- Dart SDK
+- Android Studio or VS Code
+- For iOS development: Xcode
+
+### Installation
+
+1. Clone the repository
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone <repository-url>
+cd locket_clone
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install dependencies
+```bash
+flutter pub get
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Run the app
+```bash
+flutter run
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Project Structure
 
-## Learn More
+```
+locket_clone/
+├── android/              # Android specific files
+├── ios/                  # iOS specific files
+├── lib/
+│   ├── core/            # Core utilities, constants, themes
+│   ├── data/            # Data layer (models, repositories, services)
+│   ├── domain/          # Domain layer (entities, use cases)
+│   ├── presentation/    # Presentation layer (screens, widgets, blocs)
+│   └── main.dart       # App entry point
+├── assets/              # Images, icons, etc.
+└── pubspec.yaml        # Dependencies and project configuration
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Features
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Splash Screen
+- Onboarding Flow
+- Clean Architecture Structure
+- Material Design 3
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Built With
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- [Flutter](https://flutter.dev/) - UI toolkit
+- [Dart](https://dart.dev/) - Programming language

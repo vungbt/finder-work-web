@@ -1,5 +1,0 @@
-# mutation createPreviewResume($data: GeneratePdfInput!) {
-#   create_preview_resume(data: $data) {
-#     fileURl
-#   }
-# }

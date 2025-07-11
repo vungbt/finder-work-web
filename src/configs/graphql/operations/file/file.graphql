@@ -1,7 +1,0 @@
-query uploadUrl($name: String!) {
-  upload_url(name: $name)
-}
-
-query uploadUrls($names: [String!]!) {
-  upload_urls(names: $names)
-}
